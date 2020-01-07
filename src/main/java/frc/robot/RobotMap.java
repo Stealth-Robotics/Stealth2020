@@ -16,11 +16,13 @@ package frc.robot;
 public class RobotMap 
 {
   
-    //ports for drivebase talons
-    public static final int driveLF = 8;
-    public static final int driveLR = 2;
-    public static final int driveRF = 7;
-    public static final int driveRR = 1;
+    public static final int kLeftMotor1Port = 0;
+    public static final int kLeftMotor2Port = 1;
+    public static final int kRightMotor1Port = 2;
+    public static final int kRightMotor2Port = 3;
+
+    public static final int[] kLeftEncoderPorts = new int[]{0, 1};
+    public static final int[] kRightEncoderPorts = new int[]{2, 3};
 
     /*
     PDP0 = 
