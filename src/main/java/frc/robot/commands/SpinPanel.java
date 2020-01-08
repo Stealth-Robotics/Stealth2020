@@ -7,25 +7,23 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.PanelControl;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class ExampleCommand extends CommandBase 
-{
+public class SpinPanel extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DriveBase m_subsystem;
+    private final PanelControl panelControl;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ExampleCommand(DriveBase subsystem) 
-    {
-        m_subsystem = subsystem;
+    public SpinPanel(PanelControl subsystem) {
+        this.panelControl = panelControl;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
     }
@@ -34,7 +32,7 @@ public class ExampleCommand extends CommandBase
     @Override
     public void initialize() 
     {
-
+        
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -48,7 +46,7 @@ public class ExampleCommand extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
-        
+
     }
 
     // Returns true when the command should end.
