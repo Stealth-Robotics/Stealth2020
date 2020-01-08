@@ -4,14 +4,15 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Intake extends SubsystemBase 
+public class Climber extends SubsystemBase
 {
-    Talon intakeMotor;
+
+    Talon climbMotor;
 
     /**
-     * Creates a new Intake.
+     * Creates a new Climber.
      */
-    public Intake() 
+    public Climber() 
     {
 
     }

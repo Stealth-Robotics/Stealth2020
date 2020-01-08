@@ -24,7 +24,5 @@ public class RobotMap
     public static final int[] kLeftEncoderPorts = new int[]{0, 1};
     public static final int[] kRightEncoderPorts = new int[]{2, 3};
 
-    /*
-    PDP0 = 
-    */
+    
 }
