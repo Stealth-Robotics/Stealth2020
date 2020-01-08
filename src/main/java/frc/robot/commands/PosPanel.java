@@ -1,27 +1,26 @@
 
-
 package frc.robot.commands;
 
 import frc.robot.subsystems.PanelControl;
-import frc.util.StopWatch;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class SpinPanel extends CommandBase 
+public class PosPanel extends CommandBase 
 {
-    StopWatch timer;
+    String color;
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final PanelControl panelControl;
 
     /**
-     * Creates a new SpinPanel.
+     * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public SpinPanel(PanelControl panelControl) 
+    public PosPanel(PanelControl panelControl) 
     {
         this.panelControl = panelControl;
         // Use addRequirements() here to declare subsystem dependencies.
@@ -32,8 +31,19 @@ public class SpinPanel extends CommandBase
     @Override
     public void initialize() 
     {
-        timer = new StopWatch(3000);
-        panelControl.setWheelSpeed(1.0);
+        color = DriverStation.getInstance().getGameSpecificMessage();
+        String currentColor = panelControl.getColor();
+        if (currentColor.equals("R") && color.equals("Y")
+                || currentColor.equals("Y") && color.equals("B")
+                || currentColor.equals("B") && color.equals("G")
+                || currentColor.equals("G") && color.equals("R"))
+        {
+            panelControl.setWheelSpeed(-1);
+        }
+        else
+        {
+            panelControl.setWheelSpeed(1);
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,13 +57,13 @@ public class SpinPanel extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
-        panelControl.setWheelSpeed(0.0);
+        panelControl.setWheelSpeed(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() 
     {
-        return timer.isExpired();
+        return panelControl.getColor().equals(color);
     }
 }
