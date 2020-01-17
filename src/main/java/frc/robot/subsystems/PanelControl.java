@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class PanelControl extends SubsystemBase 
 {
     Talon wheelMotor;
+    Talon wheelMotor2; 
     ColorSensorV3 colorSensor;
 
     /**
