@@ -4,19 +4,22 @@ package frc.robot.subsystems;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 
 public class PanelControl extends SubsystemBase 
 {
-    Talon wheelMotor;
-    ColorSensorV3 colorSensor;
+    private final Talon wheelMotor;
+    private final ColorSensorV3 colorSensor;
 
     /**
      * Creates a new ColorWheel.
      */
     public PanelControl() 
     {
-
+        wheelMotor = new Talon(RobotMap.panelWheelMotor);
+        colorSensor = new ColorSensorV3(Port.kOnboard);
     }
 
     @Override
