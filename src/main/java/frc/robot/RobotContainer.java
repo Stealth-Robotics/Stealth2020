@@ -9,6 +9,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Climber;
@@ -27,13 +28,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer 
 {
     // The robot's subsystems and commands are defined here...
-    private final DriveBase driveBase = new DriveBase();
-    private final Shooter shooter = new Shooter();
-    private final Intake intake = new Intake();
-    private final Climber climber = new Climber();
-    private final PanelControl panelControl = new PanelControl();
+    private final DriveBase driveBase;
+    private final Shooter shooter;
+    private final Intake intake;
+    private final Climber climber;
+    private final PanelControl panelControl;
   
-    private final ExampleCommand m_autoCommand = new ExampleCommand(driveBase);
+    private final ExampleCommand m_autoCommand;
   
   
   
@@ -42,6 +43,14 @@ public class RobotContainer
      */
     public RobotContainer() 
     {
+        driveBase = new DriveBase();
+        shooter = new Shooter();
+        intake = new Intake();
+        climber = new Climber();
+        panelControl = new PanelControl();
+        
+        m_autoCommand = new ExampleCommand(driveBase);
+
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -54,7 +63,8 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-
+        Joystick driveJoystick = new Joystick(0);
+        Joystick mechJoystick = new Joystick(1);
     }
   
   
