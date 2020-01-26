@@ -19,6 +19,12 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants 
 {
+    public static final double ticksPerDegree = 1000 / 45; //TODO find real values
+
+    public static final double hoodkP = 0.5;
+    public static final double hoodkI = 0.05;
+    public static final double hoodkD = 0.05;
+
     public static final class DriveConstants 
     {
         public static final int kLeftMotor1Port = 0;

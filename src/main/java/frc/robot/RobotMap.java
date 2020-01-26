@@ -14,9 +14,7 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap 
-{
-    public static final int colorSensor = 0;
-  
+{  
     public static final int kLeftMotor1Port = 0;
     public static final int kLeftMotor2Port = 1;
     public static final int kRightMotor1Port = 2;
@@ -27,15 +25,17 @@ public class RobotMap
 
     public static final int shooter1 = 4;
     public static final int shooter2 = 5;
+    public static final int hood = 6;
+    public static final int[] hoodEncoderPorts = new int[]{4, 5};
 
-    public static final int winch = 6;
-    public static final int claw1 = 7;
-    public static final int claw2 = 8;
+    public static final int winch = 7;
+    public static final int claw1 = 8;
+    public static final int claw2 = 9;
 
-    public static final int intake = 9;
-    public static final int belt1 =  10;
-    public static final int belt2 = 11;
-    public static final int belt3 = 12;
+    public static final int intake = 10;
+    public static final int belt1 =  11;
+    public static final int belt2 = 12;
+    public static final int belt3 = 13;
 
-    public static final int panelWheelMotor = 13;
+    public static final int panelWheelMotor = 14;
 }
