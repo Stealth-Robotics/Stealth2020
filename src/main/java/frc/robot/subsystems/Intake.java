@@ -31,6 +31,11 @@ public class Intake extends SubsystemBase
         intake.set(1);
     }
 
+    public void stopIntake()
+    {
+        intake.set(0);
+    }
+
     public void runBelts()
     {
         belts.set(1);

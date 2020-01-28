@@ -11,13 +11,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,7 +38,8 @@ public class RobotContainer
   
     private final ExampleCommand m_autoCommand;
   
-  
+    private Joystick driveJoystick;
+    private Joystick mechJoystick;
   
     /**
      * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -51,8 +54,16 @@ public class RobotContainer
         
         m_autoCommand = new ExampleCommand(driveBase);
 
+        driveJoystick = new Joystick(0);
+        mechJoystick = new Joystick(1);
+
         // Configure the button bindings
         configureButtonBindings();
+
+        new RunCommand(() -> driveBase
+            .arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
+                driveJoystick.getX(GenericHID.Hand.kRight)),
+            driveBase);
     }
   
     /**
@@ -63,8 +74,14 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        Joystick driveJoystick = new Joystick(0);
-        Joystick mechJoystick = new Joystick(1);
+        new JoystickButton(mechJoystick, 0).whenPressed(new SpinPanel(panelControl));
+        new JoystickButton(mechJoystick, 1).whenPressed(new PosPanel(panelControl));
+        new JoystickButton(mechJoystick, 2).whenPressed(new RunCommand(() -> shooter.run(1.0)))
+                .whenReleased(new RunCommand(() -> shooter.run(0)));
+        new JoystickButton(mechJoystick, 3).whenPressed(new RunCommand(() -> intake.runIntake()))
+                .whenReleased(new RunCommand(() -> intake.stopIntake()));
+        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> climber.climb()))
+                .whenReleased(new RunCommand(() -> climber.stopClimb()));
     }
   
   

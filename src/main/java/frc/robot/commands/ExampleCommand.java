@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ExampleCommand extends CommandBase 
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DriveBase m_subsystem;
+    private final DriveBase driveBase;
 
     /**
      * Creates a new ExampleCommand.
@@ -25,7 +25,7 @@ public class ExampleCommand extends CommandBase
      */
     public ExampleCommand(DriveBase subsystem) 
     {
-        m_subsystem = subsystem;
+        driveBase = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
     }
@@ -41,7 +41,7 @@ public class ExampleCommand extends CommandBase
     @Override
     public void execute() 
     {
-
+        driveBase.arcadeDrive(1, 1);
     }
 
     // Called once the command ends or is interrupted.
