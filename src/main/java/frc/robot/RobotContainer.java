@@ -36,7 +36,7 @@ public class RobotContainer
     private final Climber climber;
     private final PanelControl panelControl;
   
-    private final ExampleCommand m_autoCommand;
+    private final ScoreFuel m_autoCommand;
   
     private Joystick driveJoystick;
     private Joystick mechJoystick;
@@ -52,7 +52,7 @@ public class RobotContainer
         climber = new Climber();
         panelControl = new PanelControl();
         
-        m_autoCommand = new ExampleCommand(driveBase);
+        m_autoCommand = new ScoreFuel(shooter, driveBase);
 
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);

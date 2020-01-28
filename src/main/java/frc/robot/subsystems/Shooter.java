@@ -12,9 +12,12 @@ public class Shooter extends SubsystemBase
 {
     private final SpeedControllerGroup shooter;
     private final Talon hood;
+
+    private final Encoder shooterEncoder;
+    private final PIDController shooterController;
     
     private final Encoder hoodEncoder;
-    PIDController hoodController;
+    private final PIDController hoodController;
 
     /**
      * Creates a new Shooter.
@@ -23,6 +26,9 @@ public class Shooter extends SubsystemBase
     {
         shooter = new SpeedControllerGroup(new Talon(RobotMap.shooter1), new Talon(RobotMap.shooter2));
         hood = new Talon(RobotMap.hood);
+
+        shooterEncoder = new Encoder(RobotMap.shooterEncoderPorts[0], RobotMap.shooterEncoderPorts[1]);
+        shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
 
         hoodEncoder = new Encoder(RobotMap.hoodEncoderPorts[0], RobotMap.hoodEncoderPorts[1]);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
@@ -33,11 +39,17 @@ public class Shooter extends SubsystemBase
     {
         // This method will be called once per scheduler run
         hood.set(hoodController.calculate(hoodEncoder.get()));
+        shooter.set(shooterController.calculate(shooterEncoder.getRate()));
     }
 
     public void run(double speed)
     {
         shooter.set(speed);
+    }
+
+    public void setShooterSpeed(double speed)
+    {
+        shooterController.setSetpoint(speed);
     }
 
     public void setHoodPos(double angle)
