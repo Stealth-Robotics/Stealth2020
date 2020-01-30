@@ -57,6 +57,9 @@ public class RobotContainer
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);
 
+        driveJoystick.setYChannel(1);
+        driveJoystick.setXChannel(0);
+
         // Configure the button bindings
         configureButtonBindings();
 
@@ -74,16 +77,16 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        new JoystickButton(mechJoystick, 0).whenPressed(new SpinPanel(panelControl));
+        new JoystickButton(mechJoystick, 1).whenPressed(new SpinPanel(panelControl));
 
-        new JoystickButton(mechJoystick, 1).whenPressed(new PosPanel(panelControl));
+        new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
-        new JoystickButton(mechJoystick, 2).whenPressed(new ScoreFuel(shooter, driveBase));
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(shooter, driveBase));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new RunCommand(() -> intake.runIntake()))
+        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> intake.runIntake()))
                 .whenReleased(new RunCommand(() -> intake.stopIntake()));
-                
-        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> climber.climb()))
+
+        new JoystickButton(mechJoystick, 5).whenPressed(new RunCommand(() -> climber.climb()))
                 .whenReleased(new RunCommand(() -> climber.stopClimb()));
     }
   
