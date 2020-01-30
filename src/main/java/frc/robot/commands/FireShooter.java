@@ -23,11 +23,11 @@ public class FireShooter extends CommandBase
      *
      * @param subsystem The subsystem used by this command.
      */
-    public FireShooter(Shooter subsystem) 
+    public FireShooter(Shooter shooter) 
     {
-        shooter = subsystem;
+        this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -41,7 +41,10 @@ public class FireShooter extends CommandBase
     @Override
     public void execute() 
     {
-        
+        if (shooter.shooterAtSpeed())
+        {
+            shooter.runBelts(1);
+        }
     }
 
     // Called once the command ends or is interrupted.

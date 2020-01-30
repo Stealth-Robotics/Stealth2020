@@ -7,7 +7,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -41,7 +43,9 @@ public class AimHood extends CommandBase
     @Override
     public void execute() 
     {
-        
+        double dist = NetworkTableInstance.getDefault().getEntry("dist").getDouble(-1); //TODO Figure out how this is actually going to be done
+        double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+        shooter.setHoodPos(angle);
     }
 
     // Called once the command ends or is interrupted.

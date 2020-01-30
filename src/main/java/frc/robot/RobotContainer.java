@@ -75,11 +75,14 @@ public class RobotContainer
     private void configureButtonBindings() 
     {
         new JoystickButton(mechJoystick, 0).whenPressed(new SpinPanel(panelControl));
+
         new JoystickButton(mechJoystick, 1).whenPressed(new PosPanel(panelControl));
-        new JoystickButton(mechJoystick, 2).whenPressed(new RunCommand(() -> shooter.run(1.0)))
-                .whenReleased(new RunCommand(() -> shooter.run(0)));
+
+        new JoystickButton(mechJoystick, 2).whenPressed(new ScoreFuel(shooter, driveBase));
+
         new JoystickButton(mechJoystick, 3).whenPressed(new RunCommand(() -> intake.runIntake()))
                 .whenReleased(new RunCommand(() -> intake.stopIntake()));
+                
         new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> climber.climb()))
                 .whenReleased(new RunCommand(() -> climber.stopClimb()));
     }
