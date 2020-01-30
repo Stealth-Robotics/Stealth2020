@@ -22,15 +22,19 @@ public final class Constants
     public static final double fuelAirTime = 0.713; //seconds
     public static final double fuelInitVelocY = 6.986; //meters / second
     
-    public static final double shooterkP = 0.5;
+    public static final double shooterkP = 0.5; //TODO find real values
     public static final double shooterkI = 0.05;
     public static final double shooterkD = 0.05;
 
-    public static final double ticksPerDegree = 1000 / 45; //TODO find real values
+    public static final double ticksPerDegree = 1000 / 45;
 
     public static final double hoodkP = 0.5;
     public static final double hoodkI = 0.05;
     public static final double hoodkD = 0.05;
+
+    public static final double basekP = 0.5;
+    public static final double basekI = 0.05;
+    public static final double basekD = 0.05;
 
     public static final class DriveConstants 
     {
