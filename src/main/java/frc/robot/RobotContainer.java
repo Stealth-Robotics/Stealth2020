@@ -83,8 +83,10 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(shooter, driveBase));
 
-        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> intake.runIntake()))
+        new JoystickButton(mechJoystick, 4).whenHeld(new RunCommand(() -> intake.runIntake()))
                 .whenReleased(new RunCommand(() -> intake.stopIntake()));
+
+        new RunCommand(() -> System.out.println("Lambda Running"));
 
         new JoystickButton(mechJoystick, 5).whenPressed(new RunCommand(() -> climber.climb()))
                 .whenReleased(new RunCommand(() -> climber.stopClimb()));
