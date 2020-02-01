@@ -66,16 +66,6 @@ public class PanelControl extends SubsystemBase {
 
     public void togglePosition()
     {
-        boolean state = colorWheelPiston.get();
-
-        if(state)
-        {
-            colorWheelPiston.set(false);
-        }
-
-        else
-        {
-            colorWheelPiston.set(true);
-        }
+        colorWheelPiston.set(!colorWheelPiston.get());
     }
 }

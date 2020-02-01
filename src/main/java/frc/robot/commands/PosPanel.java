@@ -31,6 +31,8 @@ public class PosPanel extends CommandBase
     @Override
     public void initialize() 
     {
+        panelControl.togglePosition();
+
         color = DriverStation.getInstance().getGameSpecificMessage();
         String currentColor = panelControl.getColor();
         if (currentColor.equals("R") && color.equals("Y")
@@ -58,6 +60,7 @@ public class PosPanel extends CommandBase
     public void end(boolean interrupted) 
     {
         panelControl.setWheelSpeed(0);
+        panelControl.togglePosition();
     }
 
     // Returns true when the command should end.

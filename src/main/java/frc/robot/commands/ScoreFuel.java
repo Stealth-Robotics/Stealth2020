@@ -3,8 +3,8 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -25,7 +25,7 @@ public class ScoreFuel extends SequentialCommandGroup
         this.shooter = shooter;
 
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase), new AimHood(shooter), new RunCommand(() -> shooter.enable())),
+            new ParallelCommandGroup(new AlignWithTarget(driveBase), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
             new FireShooter(shooter));
     }
 
