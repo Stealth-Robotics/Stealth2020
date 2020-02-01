@@ -109,7 +109,6 @@ public class DriveBase extends SubsystemBase
 	 */
     public void arcadeDrive(double fwd, double rot) 
     {
-		System.out.println("Driving");
 		m_drive.arcadeDrive(fwd, rot);
 	}
 
