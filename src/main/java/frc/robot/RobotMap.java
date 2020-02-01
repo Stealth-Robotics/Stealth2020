@@ -39,4 +39,7 @@ public class RobotMap
     public static final int belt3 = 13;
 
     public static final int panelWheelMotor = 14;
+
+    public static final int PCM = 15;
+    public static final int colorWheelPistonChannel = 1;
 }

@@ -3,15 +3,16 @@ package frc.robot.subsystems;
 
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class PanelControl extends SubsystemBase 
-{
+public class PanelControl extends SubsystemBase {
     private final Talon wheelMotor;
     private final ColorSensorV3 colorSensor;
+    private final Solenoid colorWheelPiston;
 
     /**
      * Creates a new ColorWheel.
@@ -20,6 +21,7 @@ public class PanelControl extends SubsystemBase
     {
         wheelMotor = new Talon(RobotMap.panelWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
+        colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.colorWheelPistonChannel);
     }
 
     @Override
@@ -59,6 +61,21 @@ public class PanelControl extends SubsystemBase
         else
         {
             return "G";
+        }
+    }
+
+    public void togglePosition()
+    {
+        boolean state = colorWheelPiston.get();
+
+        if(state)
+        {
+            colorWheelPiston.set(false);
+        }
+
+        else
+        {
+            colorWheelPiston.set(true);
         }
     }
 }
