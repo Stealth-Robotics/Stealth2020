@@ -18,6 +18,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -84,12 +85,12 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(shooter, driveBase));
 
         new JoystickButton(mechJoystick, 4).whenHeld(new RunCommand(() -> intake.runIntake()))
-                .whenReleased(new RunCommand(() -> intake.stopIntake()));
+                .whenReleased(new InstantCommand(() -> intake.stopIntake()));
 
         new RunCommand(() -> System.out.println("Lambda Running"));
 
-        new JoystickButton(mechJoystick, 5).whenPressed(new RunCommand(() -> climber.climb()))
-                .whenReleased(new RunCommand(() -> climber.stopClimb()));
+        new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
+                .whenReleased(new InstantCommand(() -> climber.stopClimb()));
     }
   
   
