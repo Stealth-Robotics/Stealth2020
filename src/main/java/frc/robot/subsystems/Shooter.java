@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -11,7 +11,7 @@ import frc.robot.RobotMap;
 public class Shooter extends SubsystemBase 
 {
     private final SpeedControllerGroup shooter;
-    private final Talon hood;
+    private final WPI_TalonSRX hood;
 
     private final SpeedControllerGroup belts;
 
@@ -28,9 +28,9 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
-        shooter = new SpeedControllerGroup(new Talon(RobotMap.shooter1), new Talon(RobotMap.shooter2));
-        hood = new Talon(RobotMap.hood);
-        belts = new SpeedControllerGroup(new Talon(RobotMap.belt1), new Talon(RobotMap.belt2), new Talon(RobotMap.belt3));
+        shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
+        hood = new WPI_TalonSRX(RobotMap.hood);
+        belts = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2), new WPI_TalonSRX(RobotMap.belt3));
 
         shooterEncoder = new Encoder(RobotMap.shooterEncoderPorts[0], RobotMap.shooterEncoderPorts[1]);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
@@ -58,17 +58,15 @@ public class Shooter extends SubsystemBase
         }
     }
 
-    public void runBelts(double speed)
-    {
+    public void runBelts(final double speed) {
         belts.set(speed);
     }
 
-    public void setShooterSpeed(double speed)
-    {
+    public void setShooterSpeed(final double speed) {
         shooterController.setSetpoint(speed);
     }
 
-    public void setHoodPos(double angle)
+    public void setHoodPos(final double angle)
     {
         hoodController.setSetpoint(angle * Constants.ticksPerDegree);
     }

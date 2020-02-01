@@ -1,20 +1,21 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase 
 {
-    private final Talon intake;
+    private final WPI_TalonSRX intake;
 
     /**
      * Creates a new Intake.
      */
     public Intake() 
     {
-        intake = new Talon(RobotMap.intake);
+        intake = new WPI_TalonSRX(RobotMap.intake);
     }
 
     @Override

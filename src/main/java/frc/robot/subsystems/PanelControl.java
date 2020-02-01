@@ -1,16 +1,17 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class PanelControl extends SubsystemBase {
-    private final Talon wheelMotor;
+public class PanelControl extends SubsystemBase 
+{
+    private final WPI_TalonSRX wheelMotor;
     private final ColorSensorV3 colorSensor;
     private final Solenoid colorWheelPiston;
 
@@ -19,7 +20,7 @@ public class PanelControl extends SubsystemBase {
      */
     public PanelControl() 
     {
-        wheelMotor = new Talon(RobotMap.panelWheelMotor);
+        wheelMotor = new WPI_TalonSRX(RobotMap.panelWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
         colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.colorWheelPistonChannel);
     }

@@ -1,15 +1,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase
 {
 
-    private final Talon winch;
+    private final WPI_TalonSRX winch;
     private final SpeedControllerGroup claw;
 
     /**
@@ -17,8 +18,8 @@ public class Climber extends SubsystemBase
      */
     public Climber() 
     {
-        winch = new Talon(RobotMap.winch);
-        claw = new SpeedControllerGroup(new Talon(RobotMap.claw1), new Talon(RobotMap.claw2));
+        winch = new WPI_TalonSRX(RobotMap.winch);
+        claw = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.claw1), new WPI_TalonSRX(RobotMap.claw2));
     }
 
     @Override
