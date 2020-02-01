@@ -64,10 +64,10 @@ public class RobotContainer
         // Configure the button bindings
         configureButtonBindings();
 
-        new RunCommand(() -> driveBase
-            .arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
-                driveJoystick.getX(GenericHID.Hand.kRight)),
-            driveBase);
+        driveBase.setDefaultCommand(
+                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
+                    driveJoystick.getX(GenericHID.Hand.kRight)),
+                driveBase));
     }
   
     /**
