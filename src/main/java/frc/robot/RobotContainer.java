@@ -18,8 +18,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -53,7 +53,7 @@ public class RobotContainer
         climber = new Climber();
         panelControl = new PanelControl();
         
-        m_autoCommand = new ScoreFuel(shooter, driveBase);
+        m_autoCommand = new ScoreFuel(driveBase, shooter);
 
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);
@@ -82,15 +82,16 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(shooter, driveBase));
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
-        new JoystickButton(mechJoystick, 4).whenHeld(new RunCommand(() -> intake.runIntake()))
-                .whenReleased(new InstantCommand(() -> intake.stopIntake()));
+        // new JoystickButton(mechJoystick, 4).whenHeld(new RunCommand(() -> intake.runIntake()))
+        //         .whenReleased(new InstantCommand(() -> intake.stopIntake()));
 
-        new RunCommand(() -> System.out.println("Lambda Running"));
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> intake.runIntake(), () -> intake.stopIntake(), intake));
 
-        new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
-                .whenReleased(new InstantCommand(() -> climber.stopClimb()));
+    //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
+    //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> climber.climb(), () -> climber.stopClimb(), climber));
     }
   
   
