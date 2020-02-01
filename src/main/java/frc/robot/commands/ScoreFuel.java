@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  */
 public class ScoreFuel extends SequentialCommandGroup 
 {
-
+    DriveBase driveBase;
     Shooter shooter;
 
     /**
@@ -20,10 +20,17 @@ public class ScoreFuel extends SequentialCommandGroup
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ScoreFuel(Shooter shooter, DriveBase driveBase) 
+    public ScoreFuel(DriveBase driveBase, Shooter shooter) 
     {
+        this.driveBase = driveBase;
         this.shooter = shooter;
 
+        addRequirements(shooter, driveBase);
+    }
+
+    @Override
+    public void initialize() 
+    {
         addCommands(
             new ParallelCommandGroup(new AlignWithTarget(driveBase), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
             new FireShooter(shooter));
