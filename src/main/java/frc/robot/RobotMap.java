@@ -16,7 +16,7 @@ package frc.robot;
 public class RobotMap 
 {  
     public static final int kLeftMotor1Port = 0;
-    public static final int kLeftMotor2Port = 1;
+    public static final int kLeftMotor2Port = 6;
     public static final int kRightMotor1Port = 2;
     public static final int kRightMotor2Port = 3;
 
@@ -25,7 +25,7 @@ public class RobotMap
 
     public static final int shooter1 = 4;
     public static final int shooter2 = 5;
-    public static final int hood = 6;
+    public static final int hood = 1;
     public static final int[] shooterEncoderPorts = new int[]{4, 5};
     public static final int[] hoodEncoderPorts = new int[]{6, 7};
 

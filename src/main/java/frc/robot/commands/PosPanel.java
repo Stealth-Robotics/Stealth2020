@@ -12,6 +12,8 @@ public class PosPanel extends CommandBase
 {
     String color;
 
+    double detections;
+
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final PanelControl panelControl;
 
@@ -52,7 +54,14 @@ public class PosPanel extends CommandBase
     @Override
     public void execute() 
     {
-        
+        if (panelControl.getColor().equals(color))
+        {
+            detections++;
+        }
+        else
+        {
+            detections = 0;
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -67,6 +76,6 @@ public class PosPanel extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return panelControl.getColor().equals(color);
+        return detections >= 10;
     }
 }
