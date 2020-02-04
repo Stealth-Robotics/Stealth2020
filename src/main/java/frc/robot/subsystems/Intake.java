@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase
         // This method will be called once per scheduler run
     }
 
-    public void runIntake()
+    public void run()
     {
         intake.set(1);
     }
@@ -51,7 +51,7 @@ public class Intake extends SubsystemBase
         belt.set(0);
     }
 
-    public void toggleIntake()
+    public void toggle()
     {
         deployPistons.set(!deployPistons.get());
     }

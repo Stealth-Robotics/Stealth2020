@@ -84,7 +84,9 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> intake.runIntake(), () -> intake.stopIntake(), intake));
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> intake.run(), () -> intake.stopIntake(), intake)
+                .beforeStarting(() -> intake.toggle(), intake)
+                .andThen(() -> intake.toggle(), intake));
 
     //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
     //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));
