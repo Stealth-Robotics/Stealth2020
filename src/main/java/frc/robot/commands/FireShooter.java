@@ -37,7 +37,7 @@ public class FireShooter extends CommandBase
     {
         if (shooter.shooterAtSpeed())
         {
-            shooter.runBelts(1);
+            shooter.runBelt(1);
         }
     }
 

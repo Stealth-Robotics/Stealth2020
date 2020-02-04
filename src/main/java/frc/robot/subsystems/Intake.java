@@ -7,8 +7,11 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class Intake extends SubsystemBase {
+public class Intake extends SubsystemBase 
+{
     private final WPI_TalonSRX intake;
+
+    private final WPI_TalonSRX belt;
 
     private final Solenoid deployPistons;
 
@@ -18,6 +21,7 @@ public class Intake extends SubsystemBase {
     public Intake() 
     {
         intake = new WPI_TalonSRX(RobotMap.intake);
+        belt = new WPI_TalonSRX(RobotMap.belt3);
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
     }
 
@@ -35,6 +39,16 @@ public class Intake extends SubsystemBase {
     public void stopIntake()
     {
         intake.set(0);
+    }
+
+    public void runBelt()
+    {
+        belt.set(1);
+    }
+
+    public void stopBelt()
+    {
+        belt.set(0);
     }
 
     public void toggleIntake()

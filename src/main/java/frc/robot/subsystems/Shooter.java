@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase
     private final SpeedControllerGroup shooter;
     protected final WPI_TalonSRX hood;
 
-    private final SpeedControllerGroup belts;
+    private final SpeedControllerGroup belt;
 
     private final CANCoder shooterEncoder;
     private final PIDController shooterController;
@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase
     {
         shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
         hood = new WPI_TalonSRX(RobotMap.hood);
-        belts = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2), new WPI_TalonSRX(RobotMap.belt3));
+        belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
 
         shooterEncoder = new CANCoder(RobotMap.shooter1);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
@@ -60,9 +60,9 @@ public class Shooter extends SubsystemBase
         }
     }
 
-    public void runBelts(final double speed) 
+    public void runBelt(final double speed) 
     {
-        belts.set(speed);
+        belt.set(speed);
     }
 
     public void setShooterSpeed(final double speed) 
