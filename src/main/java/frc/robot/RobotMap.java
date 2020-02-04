@@ -26,8 +26,6 @@ public class RobotMap
     public static final int shooter1 = 4;
     public static final int shooter2 = 5;
     public static final int hood = 1;
-    public static final int[] shooterEncoderPorts = new int[]{4, 5};
-    public static final int[] hoodEncoderPorts = new int[]{6, 7};
 
     public static final int winch = 7;
     public static final int claw1 = 8;
