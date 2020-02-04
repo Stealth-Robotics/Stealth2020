@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
-import java.util.concurrent.Delayed;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -63,11 +60,13 @@ public class Shooter extends SubsystemBase
         }
     }
 
-    public void runBelts(final double speed) {
+    public void runBelts(final double speed) 
+    {
         belts.set(speed);
     }
 
-    public void setShooterSpeed(final double speed) {
+    public void setShooterSpeed(final double speed) 
+    {
         shooterController.setSetpoint(speed);
     }
 
@@ -91,33 +90,33 @@ public class Shooter extends SubsystemBase
         shooterController.reset();
         enabled = true;
     }
-    public void InitializePosition()
-    {
-       double previousEncoderPosition = hoodEncoder.getPosition();
-       
-
-     
-    hood.set(-0.1);
-    StopWatch timer = new StopWatch(1000);
-    StopWatch  timerShort = new StopWatch(50);
-
-    while(!timer.isExpired())
-    {
-       while(!timerShort.isExpired());
-       if(previousEncoderPosition == hoodEncoder.getPosition())
-       {
-
-        break;
-       }
-                
-    }
-hood.set(0);
-hoodEncoder.setPosition(0);
-   
-
-    }
+    
     public void disable()
     {
         enabled = false;
+    }
+
+    public void initializePosition()
+    {
+        double previousEncoderPosition = hoodEncoder.getPosition();
+        
+
+        
+        hood.set(-0.1);
+        StopWatch timer = new StopWatch(1000);
+        StopWatch  timerShort = new StopWatch(50);
+
+        while(!timer.isExpired())
+        {
+            while(!timerShort.isExpired());
+            if(previousEncoderPosition == hoodEncoder.getPosition())
+            {
+                break;
+            }
+                    
+        }
+
+        hood.set(0);
+        hoodEncoder.setPosition(0);
     }
 }
