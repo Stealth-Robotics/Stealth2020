@@ -3,12 +3,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class Intake extends SubsystemBase 
-{
+public class Intake extends SubsystemBase {
     private final WPI_TalonSRX intake;
+
+    private final Solenoid deployPistons;
 
     /**
      * Creates a new Intake.
@@ -16,6 +18,7 @@ public class Intake extends SubsystemBase
     public Intake() 
     {
         intake = new WPI_TalonSRX(RobotMap.intake);
+        deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
     }
 
     @Override
@@ -32,5 +35,10 @@ public class Intake extends SubsystemBase
     public void stopIntake()
     {
         intake.set(0);
+    }
+
+    public void toggleIntake()
+    {
+        deployPistons.set(!deployPistons.get());
     }
 }
