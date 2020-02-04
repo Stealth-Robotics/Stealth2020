@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import java.util.concurrent.Delayed;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -18,10 +20,10 @@ public class Shooter extends SubsystemBase
 
     private final SpeedControllerGroup belts;
 
-    private final Encoder shooterEncoder;
+    private final CANCoder shooterEncoder;
     private final PIDController shooterController;
     
-    protected final Encoder hoodEncoder;
+    protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
     private boolean enabled;
@@ -35,11 +37,11 @@ public class Shooter extends SubsystemBase
         hood = new WPI_TalonSRX(RobotMap.hood);
         belts = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2), new WPI_TalonSRX(RobotMap.belt3));
 
-        shooterEncoder = new Encoder(RobotMap.shooterEncoderPorts[0], RobotMap.shooterEncoderPorts[1]);
+        shooterEncoder = new CANCoder(RobotMap.shooter1);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
 
-        hoodEncoder = new Encoder(RobotMap.hoodEncoderPorts[0], RobotMap.hoodEncoderPorts[1]);
+        hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(50);
 
@@ -50,10 +52,10 @@ public class Shooter extends SubsystemBase
     public void periodic() 
     {
         // This method will be called once per scheduler run
-        hood.set(hoodController.calculate(hoodEncoder.get()));
+        hood.set(hoodController.calculate(hoodEncoder.getPosition()));
         if (enabled)
         {
-            shooter.set(shooterController.calculate(shooterEncoder.getRate()));
+            shooter.set(shooterController.calculate(shooterEncoder.getVelocity()));
         }
         else
         {
@@ -91,7 +93,7 @@ public class Shooter extends SubsystemBase
     }
     public void InitializePosition()
     {
-       int previousEncoderPosition = hoodEncoder.get();
+       double previousEncoderPosition = hoodEncoder.getPosition();
        
 
      
@@ -102,7 +104,7 @@ public class Shooter extends SubsystemBase
     while(!timer.isExpired())
     {
        while(!timerShort.isExpired());
-       if(previousEncoderPosition == hoodEncoder.get())
+       if(previousEncoderPosition == hoodEncoder.getPosition())
        {
 
         break;
@@ -110,8 +112,9 @@ public class Shooter extends SubsystemBase
                 
     }
 hood.set(0);
-hoodEncoder.setSelectedSensorPosition(0);
+hoodEncoder.setPosition(0);
    
+
     }
     public void disable()
     {

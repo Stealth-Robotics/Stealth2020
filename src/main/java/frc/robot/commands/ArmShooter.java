@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -41,7 +42,7 @@ public class ArmShooter extends CommandBase
     @Override
     public void execute() 
     {
-        driveBase.arcadeDrive(1, 1);
+       
     }
 
     // Called once the command ends or is interrupted.
