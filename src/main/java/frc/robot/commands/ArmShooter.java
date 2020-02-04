@@ -1,15 +1,19 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class AimHood extends CommandBase 
+public class ArmShooter extends CommandBase 
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Shooter shooter;
@@ -17,14 +21,13 @@ public class AimHood extends CommandBase
     /**
      * Creates a new ExampleCommand.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param shooter The subsystem used by this command.
      */
-    public AimHood(Shooter subsystem) 
+    public ArmShooter(Shooter shooter) 
     {
-        shooter = subsystem;
-        
+        this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -38,9 +41,7 @@ public class AimHood extends CommandBase
     @Override
     public void execute() 
     {
-        double dist = NetworkTableInstance.getDefault().getEntry("dist").getDouble(-1); //TODO Figure out how this is actually going to be done
-        double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
-        shooter.setHoodPos(angle);
+        driveBase.arcadeDrive(1, 1);
     }
 
     // Called once the command ends or is interrupted.

@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.concurrent.Delayed;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -7,18 +9,19 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.util.StopWatch;
 
 public class Shooter extends SubsystemBase 
 {
     private final SpeedControllerGroup shooter;
-    private final WPI_TalonSRX hood;
+    protected final WPI_TalonSRX hood;
 
     private final SpeedControllerGroup belts;
 
     private final Encoder shooterEncoder;
     private final PIDController shooterController;
     
-    private final Encoder hoodEncoder;
+    protected final Encoder hoodEncoder;
     private final PIDController hoodController;
 
     private boolean enabled;
@@ -86,7 +89,30 @@ public class Shooter extends SubsystemBase
         shooterController.reset();
         enabled = true;
     }
+    public void InitializePosition()
+    {
+       int previousEncoderPosition = hoodEncoder.get();
+       
 
+     
+    hood.set(-0.1);
+    StopWatch timer = new StopWatch(1000);
+    StopWatch  timerShort = new StopWatch(50);
+
+    while(!timer.isExpired())
+    {
+       while(!timerShort.isExpired());
+       if(previousEncoderPosition == hoodEncoder.get())
+       {
+
+        break;
+       }
+                
+    }
+hood.set(0);
+hoodEncoder.setSelectedSensorPosition(0);
+   
+    }
     public void disable()
     {
         enabled = false;
