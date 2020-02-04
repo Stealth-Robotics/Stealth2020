@@ -42,4 +42,5 @@ public class RobotMap
 
     public static final int PCM = 15;
     public static final int colorWheelPistonChannel = 1;
+    public static final int intakeDeployPistons = 2;
 }
