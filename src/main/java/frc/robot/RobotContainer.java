@@ -68,6 +68,8 @@ public class RobotContainer
                 new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
                     driveJoystick.getX(GenericHID.Hand.kRight)),
                 driveBase));
+
+        intake.setDefaultCommand(new IntakeDefault(intake, shooter));
     }
   
     /**
@@ -84,9 +86,7 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> intake.run(), () -> intake.stopIntake(), intake)
-                .beforeStarting(() -> intake.toggle(), intake)
-                .andThen(() -> intake.toggle(), intake));
+        new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake));
 
     //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
     //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));

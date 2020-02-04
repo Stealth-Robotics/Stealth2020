@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -15,6 +16,11 @@ public class Intake extends SubsystemBase
 
     private final Solenoid deployPistons;
 
+    private final AnalogInput beamBreak1;
+
+    public double fuelCount;
+    public boolean breakTracker;
+
     /**
      * Creates a new Intake.
      */
@@ -22,7 +28,13 @@ public class Intake extends SubsystemBase
     {
         intake = new WPI_TalonSRX(RobotMap.intake);
         belt = new WPI_TalonSRX(RobotMap.belt3);
+
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
+
+        beamBreak1 = new AnalogInput(RobotMap.beamBreak1);
+
+        fuelCount = 0;
+        breakTracker = false;
     }
 
     @Override
@@ -51,8 +63,18 @@ public class Intake extends SubsystemBase
         belt.set(0);
     }
 
+    public void reverseBelt()
+    {
+        belt.set(-1);
+    }
+
     public void toggle()
     {
         deployPistons.set(!deployPistons.get());
+    }
+
+    public boolean getBeamBreak1()
+    {
+        return beamBreak1.getVoltage() < 1; //TODO find out how beam break voltage actually works
     }
 }

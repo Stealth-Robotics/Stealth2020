@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,6 +24,8 @@ public class Shooter extends SubsystemBase
     protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
+    private final AnalogInput beamBreak2;
+
     private boolean enabled;
 
     /**
@@ -41,6 +44,8 @@ public class Shooter extends SubsystemBase
         hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(50);
+
+        beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
 
         enabled = false;
     }
@@ -118,5 +123,10 @@ public class Shooter extends SubsystemBase
 
         hood.set(0);
         hoodEncoder.setPosition(0);
+    }
+
+    public boolean getBeamBreak2()
+    {
+        return beamBreak2.getVoltage() < 1; //TODO find out how beam break voltage actually works
     }
 }
