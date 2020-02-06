@@ -3,6 +3,7 @@ package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -15,6 +16,9 @@ public class AlignWithTarget extends CommandBase
     private final DriveBase driveBase;
     private final PIDController controller;
 
+    NetworkTable limelight;
+
+    boolean hasValidTarget = false;
 
     /**
      * Creates a new ExampleCommand.
@@ -28,14 +32,18 @@ public class AlignWithTarget extends CommandBase
         controller = new PIDController(Constants.basekP, Constants.basekI, Constants.basekD);
 
         addRequirements(driveBase);
+
+        limelight = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
-    {
-        double target = NetworkTableInstance.getDefault().getEntry("Target").getDouble(0); //TODO Figure out how this is actually going to be done
-        controller.setSetpoint(target);
+    {        
+        limelight.getEntry("ledMode").setNumber(3);
+        limelight.getEntry("camMode").setNumber(0);
+
+        controller.setSetpoint(updateLimelightTracking());
         controller.setTolerance(5);
     }
 
@@ -58,5 +66,20 @@ public class AlignWithTarget extends CommandBase
     public boolean isFinished() 
     {
         return controller.atSetpoint();
+    }
+
+    public double updateLimelightTracking()
+    {
+        double tv = limelight.getEntry("tv").getDouble(0);
+
+        if (tv < 1.0)
+        {
+            hasValidTarget = false;
+            return 0;
+        }
+
+        hasValidTarget = true;
+
+        return limelight.getEntry("tx").getDouble(0);
     }
 }
