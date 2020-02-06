@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -16,9 +17,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class IntakeDefault extends CommandBase 
 {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake intake;
     private final Shooter shooter;
+
+    private static boolean ballPositioned;
 
     /**
      * Creates a new ExampleCommand.
@@ -43,7 +45,7 @@ public class IntakeDefault extends CommandBase
         }
         else
         {
-            //TODO finish this
+            intake.runBelt();
         }
     }
 
@@ -51,7 +53,25 @@ public class IntakeDefault extends CommandBase
     @Override
     public void execute() 
     {
-        
+        if (shooter.getBeamBreak2())
+        {
+            if (!ballPositioned)
+            {
+                if (intake.getBeamBreak1())
+                {
+                    intake.runBelt();
+                }
+                else
+                {
+                    intake.stopBelt();
+                    ballPositioned = true;
+                }
+            }
+        }
+        else
+        {
+            intake.runBelt();
+        }
     }
 
     // Called once the command ends or is interrupted.
