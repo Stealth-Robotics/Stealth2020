@@ -10,7 +10,7 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase
 {
 
-    private final WPI_TalonSRX winch;
+    private final SpeedControllerGroup winch;
     private final SpeedControllerGroup climbElevator;
 
     /**
@@ -19,7 +19,7 @@ public class Climber extends SubsystemBase
 
     public Climber() 
     {
-        winch = new WPI_TalonSRX(RobotMap.winch);
+        winch = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.winch1), new WPI_TalonSRX(RobotMap.winch2));
         climbElevator = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.claw1), new WPI_TalonSRX(RobotMap.claw2));
     }
 
@@ -29,18 +29,13 @@ public class Climber extends SubsystemBase
         // This method will be called once per scheduler run
     }
 
-    public void liftClaw(double speed)
+    public void setClimbElevatorSpeed(double speed)
     {
         climbElevator.set(speed);
     }
 
-    public void climb()
+    public void setWinchSpeed(double speed)
     {
-        winch.set(1);
-    }
-
-    public void stopClimb()
-    {
-        winch.set(0);
+        winch.set(speed);
     }
 }

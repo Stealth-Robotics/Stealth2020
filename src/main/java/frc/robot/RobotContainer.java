@@ -90,7 +90,7 @@ public class RobotContainer
 
     //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
     //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> climber.climb(), () -> climber.stopClimb(), climber));
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(() -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()), () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()), climber));
     }
   
   
