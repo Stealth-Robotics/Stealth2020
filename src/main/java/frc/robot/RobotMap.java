@@ -45,4 +45,5 @@ public class RobotMap
 
     public static final int beamBreak1 = 0;
     public static final int beamBreak2 = 1;
+    public static final int beamBreak3 = 2;
 }

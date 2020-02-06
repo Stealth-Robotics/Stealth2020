@@ -39,14 +39,7 @@ public class IntakeDefault extends CommandBase
     @Override
     public void initialize() 
     {
-        if (shooter.getBeamBreak2())
-        {
-            intake.reverseBelt();
-        }
-        else
-        {
-            intake.runBelt();
-        }
+        
     }
 
     // Called every time the scheduler runs while the command is scheduled.

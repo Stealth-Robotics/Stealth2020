@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase
     private final PIDController hoodController;
 
     private final AnalogInput beamBreak2;
+    private final AnalogInput beamBreak3;
 
     private boolean enabled;
 
@@ -46,6 +47,7 @@ public class Shooter extends SubsystemBase
         hoodController.setTolerance(50);
 
         beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
+        beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
 
         enabled = false;
     }
@@ -65,9 +67,19 @@ public class Shooter extends SubsystemBase
         }
     }
 
-    public void runBelt(final double speed) 
+    public void runBelt()
     {
-        belt.set(speed);
+        belt.set(1);
+    }
+
+    public void stopBelt()
+    {
+        belt.set(0);
+    }
+
+    public void reverseBelt()
+    {
+        belt.set(-1);
     }
 
     public void setShooterSpeed(final double speed) 
@@ -125,8 +137,15 @@ public class Shooter extends SubsystemBase
         hoodEncoder.setPosition(0);
     }
 
+    //TODO find out how beam break voltage actually works
+
     public boolean getBeamBreak2()
     {
-        return beamBreak2.getVoltage() < 1; //TODO find out how beam break voltage actually works
+        return beamBreak2.getVoltage() < 1; 
+    }
+
+    public boolean getBeamBreak3()
+    {
+        return beamBreak3.getVoltage() < 1;
     }
 }

@@ -8,6 +8,8 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -18,6 +20,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -70,6 +74,15 @@ public class RobotContainer
                 driveBase));
 
         intake.setDefaultCommand(new IntakeDefault(intake, shooter));
+
+        shooter.setDefaultCommand(new ConditionalCommand(new InstantCommand(() -> shooter.runBelt()), new InstantCommand(() -> shooter.stopBelt()), new BooleanSupplier()
+        {
+            @Override
+            public boolean getAsBoolean() 
+            {
+                return shooter.getBeamBreak2() && !shooter.getBeamBreak3();
+            }
+        }));
     }
   
     /**
