@@ -18,8 +18,6 @@ public class AlignWithTarget extends CommandBase
 
     NetworkTable limelight;
 
-    boolean hasValidTarget = false;
-
     /**
      * Creates a new ExampleCommand.
      *
@@ -74,11 +72,8 @@ public class AlignWithTarget extends CommandBase
 
         if (tv < 1.0)
         {
-            hasValidTarget = false;
             return 0;
         }
-
-        hasValidTarget = true;
 
         return limelight.getEntry("tx").getDouble(0);
     }
