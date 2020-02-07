@@ -10,6 +10,7 @@ package frc.robot;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -97,9 +98,16 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        new JoystickButton(mechJoystick, 1).whenPressed(new SpinPanel(panelControl));
+        new JoystickButton(mechJoystick, 1).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
+        {
+			@Override
+            public boolean getAsBoolean() 
+            {
+				return DriverStation.getInstance().getGameSpecificMessage().equals("");
+			}
+        }));
 
-        new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
+        // new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
