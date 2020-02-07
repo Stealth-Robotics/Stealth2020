@@ -1,5 +1,5 @@
 
-package frc.robot.commands.MultiSubsystemCommand;
+package frc.robot.commands.MultiSubsystemCommands;
 
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;

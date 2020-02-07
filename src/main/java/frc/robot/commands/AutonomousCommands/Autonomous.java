@@ -7,7 +7,7 @@
 
 package frc.robot.commands.AutonomousCommands;
 
-import frc.robot.commands.MultiSubsystemCommand.ScoreFuel;
+import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
