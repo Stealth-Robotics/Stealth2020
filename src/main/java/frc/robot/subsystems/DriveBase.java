@@ -9,7 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -25,12 +25,12 @@ import frc.robot.RobotMap;
 public class DriveBase extends SubsystemBase 
 {
 	// The motors on the left side of the drive.
-	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.kLeftMotor1Port),
-			new PWMVictorSPX(RobotMap.kLeftMotor2Port));
+	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new PWMSparkMax(RobotMap.kLeftMotor1Port),
+			new PWMSparkMax(RobotMap.kLeftMotor2Port));
 
 	// The motors on the right side of the drive.
-	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new PWMVictorSPX(RobotMap.kRightMotor1Port),
-			new PWMVictorSPX(RobotMap.kRightMotor2Port));
+	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new PWMSparkMax(RobotMap.kRightMotor1Port),
+			new PWMSparkMax(RobotMap.kRightMotor2Port));
 
 	// The robot's drive
 	private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
