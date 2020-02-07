@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
+/**
+ * The class to control the climber
+ */
 public class Climber extends SubsystemBase
 {
 
@@ -29,11 +32,21 @@ public class Climber extends SubsystemBase
         // This method will be called once per scheduler run
     }
 
+    /**
+     * Sets the speed of the climb elevator
+     * 
+     * @param speed The speed to run
+     */
     public void setClimbElevatorSpeed(double speed)
     {
         climbElevator.set(speed);
     }
 
+    /**
+     * Sets the speed of the winch
+     * 
+     * @param speed The speed to run
+     */
     public void setWinchSpeed(double speed)
     {
         winch.set(speed);

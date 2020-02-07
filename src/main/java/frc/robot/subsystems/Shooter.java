@@ -68,57 +68,93 @@ public class Shooter extends SubsystemBase
         }
     }
 
+    /**
+     * Runs the belt connected to the shooter in the forward direction
+     */
     public void runBelt()
     {
         belt.set(1);
     }
 
+    /**
+     * Stops the belt connected to the shooter
+     */
     public void stopBelt()
     {
         belt.set(0);
     }
 
+    /**
+     * Reverses the belt connected to the shooter
+     */
     public void reverseBelt()
     {
         belt.set(-1);
     }
 
+    /**
+     * Sets the speed of the shooter
+     * 
+     * @param speed The speed to set
+     */
     public void setShooterSpeed(final double speed) 
     {
         shooterController.setSetpoint(speed);
     }
 
+    /**
+     * Sets the angle to aim the shooter hood
+     * 
+     * @param angle The angle to set, based on the forward hood edge
+     */
     public void setHoodPos(final double angle)
     {
         hoodController.setSetpoint(angle * Constants.ticksPerDegree);
     }
 
+    /**
+     * Checks if the shooter is at the desired speed
+     * 
+     * @return if the shooter is at the desired speed
+     */
     public boolean shooterAtSpeed()
     {
         return shooterController.atSetpoint();
     }
 
+    /**
+     * Checks if the hood is at the desired angle
+     * 
+     * @return if the hood is at the desired angle
+     */
     public boolean hoodAimed()
     {
         return hoodController.atSetpoint();
     }
 
+    /**
+     * Tells the shooter to run
+     */
     public void enable()
     {
         shooterController.reset();
         enabled = true;
     }
     
+    /**
+     * Tells the shooter to stop
+     */
     public void disable()
     {
         enabled = false;
     }
 
+    /**
+     * Allows the shooter to zero itself at the start of the match
+     */
     public void initializePosition()
     {
         double previousEncoderPosition = hoodEncoder.getPosition();
-        
-
         
         hood.set(-0.1);
         StopWatch timer = new StopWatch(1000);
@@ -140,11 +176,21 @@ public class Shooter extends SubsystemBase
 
     //TODO find out how beam break voltage actually works
 
+    /**
+     * Gets if the beam break at the bottom of the shooter belt is triggered
+     * 
+     * @return If triggered
+     */
     public boolean getBeamBreak2()
     {
         return beamBreak2.getVoltage() < 1; 
     }
 
+    /**
+     * Gets if the beam break at the top of the shooter belt is triggered
+     * 
+     * @return If triggered
+     */
     public boolean getBeamBreak3()
     {
         return beamBreak3.getVoltage() < 1;
