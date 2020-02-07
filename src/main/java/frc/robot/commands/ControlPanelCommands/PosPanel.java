@@ -1,5 +1,5 @@
 
-package frc.robot.commands;
+package frc.robot.commands.ControlPanelCommands;
 
 import frc.robot.subsystems.PanelControl;
 import edu.wpi.first.wpilibj.DriverStation;

@@ -1,59 +1,57 @@
 
+package frc.robot.commands.ShooterCommands;
 
-package frc.robot.commands;
-
-import frc.robot.subsystems.PanelControl;
-import frc.util.StopWatch;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * This command spins the control panel 3 times
+ * An example command that uses an example subsystem.
  */
-public class SpinPanel extends CommandBase 
+public class FireShooter extends CommandBase 
 {
-    StopWatch timer;
-
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final PanelControl panelControl;
+    private final Shooter shooter;
 
     /**
-     * Creates a new SpinPanel.
+     * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public SpinPanel(PanelControl panelControl) 
+    public FireShooter(Shooter shooter) 
     {
-        this.panelControl = panelControl;
+        this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(panelControl);
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {
-        timer = new StopWatch(3000);
-        panelControl.setWheelSpeed(1.0);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() 
     {
-        
+        if (shooter.shooterAtSpeed())
+        {
+            shooter.runBelt();
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) 
     {
-        panelControl.setWheelSpeed(0.0);
+        
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() 
     {
-        return timer.isExpired();
+        return false;
     }
 }
