@@ -19,6 +19,7 @@ import frc.robot.commands.ControlPanelCommands.SpinPanel;
 import frc.robot.commands.IntakeCommands.IntakeDefault;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
+import frc.robot.commands.ShooterCommands.ShooterDefault;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
@@ -26,7 +27,6 @@ import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -80,14 +80,7 @@ public class RobotContainer
 
         intake.setDefaultCommand(new IntakeDefault(intake, shooter));
 
-        shooter.setDefaultCommand(new ConditionalCommand(new InstantCommand(() -> shooter.runBelt()), new InstantCommand(() -> shooter.stopBelt()), new BooleanSupplier()
-        {
-            @Override
-            public boolean getAsBoolean() 
-            {
-                return shooter.getBeamBreak2() && !shooter.getBeamBreak3();
-            }
-        }));
+        shooter.setDefaultCommand(new ShooterDefault(shooter));
     }
   
     /**

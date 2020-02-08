@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase
 
     private final Solenoid deployPistons;
 
-    private final AnalogInput beamBreak1;
+    // private final AnalogInput beamBreak1;
 
     public double fuelCount;
     public boolean breakTracker;
@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
 
-        beamBreak1 = new AnalogInput(RobotMap.beamBreak1);
+        // beamBreak1 = new AnalogInput(RobotMap.beamBreak1);
 
         fuelCount = 0;
         breakTracker = false;
@@ -75,6 +75,7 @@ public class Intake extends SubsystemBase
 
     public boolean getBeamBreak1()
     {
-        return beamBreak1.getVoltage() < 1; //TODO find out how beam break voltage actually works
+        // return beamBreak1.getVoltage() < 1; //TODO find out how beam break voltage actually works
+        return false;
     }
 }

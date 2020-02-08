@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PWMSparkMax;
+// import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase
     protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
-    private final AnalogInput beamBreak2;
-    private final AnalogInput beamBreak3;
+    // private final AnalogInput beamBreak2;
+    // private final AnalogInput beamBreak3;
 
     private boolean enabled;
 
@@ -35,7 +35,8 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
-        shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
+        // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
+        shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
         hood = new WPI_TalonSRX(RobotMap.hood);
         belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
 
@@ -47,8 +48,8 @@ public class Shooter extends SubsystemBase
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(50);
 
-        beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
-        beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
+        // beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
+        // beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
 
         enabled = false;
     }
@@ -183,7 +184,8 @@ public class Shooter extends SubsystemBase
      */
     public boolean getBeamBreak2()
     {
-        return beamBreak2.getVoltage() < 1; 
+        // return beamBreak2.getVoltage() < 1; 
+        return false;
     }
 
     /**
@@ -193,6 +195,7 @@ public class Shooter extends SubsystemBase
      */
     public boolean getBeamBreak3()
     {
-        return beamBreak3.getVoltage() < 1;
+        // return beamBreak3.getVoltage() < 1;
+        return false;
     }
 }
