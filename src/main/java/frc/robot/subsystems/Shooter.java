@@ -46,7 +46,7 @@ public class Shooter extends SubsystemBase
 
         // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
-        hoodController.setTolerance(50);
+        hoodController.setTolerance(3);
 
         // beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
         // beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
@@ -101,7 +101,7 @@ public class Shooter extends SubsystemBase
      * 
      * @param speed The speed to set
      */
-    public void setShooterSpeed(final double speed) 
+    public void setShooterSpeed(double speed) 
     {
         shooterController.setSetpoint(speed);
     }
@@ -111,9 +111,10 @@ public class Shooter extends SubsystemBase
      * 
      * @param angle The angle to set, based on the forward hood edge
      */
-    public void setHoodPos(final double angle)
+    public void setHoodPos(double angle)
     {
-        hoodController.setSetpoint(angle * Constants.ticksPerDegree);
+        System.out.println("Target: " + (Math.PI / 2 - angle) * Constants.ticksPerDegree);
+        hoodController.setSetpoint((Math.PI / 2 - angle) * Constants.ticksPerDegree);
     }
 
     /**
