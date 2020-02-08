@@ -5,47 +5,63 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.AutonomousCommands;
+package frc.robot.commands.ShooterCommands;
 
-import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
-import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class Autonomous extends SequentialCommandGroup 
+public class ShooterDefault extends CommandBase 
 {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DriveBase driveBase;
     private final Shooter shooter;
+
+    private static boolean ballPositioned;
 
     /**
      * Creates a new ExampleCommand.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param intake The subsystem used by this command.
      */
-    public Autonomous(DriveBase driveBase, Shooter shooter) 
+    public ShooterDefault(Shooter shooter) 
     {
-        this.driveBase = driveBase;
         this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(driveBase, shooter);
-
-    }
-    public void execute()
-    {
-
-
-        
+        addRequirements(shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {
-        addCommands(new ScoreFuel(driveBase, shooter));
+        
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() //TODO probably not what we want to do but I'm busy so fix later
+    {
+        if (shooter.getBeamBreak3())
+        {
+            if (!ballPositioned)
+            {
+                if (shooter.getBeamBreak2())
+                {
+                    shooter.runBelt();
+                }
+                else
+                {
+                    shooter.stopBelt();
+                    ballPositioned = true;
+                }
+            }
+        }
+        else
+        {
+            shooter.runBelt();
+        }
     }
 
     // Called once the command ends or is interrupted.

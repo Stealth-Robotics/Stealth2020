@@ -38,8 +38,9 @@ public class AimHood extends CommandBase
     @Override
     public void execute() 
     {
-        double dist = NetworkTableInstance.getDefault().getEntry("dist").getDouble(-1); //TODO Figure out how this is actually going to be done
+        double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO Figure out how this is actually going to be done
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+        System.out.println(angle);
         shooter.setHoodPos(angle);
     }
 

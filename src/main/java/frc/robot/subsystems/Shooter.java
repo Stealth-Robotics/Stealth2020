@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PWMSparkMax;
+// import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,11 +22,11 @@ public class Shooter extends SubsystemBase
     private final CANCoder shooterEncoder;
     private final PIDController shooterController;
     
-    protected final CANCoder hoodEncoder;
+    // protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
-    private final AnalogInput beamBreak2;
-    private final AnalogInput beamBreak3;
+    // private final AnalogInput beamBreak2;
+    // private final AnalogInput beamBreak3;
 
     private boolean enabled;
 
@@ -35,7 +35,8 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
-        shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
+        // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
+        shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
         hood = new WPI_TalonSRX(RobotMap.hood);
         belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
 
@@ -43,12 +44,12 @@ public class Shooter extends SubsystemBase
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
 
-        hoodEncoder = new CANCoder(RobotMap.hood);
+        // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(50);
 
-        beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
-        beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
+        // beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
+        // beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
 
         enabled = false;
     }
@@ -57,7 +58,10 @@ public class Shooter extends SubsystemBase
     public void periodic() 
     {
         // This method will be called once per scheduler run
-        hood.set(hoodController.calculate(hoodEncoder.getPosition()));
+        // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
+        // System.out.println(hoodEncoder.getPosition());
+        hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
+        System.out.println(hood.getSelectedSensorPosition(0));
         if (enabled)
         {
             shooter.set(shooterController.calculate(shooterEncoder.getVelocity()));
@@ -68,57 +72,94 @@ public class Shooter extends SubsystemBase
         }
     }
 
+    /**
+     * Runs the belt connected to the shooter in the forward direction
+     */
     public void runBelt()
     {
         belt.set(1);
     }
 
+    /**
+     * Stops the belt connected to the shooter
+     */
     public void stopBelt()
     {
         belt.set(0);
     }
 
+    /**
+     * Reverses the belt connected to the shooter
+     */
     public void reverseBelt()
     {
         belt.set(-1);
     }
 
+    /**
+     * Sets the speed of the shooter
+     * 
+     * @param speed The speed to set
+     */
     public void setShooterSpeed(final double speed) 
     {
         shooterController.setSetpoint(speed);
     }
 
+    /**
+     * Sets the angle to aim the shooter hood
+     * 
+     * @param angle The angle to set, based on the forward hood edge
+     */
     public void setHoodPos(final double angle)
     {
         hoodController.setSetpoint(angle * Constants.ticksPerDegree);
     }
 
+    /**
+     * Checks if the shooter is at the desired speed
+     * 
+     * @return if the shooter is at the desired speed
+     */
     public boolean shooterAtSpeed()
     {
         return shooterController.atSetpoint();
     }
 
+    /**
+     * Checks if the hood is at the desired angle
+     * 
+     * @return if the hood is at the desired angle
+     */
     public boolean hoodAimed()
     {
         return hoodController.atSetpoint();
     }
 
+    /**
+     * Tells the shooter to run
+     */
     public void enable()
     {
         shooterController.reset();
         enabled = true;
     }
     
+    /**
+     * Tells the shooter to stop
+     */
     public void disable()
     {
         enabled = false;
     }
 
+    /**
+     * Allows the shooter to zero itself at the start of the match
+     */
     public void initializePosition()
     {
-        double previousEncoderPosition = hoodEncoder.getPosition();
-        
-
+        // double previousEncoderPosition = hoodEncoder.getPosition();
+        double previousEncoderPosition = hood.getSelectedSensorPosition(0);
         
         hood.set(-0.1);
         StopWatch timer = new StopWatch(1000);
@@ -127,7 +168,8 @@ public class Shooter extends SubsystemBase
         while(!timer.isExpired())
         {
             while(!timerShort.isExpired());
-            if(previousEncoderPosition == hoodEncoder.getPosition())
+            // if(previousEncoderPosition == hoodEncoder.getPosition())
+            if(previousEncoderPosition == hood.getSelectedSensorPosition(0))
             {
                 break;
             }
@@ -135,18 +177,30 @@ public class Shooter extends SubsystemBase
         }
 
         hood.set(0);
-        hoodEncoder.setPosition(0);
+        hood.getSelectedSensorPosition(0);
     }
 
     //TODO find out how beam break voltage actually works
 
+    /**
+     * Gets if the beam break at the bottom of the shooter belt is triggered
+     * 
+     * @return If triggered
+     */
     public boolean getBeamBreak2()
     {
-        return beamBreak2.getVoltage() < 1; 
+        // return beamBreak2.getVoltage() < 1; 
+        return false;
     }
 
+    /**
+     * Gets if the beam break at the top of the shooter belt is triggered
+     * 
+     * @return If triggered
+     */
     public boolean getBeamBreak3()
     {
-        return beamBreak3.getVoltage() < 1;
+        // return beamBreak3.getVoltage() < 1;
+        return false;
     }
 }
