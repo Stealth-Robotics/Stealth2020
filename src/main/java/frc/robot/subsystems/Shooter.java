@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase
     private final CANCoder shooterEncoder;
     private final PIDController shooterController;
     
-    protected final CANCoder hoodEncoder;
+    // protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
     // private final AnalogInput beamBreak2;
@@ -44,7 +44,7 @@ public class Shooter extends SubsystemBase
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
 
-        hoodEncoder = new CANCoder(RobotMap.hood);
+        // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(50);
 
@@ -58,7 +58,10 @@ public class Shooter extends SubsystemBase
     public void periodic() 
     {
         // This method will be called once per scheduler run
-        hood.set(hoodController.calculate(hoodEncoder.getPosition()));
+        // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
+        // System.out.println(hoodEncoder.getPosition());
+        hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
+        System.out.println(hood.getSelectedSensorPosition(0));
         if (enabled)
         {
             shooter.set(shooterController.calculate(shooterEncoder.getVelocity()));
@@ -155,7 +158,8 @@ public class Shooter extends SubsystemBase
      */
     public void initializePosition()
     {
-        double previousEncoderPosition = hoodEncoder.getPosition();
+        // double previousEncoderPosition = hoodEncoder.getPosition();
+        double previousEncoderPosition = hood.getSelectedSensorPosition(0);
         
         hood.set(-0.1);
         StopWatch timer = new StopWatch(1000);
@@ -164,7 +168,8 @@ public class Shooter extends SubsystemBase
         while(!timer.isExpired())
         {
             while(!timerShort.isExpired());
-            if(previousEncoderPosition == hoodEncoder.getPosition())
+            // if(previousEncoderPosition == hoodEncoder.getPosition())
+            if(previousEncoderPosition == hood.getSelectedSensorPosition(0))
             {
                 break;
             }
@@ -172,7 +177,7 @@ public class Shooter extends SubsystemBase
         }
 
         hood.set(0);
-        hoodEncoder.setPosition(0);
+        hood.getSelectedSensorPosition(0);
     }
 
     //TODO find out how beam break voltage actually works
