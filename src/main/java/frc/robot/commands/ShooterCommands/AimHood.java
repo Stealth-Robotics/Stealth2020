@@ -31,7 +31,7 @@ public class AimHood extends CommandBase
     @Override
     public void initialize() 
     {
-
+        // NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").setDouble(1);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +40,8 @@ public class AimHood extends CommandBase
     {
         double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO Figure out how this is actually going to be done
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
-        System.out.println(angle);
+        System.out.println("Dist: " + dist);
+        System.out.println("Angle: " + angle * 180 / Math.PI);
         shooter.setHoodPos(angle);
     }
 
@@ -55,6 +56,7 @@ public class AimHood extends CommandBase
     @Override
     public boolean isFinished() 
     {
+        // return shooter.hoodAimed();
         return false;
     }
 }
