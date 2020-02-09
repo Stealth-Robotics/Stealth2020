@@ -10,7 +10,11 @@ package frc.robot.commands.IntakeCommands;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * An example command that uses an example subsystem.
@@ -19,8 +23,6 @@ public class IntakeDefault extends CommandBase
 {
     private final Intake intake;
     private final Shooter shooter;
-
-    private static boolean ballPositioned;
 
     /**
      * Creates a new ExampleCommand.
@@ -48,22 +50,32 @@ public class IntakeDefault extends CommandBase
     {
         if (shooter.getBeamBreak2())
         {
-            if (!ballPositioned)
-            {
-                if (intake.getBeamBreak1())
-                {
-                    intake.runBelt();
-                }
-                else
-                {
-                    intake.stopBelt();
-                    ballPositioned = true;
-                }
-            }
+            new RunCommand(() -> intake.runBelt(), intake)
+                    .withInterrupt(new BooleanSupplier()
+                    {
+                        @Override
+                        public boolean getAsBoolean()
+                        {
+                            return !shooter.getBeamBreak2();
+                        }
+                    })
+                    .andThen(new WaitCommand(5))
+                    .andThen(() -> intake.reverseBelt(), intake)
+                        .withInterrupt(new BooleanSupplier()
+                        {
+                            public boolean getAsBoolean()
+                            {
+                                return intake.getBeamBreak1();
+                            }
+                        }).schedule();
+        }
+        if (intake.getBeamBreak1())
+        {
+            intake.runBelt();
         }
         else
         {
-            intake.runBelt();
+            intake.stopBelt();
         }
     }
 

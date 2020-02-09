@@ -18,8 +18,6 @@ public class ShooterDefault extends CommandBase
 {
     private final Shooter shooter;
 
-    private static boolean ballPositioned;
-
     /**
      * Creates a new ExampleCommand.
      *
@@ -41,26 +39,15 @@ public class ShooterDefault extends CommandBase
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() //TODO probably not what we want to do but I'm busy so fix later
+    public void execute()
     {
-        if (shooter.getBeamBreak3())
+        if (shooter.getBeamBreak2() && !shooter.getBeamBreak3())
         {
-            if (!ballPositioned)
-            {
-                if (shooter.getBeamBreak2())
-                {
-                    shooter.runBelt();
-                }
-                else
-                {
-                    shooter.stopBelt();
-                    ballPositioned = true;
-                }
-            }
+            shooter.runBelt();
         }
         else
         {
-            shooter.runBelt();
+            shooter.stopBelt();
         }
     }
 

@@ -6,8 +6,12 @@ import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Shooter;
+
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
@@ -36,7 +40,15 @@ public class ScoreFuel extends SequentialCommandGroup
     {
         addCommands(
             new ParallelCommandGroup(new AlignWithTarget(driveBase), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
-            new FireShooter(shooter));
+            new FireShooter(shooter),
+            new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
+            {
+                @Override
+                public boolean getAsBoolean()
+                {
+                    return shooter.getBeamBreak2();
+                }
+            }));
     }
 
     // Called once the command ends or is interrupted.
