@@ -26,7 +26,7 @@ public final class Constants
     public static final double shooterkI = 0.0;
     public static final double shooterkD = 0.0;
 
-    public static final double ticksPerDegree = 1680 * (49 / 12) / 45;
+    public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
 
     public static final double hoodkP = 0.01;
     public static final double hoodkI = 0.005;

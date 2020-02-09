@@ -113,8 +113,8 @@ public class Shooter extends SubsystemBase
      */
     public void setHoodPos(double angle)
     {
-        System.out.println("Target: " + (Math.PI / 2 - angle) * Constants.ticksPerDegree);
-        hoodController.setSetpoint((Math.PI / 2 - angle) * Constants.ticksPerDegree);
+        System.out.println("Target: " + (Math.PI / 4 - angle) * Constants.ticksPerRadian);
+        hoodController.setSetpoint((Math.PI / 4 - angle) * Constants.ticksPerRadian);
     }
 
     /**

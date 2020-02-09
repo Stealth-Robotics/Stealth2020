@@ -40,6 +40,7 @@ public class AimHood extends CommandBase
     {
         double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO Figure out how this is actually going to be done
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+        angle = (angle > Math.PI / 4) ? Math.PI / 4 : (angle < Math.PI / 6) ? Math.PI / 6 : angle;
         System.out.println("Dist: " + dist);
         System.out.println("Angle: " + angle * 180 / Math.PI);
         shooter.setHoodPos(angle);
