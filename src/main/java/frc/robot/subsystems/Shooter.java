@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
-
-import edu.wpi.first.wpilibj.AnalogInput;
 // import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;

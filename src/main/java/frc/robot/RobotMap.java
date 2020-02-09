@@ -20,8 +20,10 @@ public class RobotMap
     public static final int kRightMotor1Port = 2;
     public static final int kRightMotor2Port = 3;
 
-    public static final int[] kLeftEncoderPorts = new int[]{0, 1};
-    public static final int[] kRightEncoderPorts = new int[]{2, 3};
+    public static final int kLeftEncoderPort = 1;
+    public static final int kRightEncoderPort = 2;
+
+    public static final int kGyroPort = 3;
 
     public static final int shooter1 = 4;
     public static final int shooter2 = 5;

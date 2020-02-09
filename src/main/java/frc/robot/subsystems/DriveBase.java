@@ -7,19 +7,19 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class DriveBase extends SubsystemBase 
@@ -35,16 +35,14 @@ public class DriveBase extends SubsystemBase
 	// The robot's drive
 	private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-	// The left-side drive encoder
-	private final Encoder m_leftEncoder = new Encoder(RobotMap.kLeftEncoderPorts[0], RobotMap.kLeftEncoderPorts[1],
-			DriveConstants.kLeftEncoderReversed);
+	// Left Side Drive Encoder
+	private final CANCoder m_leftEncoder = new CANCoder(RobotMap.kLeftEncoderPort);
 
-	// The right-side drive encoder
-	private final Encoder m_rightEncoder = new Encoder(RobotMap.kRightEncoderPorts[0], RobotMap.kRightEncoderPorts[1],
-			DriveConstants.kRightEncoderReversed);
+	// Right Side Drive Encoder
+	private final CANCoder m_rightEncoder = new CANCoder(RobotMap.kRightEncoderPort);
 
 	// The gyro sensor
-	private final Gyro m_gyro = new ADXRS450_Gyro();
+	private final PigeonIMU m_gyro = new PigeonIMU(RobotMap.kGyroPort);
 
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
@@ -55,8 +53,9 @@ public class DriveBase extends SubsystemBase
     public DriveBase() 
     {
 		// Sets the distance per pulse for the encoders
-		m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-		m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+
+		//m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
+		//m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
 
 		resetEncoders();
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -66,8 +65,8 @@ public class DriveBase extends SubsystemBase
     public void periodic()
     {
 		// Update the odometry in the periodic block
-		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getDistance(),
-				m_rightEncoder.getDistance());
+		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
+				m_rightEncoder.getPosition());
 	}
 
 	/**
@@ -87,7 +86,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() 
     {
-		return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+		return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
 	}
 
 	/**
@@ -129,8 +128,8 @@ public class DriveBase extends SubsystemBase
 	 */
     public void resetEncoders() 
     {
-		m_leftEncoder.reset();
-		m_rightEncoder.reset();
+		m_leftEncoder.setPosition(0.00);
+		m_rightEncoder.setPosition(0.00);
 	}
 
 	/**
@@ -140,7 +139,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getAverageEncoderDistance() 
     {
-		return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+		return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
 	}
 
 	/**
@@ -148,7 +147,7 @@ public class DriveBase extends SubsystemBase
 	 *
 	 * @return the left drive encoder
 	 */
-    public Encoder getLeftEncoder() 
+    public CANCoder getLeftEncoder() 
     {
 		return m_leftEncoder;
 	}
@@ -158,7 +157,7 @@ public class DriveBase extends SubsystemBase
 	 *
 	 * @return the right drive encoder
 	 */
-    public Encoder getRightEncoder() 
+    public CANCoder getRightEncoder() 
     {
 		return m_rightEncoder;
 	}
@@ -178,7 +177,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void zeroHeading() 
     {
-		m_gyro.reset();
+		m_gyro.setFusedHeading(0.0, Constants.DriveConstants.kTimeoutMs);
 	}
 
 	/**
@@ -188,7 +187,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getHeading() 
     {
-		return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		return Math.IEEEremainder(m_gyro.getFusedHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 
 	/**
@@ -198,6 +197,6 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getTurnRate() 
     {
-		return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		return (new double[3])[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 }
