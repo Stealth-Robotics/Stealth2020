@@ -75,6 +75,6 @@ public class AlignWithTarget extends CommandBase
             return 0;
         }
 
-        return limelight.getEntry("tx").getDouble(0);
+        return limelight.getEntry("tx").getDouble(0) * Constants.basekP;
     }
 }
