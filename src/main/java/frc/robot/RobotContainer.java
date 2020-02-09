@@ -19,7 +19,7 @@ import frc.robot.commands.ControlPanelCommands.SpinPanel;
 import frc.robot.commands.IntakeCommands.IntakeDefault;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
-import frc.robot.commands.ShooterCommands.AimHood;
+// import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.ShooterDefault;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
@@ -105,7 +105,15 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
-        new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake));
+        new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake)
+                .andThen(() -> intake.reverseBelt(), intake)
+                    .withInterrupt(new BooleanSupplier()
+                    {
+                        public boolean getAsBoolean()
+                        {
+                            return intake.getBeamBreak1();
+                        }
+                    }));
 
     //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
     //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));
