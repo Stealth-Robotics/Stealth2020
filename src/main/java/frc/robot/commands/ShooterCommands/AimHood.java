@@ -57,7 +57,7 @@ public class AimHood extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        // return shooter.hoodAimed();
-        return false;
+        return shooter.hoodAimed();
+        // return false;
     }
 }

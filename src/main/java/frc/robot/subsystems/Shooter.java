@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 
-import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 // import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -25,8 +25,8 @@ public class Shooter extends SubsystemBase
     // protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
 
-    // private final AnalogInput beamBreak2;
-    // private final AnalogInput beamBreak3;
+    private final DigitalInput beamBreak2;
+    private final DigitalInput beamBreak3;
 
     private boolean enabled;
 
@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(3);
 
-        // beamBreak2 = new AnalogInput(RobotMap.beamBreak2);
-        // beamBreak3 = new AnalogInput(RobotMap.beamBreak3);
+        beamBreak2 = new DigitalInput(RobotMap.beamBreak2);
+        beamBreak3 = new DigitalInput(RobotMap.beamBreak3);
 
         enabled = false;
     }
@@ -188,10 +188,10 @@ public class Shooter extends SubsystemBase
      * 
      * @return If triggered
      */
-    public boolean getBeamBreak2()
+    public boolean getBeamBreak2() //TODO check if true == broken
     {
-        // return beamBreak2.getVoltage() < 1; 
-        return false;
+        return beamBreak2.get(); 
+        // return false;
     }
 
     /**
@@ -201,7 +201,7 @@ public class Shooter extends SubsystemBase
      */
     public boolean getBeamBreak3()
     {
-        // return beamBreak3.getVoltage() < 1;
-        return false;
+        return beamBreak3.get();
+        // return false;
     }
 }

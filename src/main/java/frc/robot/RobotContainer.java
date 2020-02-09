@@ -113,7 +113,7 @@ public class RobotContainer
             () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()),
              () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()), climber));
 
-        new JoystickButton(driveJoystick, 1).whenPressed(new AimHood(shooter));
+        // new JoystickButton(driveJoystick, 1).whenPressed(new AimHood(shooter));
     }
   
   
