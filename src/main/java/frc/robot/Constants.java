@@ -19,15 +19,25 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants 
 {
+    public static final double fuelAirTime = 0.713; //seconds
+    public static final double fuelInitVelocY = 6.986; //meters / second
+    
+    public static final double shooterkP = 0.3; //TODO find real values
+    public static final double shooterkI = 0.0;
+    public static final double shooterkD = 0.0;
+
+    public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
+
+    public static final double hoodkP = 0.01; //these ones work I think
+    public static final double hoodkI = 0.005;
+    public static final double hoodkD = 0.0;
+
+    public static final double basekP = 0.5;
+    public static final double basekI = 0.05;
+    public static final double basekD = 0.05;
+
     public static final class DriveConstants 
     {
-        public static final int kLeftMotor1Port = 0;
-        public static final int kLeftMotor2Port = 1;
-        public static final int kRightMotor1Port = 2;
-        public static final int kRightMotor2Port = 3;
-
-        public static final int[] kLeftEncoderPorts = new int[]{0, 1};
-        public static final int[] kRightEncoderPorts = new int[]{2, 3};
         public static final boolean kLeftEncoderReversed = false;
         public static final boolean kRightEncoderReversed = true;
 
@@ -54,11 +64,8 @@ public final class Constants
 
         // Example value only - as above, this must be tuned for your drive!
         public static final double kPDriveVel = 8.5;
-    }
 
-    public static final class OIConstants 
-    {
-        public static final int kDriverControllerPort = 1;
+        public static final int kTimeoutMs = 20;
     }
 
     public static final class AutoConstants 

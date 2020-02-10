@@ -1,16 +1,18 @@
 
-package frc.robot.commands;
+package frc.robot.commands.ControlPanelCommands;
 
 import frc.robot.subsystems.PanelControl;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * An example command that uses an example subsystem.
+ * This command rotates the control panel to the desired location
  */
 public class PosPanel extends CommandBase 
 {
     String color;
+
+    double detections;
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final PanelControl panelControl;
@@ -31,6 +33,8 @@ public class PosPanel extends CommandBase
     @Override
     public void initialize() 
     {
+        panelControl.togglePosition();
+
         color = DriverStation.getInstance().getGameSpecificMessage();
         String currentColor = panelControl.getColor();
         if (currentColor.equals("R") && color.equals("Y")
@@ -50,7 +54,14 @@ public class PosPanel extends CommandBase
     @Override
     public void execute() 
     {
-        
+        if (panelControl.getColor().equals(color))
+        {
+            detections++;
+        }
+        else
+        {
+            detections = 0;
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -58,12 +69,13 @@ public class PosPanel extends CommandBase
     public void end(boolean interrupted) 
     {
         panelControl.setWheelSpeed(0);
+        panelControl.togglePosition();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() 
     {
-        return panelControl.getColor().equals(color);
+        return detections >= 10;
     }
 }

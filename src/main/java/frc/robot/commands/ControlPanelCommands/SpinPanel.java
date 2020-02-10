@@ -1,13 +1,11 @@
-
-
-package frc.robot.commands;
+package frc.robot.commands.ControlPanelCommands;
 
 import frc.robot.subsystems.PanelControl;
 import frc.util.StopWatch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
- * An example command that uses an example subsystem.
+ * This command spins the control panel 3 times
  */
 public class SpinPanel extends CommandBase 
 {
