@@ -1,11 +1,13 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 /**
  * The class to control the climber
@@ -13,8 +15,8 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase
 {
 
-    private final SpeedControllerGroup winch;
-    private final SpeedControllerGroup climbElevator;
+    private final CANSparkMax winch;
+    private final SpeedControllerGroup climbElevators;
 
     /**
      * Creates a new Climber.
@@ -22,8 +24,8 @@ public class Climber extends SubsystemBase
 
     public Climber() 
     {
-        winch = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.winch1), new WPI_TalonSRX(RobotMap.winch2));
-        climbElevator = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.claw1), new WPI_TalonSRX(RobotMap.claw2));
+        winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
+        climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class Climber extends SubsystemBase
      */
     public void setClimbElevatorSpeed(double speed)
     {
-        climbElevator.set(speed);
+        climbElevators.set(speed);
     }
 
     /**
