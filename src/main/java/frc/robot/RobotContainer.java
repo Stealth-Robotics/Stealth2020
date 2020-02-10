@@ -92,6 +92,8 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
+        //'A' button pressed, if game message released spin panel to color otherwise spin five times
+        //We should consider putting this into two buttons and/or onto drive station buttons
         new JoystickButton(mechJoystick, 1).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
         {
 			@Override
@@ -105,6 +107,7 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
 
+        //runs the intake, then reverses intake belt to prepare for other balls
         new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake)
                 .andThen(() -> intake.reverseBelt(), intake)
                     .withInterrupt(new BooleanSupplier()

@@ -28,7 +28,7 @@ public final class Constants
 
     public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
 
-    public static final double hoodkP = 0.01;
+    public static final double hoodkP = 0.01; //these ones work I think
     public static final double hoodkI = 0.005;
     public static final double hoodkD = 0.0;
 
