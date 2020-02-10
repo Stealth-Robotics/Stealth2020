@@ -5,6 +5,7 @@ import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 import java.util.function.BooleanSupplier;
@@ -22,24 +23,27 @@ public class ScoreFuel extends SequentialCommandGroup
     DriveBase driveBase;
     Shooter shooter;
 
+    Limelight limelight;
+
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ScoreFuel(DriveBase driveBase, Shooter shooter) 
+    public ScoreFuel(DriveBase driveBase, Shooter shooter, Limelight limelight) 
     {
         this.driveBase = driveBase;
         this.shooter = shooter;
+        this.limelight = limelight;
 
-        addRequirements(shooter, driveBase);
+        addRequirements(shooter, driveBase, limelight);
     }
 
     @Override
     public void initialize() 
     {
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
+            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
             new FireShooter(shooter),
             new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
             {

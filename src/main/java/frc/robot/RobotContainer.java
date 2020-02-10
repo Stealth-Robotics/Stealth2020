@@ -24,6 +24,7 @@ import frc.robot.commands.ShooterCommands.ShooterDefault;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,6 +47,7 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final PanelControl panelControl;
+    private final Limelight limelight;
   
     private final ScoreFuel m_autoCommand;
   
@@ -62,8 +64,9 @@ public class RobotContainer
         intake = new Intake();
         climber = new Climber();
         panelControl = new PanelControl();
+        limelight = new Limelight();
         
-        m_autoCommand = new ScoreFuel(driveBase, shooter);
+        m_autoCommand = new ScoreFuel(driveBase, shooter, limelight);
 
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);
@@ -105,7 +108,7 @@ public class RobotContainer
 
         // new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter));
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
 
         //runs the intake, then reverses intake belt to prepare for other balls
         new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake)
