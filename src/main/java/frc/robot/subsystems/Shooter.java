@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 // import edu.wpi.first.wpilibj.PWMSparkMax;
@@ -36,7 +38,7 @@ public class Shooter extends SubsystemBase
     public Shooter() 
     {
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
-        shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
+        shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
         hood = new WPI_TalonSRX(RobotMap.hood);
         belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
 
