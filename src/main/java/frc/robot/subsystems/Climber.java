@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -17,8 +18,8 @@ public class Climber extends SubsystemBase
 {
 
     private final CANSparkMax winch;
-    private final CANCoder m_leftClimberEncoder = new CANCoder(RobotMap.kLeftEncoderPort);
-    private final CANCoder m_rightClimberEncoder = new CANCoder(RobotMap.kRightEncoderPort);
+    private final DigitalInput leftLimitSwitch; 
+    private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 
     /**
@@ -26,15 +27,27 @@ public class Climber extends SubsystemBase
      */
 
     public Climber() 
-    {
+    {    leftLimitSwitch = new DigitalInput(1);
+         rightLimitSwitch  = new DigitalInput(2);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
         climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
     }
 
     @Override
+   
     public void periodic() 
     {
-        // This method will be called once per scheduler run
+        if(leftLimitSwitch.get() == true)
+        {
+           setClimbElevatorSpeed(0);
+           setWinchSpeed(0);
+        }
+        if(rightLimitSwitch.get()== false)
+        {
+            setClimbElevatorSpeed(0);
+            setWinchSpeed(0);
+        }
+        
     }
 
     /**
@@ -46,6 +59,7 @@ public class Climber extends SubsystemBase
     {
         climbElevators.set(speed);
     }
+    
 
     /**
      * Sets the speed of the winch
