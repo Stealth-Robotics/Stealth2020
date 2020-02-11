@@ -5,8 +5,10 @@ import com.ctre.phoenix.motorcontrol.can.*;
 // import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -16,18 +18,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class Climber extends SubsystemBase
 {
-
     private final CANSparkMax winch;
     private final DigitalInput leftLimitSwitch; 
     private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 
+    PowerDistributionPanel PDP;
+
     /**
      * Creates a new Climber.
      */
 
-    public Climber() 
+    public Climber(PowerDistributionPanel PDP) 
     {    
+        this.PDP = PDP;
+
         leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
@@ -38,6 +43,8 @@ public class Climber extends SubsystemBase
    
     public void periodic() 
     {
+        VoltageCheck();
+
         if(leftLimitSwitch.get())
         {
            setClimbElevatorSpeed(0);
@@ -70,5 +77,19 @@ public class Climber extends SubsystemBase
     public void setWinchSpeed(double speed)
     {
         winch.set(speed);
+    }
+
+    public void VoltageCheck()
+    {
+        if(PDP.getCurrent(RobotMap.climber1PDPChannel) > Constants.RedlineVoltageLimit
+        || PDP.getCurrent(RobotMap.climber2PDPChannel) > Constants.RedlineVoltageLimit)
+        {
+            climbElevators.setVoltage(0);
+        }
+
+        if(PDP.getCurrent(RobotMap.winchPDPChannel) > Constants.NEOVoltageLimit)
+        {
+            winch.setVoltage(0);
+        }
     }
 }

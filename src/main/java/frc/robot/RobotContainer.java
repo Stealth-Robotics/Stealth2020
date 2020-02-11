@@ -13,6 +13,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.ControlPanelCommands.SpinPanel;
@@ -48,6 +49,8 @@ public class RobotContainer
     private final Climber climber;
     private final PanelControl panelControl;
     private final Limelight limelight;
+
+    private final PowerDistributionPanel PDP;
   
     private final ScoreFuel m_autoCommand;
   
@@ -59,11 +62,13 @@ public class RobotContainer
      */
     public RobotContainer() 
     {
-        driveBase = new DriveBase();
-        shooter = new Shooter();
-        intake = new Intake();
-        climber = new Climber();
-        panelControl = new PanelControl();
+        PDP = new PowerDistributionPanel(RobotMap.PDPCanID);
+
+        driveBase = new DriveBase(PDP);
+        shooter = new Shooter(PDP);
+        intake = new Intake(PDP);
+        climber = new Climber(PDP);
+        panelControl = new PanelControl(PDP);
         limelight = new Limelight();
         
         m_autoCommand = new ScoreFuel(driveBase, shooter, limelight);

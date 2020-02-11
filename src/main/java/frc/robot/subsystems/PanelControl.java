@@ -4,9 +4,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class PanelControl extends SubsystemBase 
@@ -15,11 +17,15 @@ public class PanelControl extends SubsystemBase
     private final ColorSensorV3 colorSensor;
     private final Solenoid colorWheelPiston;
 
+    PowerDistributionPanel PDP;
+
     /**
      * Creates a new ColorWheel.
      */
-    public PanelControl() 
+    public PanelControl(PowerDistributionPanel PDP) 
     {
+        this.PDP = PDP;
+
         wheelMotor = new WPI_TalonSRX(RobotMap.panelWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
         colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.colorWheelPistonChannel);
@@ -28,6 +34,8 @@ public class PanelControl extends SubsystemBase
     @Override
     public void periodic() 
     {
+        VoltageCheck();
+
         // This method will be called once per scheduler run
         // double prox = Math.pow(colorSensor.getProximity(), 1.25);
         // System.out.println((int)colorSensor.getRed() / prox + " " + (int)colorSensor.getBlue() / prox + " " + (int)colorSensor.getGreen() / prox + " " + colorSensor.getProximity());
@@ -77,5 +85,14 @@ public class PanelControl extends SubsystemBase
     public void togglePosition()
     {
         colorWheelPiston.set(!colorWheelPiston.get());
+    }
+
+    public void VoltageCheck() 
+    {
+        if(PDP.getCurrent(RobotMap.panelWheelMotorPDPChannel) > Constants.RedlineVoltageLimit) 
+        // TODO Find out what motor is wheelMotor is
+        {
+            wheelMotor.setVoltage(0);
+		}
     }
 }

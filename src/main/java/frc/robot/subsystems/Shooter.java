@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 // import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -32,11 +33,15 @@ public class Shooter extends SubsystemBase
 
     private boolean enabled;
 
+    PowerDistributionPanel PDP;
+
     /**
      * Creates a new Shooter.
      */
-    public Shooter() 
+    public Shooter(PowerDistributionPanel PDP) 
     {
+        this.PDP = PDP;
+
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
         shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
         hood = new WPI_TalonSRX(RobotMap.hood);
@@ -59,6 +64,8 @@ public class Shooter extends SubsystemBase
     @Override
     public void periodic() 
     {
+        VoltageCheck();
+
         // This method will be called once per scheduler run
         // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
         // System.out.println(hoodEncoder.getPosition());
@@ -205,5 +212,25 @@ public class Shooter extends SubsystemBase
     {
         return !beamBreak3.get();
         // return false;
+    }
+
+    public void VoltageCheck()
+    {
+        if(PDP.getCurrent(RobotMap.shooter1PDPChannel) > Constants.NEOVoltageLimit
+        || PDP.getCurrent(RobotMap.shooter2PDPChannel) > Constants.NEOVoltageLimit)
+        {
+            shooter.setVoltage(0);
+        }
+
+        if(PDP.getCurrent(RobotMap.hoodPDPChannel) > Constants.Neverest60VoltageLimit)
+        {
+            hood.setVoltage(0);
+        }
+
+        if(PDP.getCurrent(RobotMap.belt1PDPChannel) > Constants.RedlineVoltageLimit
+        ||PDP.getCurrent(RobotMap.belt2PDPChannel) > Constants.RedlineVoltageLimit)
+        {
+            belt.setVoltage(0);
+        }
     }
 }

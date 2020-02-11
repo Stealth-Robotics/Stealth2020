@@ -39,6 +39,12 @@ public final class Constants
     public static final double basekI = 0.05;
     public static final double basekD = 0.05;
 
+    // Voltage Limits
+
+    public static final int NEOVoltageLimit = 12;
+    public static final int RedlineVoltageLimit = 12;
+    public static final int Neverest60VoltageLimit = 12;
+
     public static final class DriveConstants 
     {
         public static final boolean kLeftEncoderReversed = false;

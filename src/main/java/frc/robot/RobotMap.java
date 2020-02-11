@@ -49,4 +49,37 @@ public class RobotMap
     public static final int beamBreak3 = 2;
     public static final int leftLimitSwitch = 3;
     public static final int rightLimitSwitch = 4;
+
+    // Voltage Control
+    
+    /*
+        Voltage Control Docs :
+            https://docs.wpilib.org/en/latest/docs/software/can-devices/power-distribution-panel.html
+    */
+
+    // PDP Channels 
+
+    public static final int PDPCanID = 0;
+
+    public static final int kLeftMotor1PDPChannel = 1;
+    public static final int kLeftMotor2PDPChannel = 2;
+    public static final int kRightMotor1PDPChannel = 3;
+    public static final int kRightMotor2PDPChannel = 4;
+
+    public static final int shooter1PDPChannel = 5;
+    public static final int shooter2PDPChannel = 6;
+    public static final int hoodPDPChannel = 7;
+
+    public static final int winchPDPChannel = 8;
+    public static final int climber1PDPChannel = 9;
+    public static final int climber2PDPChannel = 9;
+
+    public static final int intakePDPChannel = 10;
+    public static final int belt1PDPChannel =  11;
+    public static final int belt2PDPChannel = 12;
+    public static final int belt3PDPChannel = 13;
+
+    public static final int panelWheelMotorPDPChannel = 14;
+
+    public static final int PCMPDPChannel = 15;
 }
