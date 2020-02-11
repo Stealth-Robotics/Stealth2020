@@ -2,7 +2,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
-import com.ctre.phoenix.sensors.CANCoder;
+// import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -27,8 +27,8 @@ public class Climber extends SubsystemBase
      */
 
     public Climber() 
-    {    leftLimitSwitch = new DigitalInput(1);
-         rightLimitSwitch  = new DigitalInput(2);
+    {    leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
+         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
         climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
     }
@@ -37,12 +37,12 @@ public class Climber extends SubsystemBase
    
     public void periodic() 
     {
-        if(leftLimitSwitch.get() == true)
+        if(leftLimitSwitch.get())
         {
            setClimbElevatorSpeed(0);
            setWinchSpeed(0);
         }
-        if(rightLimitSwitch.get()== false)
+        if(!rightLimitSwitch.get())
         {
             setClimbElevatorSpeed(0);
             setWinchSpeed(0);

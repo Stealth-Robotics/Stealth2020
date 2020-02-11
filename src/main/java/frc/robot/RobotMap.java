@@ -47,4 +47,6 @@ public class RobotMap
     public static final int beamBreak1 = 0;
     public static final int beamBreak2 = 1;
     public static final int beamBreak3 = 2;
+    public static final int leftLimitSwitch = 3;
+    public static final int rightLimitSwitch = 4;
 }
