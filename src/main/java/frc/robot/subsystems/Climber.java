@@ -2,6 +2,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,6 +17,8 @@ public class Climber extends SubsystemBase
 {
 
     private final CANSparkMax winch;
+    private final CANCoder m_leftClimberEncoder = new CANCoder(RobotMap.kLeftEncoderPort);
+    private final CANCoder m_rightClimberEncoder = new CANCoder(RobotMap.kRightEncoderPort);
     private final SpeedControllerGroup climbElevators;
 
     /**
