@@ -27,8 +27,9 @@ public class Climber extends SubsystemBase
      */
 
     public Climber() 
-    {    leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
-         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
+    {    
+        leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
+        rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
         climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
     }
@@ -42,12 +43,12 @@ public class Climber extends SubsystemBase
            setClimbElevatorSpeed(0);
            setWinchSpeed(0);
         }
-        if(!rightLimitSwitch.get())
+
+        if(rightLimitSwitch.get())
         {
             setClimbElevatorSpeed(0);
             setWinchSpeed(0);
         }
-        
     }
 
     /**
