@@ -190,9 +190,9 @@ public class Shooter extends SubsystemBase
      * 
      * @return If triggered
      */
-    public boolean getBeamBreak2() //TODO check if true == broken
+    public boolean getBeamBreak2()
     {
-        return beamBreak2.get(); 
+        return !beamBreak2.get(); //true == no break
         // return false;
     }
 
@@ -203,7 +203,7 @@ public class Shooter extends SubsystemBase
      */
     public boolean getBeamBreak3()
     {
-        return beamBreak3.get();
+        return !beamBreak3.get();
         // return false;
     }
 }

@@ -98,7 +98,7 @@ public class Intake extends SubsystemBase
      */
     public boolean getBeamBreak1()
     {
-        return beamBreak1.get();
+        return !beamBreak1.get();
         // return false;
     }
 }
