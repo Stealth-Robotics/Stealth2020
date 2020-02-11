@@ -128,6 +128,12 @@ public class RobotContainer
              () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()), climber));
 
         // new JoystickButton(driveJoystick, 1).whenPressed(new AimHood(shooter));
+
+        //speed of 5 may be changed just placeholder. // button may also be changed
+        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
+            () -> climber.setWinchSpeed(mechJoystick.getMagnitude()),
+             () -> climber.setWinchSpeed(mechJoystick.getMagnitude()), climber));
+       
     }
   
   
