@@ -67,8 +67,8 @@ public class DriveBase extends SubsystemBase
     public void periodic()
     {
 		// Update the odometry in the periodic block
-		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
-				m_rightEncoder.getPosition());
+		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
+				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getAverageEncoderDistance() 
     {
-		return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
+		return (m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0) + m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0)) / 2.0;
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void zeroHeading() 
     {
-		m_gyro.setFusedHeading(0.0, Constants.DriveConstants.kTimeoutMs);
+		m_gyro.setCompassAngle(0.0, Constants.DriveConstants.kTimeoutMs);
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getHeading() 
     {
-		return Math.IEEEremainder(m_gyro.getFusedHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		return Math.IEEEremainder(m_gyro.getCompassHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 
 	/**
@@ -199,6 +199,9 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getTurnRate() 
     {
-		return (new double[3])[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		double[] mXYZDegreePerSecond = new double[3];
+		m_gyro.getRawGyro(mXYZDegreePerSecond);
+
+   		return mXYZDegreePerSecond[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 }
