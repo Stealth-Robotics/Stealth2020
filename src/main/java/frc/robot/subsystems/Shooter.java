@@ -6,8 +6,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-// import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,14 +31,14 @@ public class Shooter extends SubsystemBase
 
     private boolean enabled;
 
-    PowerDistributionPanel PDP;
+    //PowerDistributionPanel PDP;
 
     /**
      * Creates a new Shooter.
      */
-    public Shooter(PowerDistributionPanel PDP) 
+    public Shooter() 
     {
-        this.PDP = PDP;
+        //this.PDP = PDP;
 
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
         shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
@@ -64,7 +62,7 @@ public class Shooter extends SubsystemBase
     @Override
     public void periodic() 
     {
-        VoltageCheck();
+        //VoltageCheck();
 
         // This method will be called once per scheduler run
         // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
@@ -214,7 +212,7 @@ public class Shooter extends SubsystemBase
         // return false;
     }
 
-    public void VoltageCheck()
+    /*public void VoltageCheck()
     {
         if(PDP.getCurrent(RobotMap.shooter1PDPChannel) > Constants.NEOVoltageLimit
         || PDP.getCurrent(RobotMap.shooter2PDPChannel) > Constants.NEOVoltageLimit)
@@ -232,5 +230,5 @@ public class Shooter extends SubsystemBase
         {
             belt.setVoltage(0);
         }
-    }
+    }*/
 }

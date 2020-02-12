@@ -64,11 +64,11 @@ public class RobotContainer
     {
         PDP = new PowerDistributionPanel(RobotMap.PDPCanID);
 
-        driveBase = new DriveBase(PDP);
-        shooter = new Shooter(PDP);
-        intake = new Intake(PDP);
-        climber = new Climber(PDP);
-        panelControl = new PanelControl(PDP);
+        driveBase = new DriveBase();
+        shooter = new Shooter();
+        intake = new Intake();
+        climber = new Climber();
+        panelControl = new PanelControl();
         limelight = new Limelight();
         
         m_autoCommand = new ScoreFuel(driveBase, shooter, limelight);

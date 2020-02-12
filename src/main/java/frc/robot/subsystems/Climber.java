@@ -3,12 +3,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
 // import com.ctre.phoenix.sensors.CANCoder;
-
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -23,15 +20,15 @@ public class Climber extends SubsystemBase
     private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 
-    PowerDistributionPanel PDP;
+    //PowerDistributionPanel PDP;
 
     /**
      * Creates a new Climber.
      */
 
-    public Climber(PowerDistributionPanel PDP) 
+    public Climber() 
     {    
-        this.PDP = PDP;
+        //this.PDP = PDP;
 
         leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
@@ -43,7 +40,7 @@ public class Climber extends SubsystemBase
    
     public void periodic() 
     {
-        VoltageCheck();
+        //VoltageCheck();
 
         if(leftLimitSwitch.get())
         {
@@ -79,7 +76,7 @@ public class Climber extends SubsystemBase
         winch.set(speed);
     }
 
-    public void VoltageCheck()
+    /*public void VoltageCheck()
     {
         if(PDP.getCurrent(RobotMap.climber1PDPChannel) > Constants.RedlineVoltageLimit
         || PDP.getCurrent(RobotMap.climber2PDPChannel) > Constants.RedlineVoltageLimit)
@@ -91,5 +88,5 @@ public class Climber extends SubsystemBase
         {
             winch.setVoltage(0);
         }
-    }
+    }*/
 }

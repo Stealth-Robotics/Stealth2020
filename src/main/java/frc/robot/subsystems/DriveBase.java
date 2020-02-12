@@ -11,8 +11,6 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -50,14 +48,14 @@ public class DriveBase extends SubsystemBase
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
 
-	PowerDistributionPanel PDP;
+	//PowerDistributionPanel PDP;
 	
 	/**
 	 * Creates a new DriveSubsystem.
 	 */
-    public DriveBase(PowerDistributionPanel PDP) 
+    public DriveBase() 
     {
-		this.PDP = PDP;
+		//this.PDP = PDP;
 
 		// Sets the distance per pulse for the encoders
 
@@ -71,7 +69,7 @@ public class DriveBase extends SubsystemBase
 	@Override
     public void periodic()
     {
-		VoltageCheck();
+		//VoltageCheck();
 
 		// Update the odometry in the periodic block
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
@@ -212,7 +210,7 @@ public class DriveBase extends SubsystemBase
    		return mXYZDegreePerSecond[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 
-	public void VoltageCheck()
+	/* void VoltageCheck()
 	{
 		if(PDP.getCurrent(RobotMap.kLeftMotor1PDPChannel) > Constants.NEOVoltageLimit
 		|| PDP.getCurrent(RobotMap.kLeftMotor2PDPChannel) > Constants.NEOVoltageLimit)
@@ -225,5 +223,5 @@ public class DriveBase extends SubsystemBase
 		{
 			m_rightMotors.setVoltage(0);
 		}
-	}
+	}*/
 }

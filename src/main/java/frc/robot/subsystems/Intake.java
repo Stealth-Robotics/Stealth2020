@@ -4,10 +4,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase 
@@ -23,14 +21,14 @@ public class Intake extends SubsystemBase
     public double fuelCount;
     public boolean breakTracker;
 
-    PowerDistributionPanel PDP;
+    //PowerDistributionPanel PDP;
 
     /**
      * Creates a new Intake.
      */
-    public Intake(PowerDistributionPanel PDP) 
+    public Intake() 
     {
-        this.PDP = PDP;
+        //this.PDP = PDP;
 
         intake = new WPI_TalonSRX(RobotMap.intake);
         belt = new WPI_TalonSRX(RobotMap.belt3);
@@ -48,7 +46,7 @@ public class Intake extends SubsystemBase
     {
         // This method will be called once per scheduler run
 
-        VoltageCheck();
+        //VoltageCheck();
     }
 
     /**
@@ -110,7 +108,7 @@ public class Intake extends SubsystemBase
         // return false;
     }
 
-    public void VoltageCheck() 
+    /*public void VoltageCheck() 
     {
         if(PDP.getCurrent(RobotMap.intakePDPChannel) > Constants.RedlineVoltageLimit)
         {
@@ -121,5 +119,5 @@ public class Intake extends SubsystemBase
 		{
 			belt.setVoltage(0);
 		}   
-    }
+    }*/
 }

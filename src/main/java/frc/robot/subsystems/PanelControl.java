@@ -3,12 +3,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
-
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class PanelControl extends SubsystemBase 
@@ -17,14 +14,14 @@ public class PanelControl extends SubsystemBase
     private final ColorSensorV3 colorSensor;
     private final Solenoid colorWheelPiston;
 
-    PowerDistributionPanel PDP;
+    //PowerDistributionPanel PDP;
 
     /**
      * Creates a new ColorWheel.
      */
-    public PanelControl(PowerDistributionPanel PDP) 
+    public PanelControl() 
     {
-        this.PDP = PDP;
+        //this.PDP = PDP;
 
         wheelMotor = new WPI_TalonSRX(RobotMap.panelWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
@@ -34,7 +31,7 @@ public class PanelControl extends SubsystemBase
     @Override
     public void periodic() 
     {
-        VoltageCheck();
+        //VoltageCheck();
 
         // This method will be called once per scheduler run
         // double prox = Math.pow(colorSensor.getProximity(), 1.25);
@@ -87,12 +84,12 @@ public class PanelControl extends SubsystemBase
         colorWheelPiston.set(!colorWheelPiston.get());
     }
 
-    public void VoltageCheck() 
+    /*public void VoltageCheck() 
     {
         if(PDP.getCurrent(RobotMap.panelWheelMotorPDPChannel) > Constants.RedlineVoltageLimit) 
         // TODO Find out what motor is wheelMotor is
         {
             wheelMotor.setVoltage(0);
 		}
-    }
+    }*/
 }
