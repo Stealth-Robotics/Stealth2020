@@ -13,7 +13,6 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.ControlPanelCommands.SpinPanel;
@@ -60,7 +59,7 @@ public class RobotContainer
      */
     public RobotContainer() 
     {
-        PDP = new PowerDistributionPanel(RobotMap.PDPCanID);
+        //PDP = new PowerDistributionPanel(RobotMap.PDPCanID);
 
         driveBase = new DriveBase();
         shooter = new Shooter();
