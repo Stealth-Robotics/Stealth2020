@@ -49,8 +49,6 @@ public class RobotContainer
     private final Climber climber;
     private final PanelControl panelControl;
     private final Limelight limelight;
-
-    private final PowerDistributionPanel PDP;
   
     private final ScoreFuel m_autoCommand;
   
