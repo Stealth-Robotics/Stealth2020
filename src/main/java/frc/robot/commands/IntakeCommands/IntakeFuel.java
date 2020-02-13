@@ -35,25 +35,19 @@ public class IntakeFuel extends CommandBase
     public void initialize() 
     {
         intake.toggle();
+        intake.run();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() 
     {
-        intake.run();
         if (intake.getBeamBreak1())
         {
-            if (!intake.breakTracker)
-            {
-                intake.fuelCount++;
-                intake.breakTracker = true;
-                intake.runBelt();
-            }
+            intake.runBelt();
         }
-        else if (intake.breakTracker)
+        else
         {
-            intake.breakTracker = false;
             intake.stopBelt();
         }
     }
@@ -69,6 +63,6 @@ public class IntakeFuel extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return intake.fuelCount > 4;
+        return false;
     }
 }

@@ -121,7 +121,7 @@ public class RobotContainer
                         {
                             return intake.getBeamBreak1();
                         }
-                    }));
+                    }).withTimeout(5));
 
     //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
     //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));

@@ -59,15 +59,14 @@ public class IntakeDefault extends CommandBase
                             return !shooter.getBeamBreak2();
                         }
                     })
-                    .andThen(new WaitCommand(5))
-                    .andThen(() -> intake.reverseBelt(), intake)
-                        .withInterrupt(new BooleanSupplier()
+                    .andThen(new WaitCommand(5).andThen(() -> intake.reverseBelt(), intake)
+                    .withInterrupt(new BooleanSupplier()
+                    {
+                        public boolean getAsBoolean()
                         {
-                            public boolean getAsBoolean()
-                            {
-                                return intake.getBeamBreak1();
-                            }
-                        }).schedule();
+                            return intake.getBeamBreak1();
+                        }
+                    }).withTimeout(5)).schedule();
         }
         if (intake.getBeamBreak1())
         {
