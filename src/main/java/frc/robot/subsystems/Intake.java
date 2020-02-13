@@ -18,6 +18,9 @@ public class Intake extends SubsystemBase
 
     private final DigitalInput beamBreak1;
 
+    public double fuelCount;
+    public boolean breakTracker;
+
     //PowerDistributionPanel PDP;
 
     /**
