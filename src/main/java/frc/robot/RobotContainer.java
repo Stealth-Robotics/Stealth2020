@@ -135,7 +135,7 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
             () -> climber.setWinchSpeed(mechJoystick.getMagnitude()),
              () -> climber.setWinchSpeed(mechJoystick.getMagnitude()), climber));
-
+          //Move elevator motrs down when the winch goes up
              new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
                 () -> climber.setClimbElevatorSpeed(-mechJoystick.getMagnitude()),
                  () -> climber.setClimbElevatorSpeed(-mechJoystick.getMagnitude()), climber));
