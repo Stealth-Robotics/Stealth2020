@@ -2,9 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-// import edu.wpi.first.wpilibj.PWMSparkMax;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,13 +31,17 @@ public class Shooter extends SubsystemBase
 
     private boolean enabled;
 
+    //PowerDistributionPanel PDP;
+
     /**
      * Creates a new Shooter.
      */
     public Shooter() 
     {
+        //this.PDP = PDP;
+
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
-        shooter = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.shooter1), new WPI_TalonSRX(RobotMap.shooter2));
+        shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
         hood = new WPI_TalonSRX(RobotMap.hood);
         belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
 
@@ -57,6 +62,8 @@ public class Shooter extends SubsystemBase
     @Override
     public void periodic() 
     {
+        //VoltageCheck();
+
         // This method will be called once per scheduler run
         // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
         // System.out.println(hoodEncoder.getPosition());
@@ -188,9 +195,9 @@ public class Shooter extends SubsystemBase
      * 
      * @return If triggered
      */
-    public boolean getBeamBreak2() //TODO check if true == broken
+    public boolean getBeamBreak2()
     {
-        return beamBreak2.get(); 
+        return !beamBreak2.get(); //true == no break
         // return false;
     }
 
@@ -201,7 +208,27 @@ public class Shooter extends SubsystemBase
      */
     public boolean getBeamBreak3()
     {
-        return beamBreak3.get();
+        return !beamBreak3.get();
         // return false;
     }
+
+    /*public void VoltageCheck()
+    {
+        if(PDP.getCurrent(RobotMap.shooter1PDPChannel) > Constants.NEOVoltageLimit
+        || PDP.getCurrent(RobotMap.shooter2PDPChannel) > Constants.NEOVoltageLimit)
+        {
+            shooter.setVoltage(0);
+        }
+
+        if(PDP.getCurrent(RobotMap.hoodPDPChannel) > Constants.Neverest60VoltageLimit)
+        {
+            hood.setVoltage(0);
+        }
+
+        if(PDP.getCurrent(RobotMap.belt1PDPChannel) > Constants.RedlineVoltageLimit
+        ||PDP.getCurrent(RobotMap.belt2PDPChannel) > Constants.RedlineVoltageLimit)
+        {
+            belt.setVoltage(0);
+        }
+    }*/
 }

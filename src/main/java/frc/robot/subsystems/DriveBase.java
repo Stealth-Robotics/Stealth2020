@@ -9,7 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.PWMSparkMax;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -25,12 +26,12 @@ import frc.robot.RobotMap;
 public class DriveBase extends SubsystemBase 
 {
 	// The motors on the left side of the drive.
-	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new PWMSparkMax(RobotMap.kLeftMotor1Port),
-			new PWMSparkMax(RobotMap.kLeftMotor2Port));
+	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.kLeftMotor1Port, MotorType.kBrushless),
+			new CANSparkMax(RobotMap.kLeftMotor2Port, MotorType.kBrushless));
 
 	// The motors on the right side of the drive.
-	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new PWMSparkMax(RobotMap.kRightMotor1Port),
-			new PWMSparkMax(RobotMap.kRightMotor2Port));
+	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.kRightMotor1Port, MotorType.kBrushless),
+			new CANSparkMax(RobotMap.kRightMotor2Port, MotorType.kBrushless));
 
 	// The robot's drive
 	private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
@@ -47,11 +48,15 @@ public class DriveBase extends SubsystemBase
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
 
+	//PowerDistributionPanel PDP;
+	
 	/**
 	 * Creates a new DriveSubsystem.
 	 */
     public DriveBase() 
     {
+		//this.PDP = PDP;
+
 		// Sets the distance per pulse for the encoders
 
 		//m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
@@ -64,9 +69,11 @@ public class DriveBase extends SubsystemBase
 	@Override
     public void periodic()
     {
+		//VoltageCheck();
+
 		// Update the odometry in the periodic block
-		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(),
-				m_rightEncoder.getPosition());
+		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
+				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
 	}
 
 	/**
@@ -139,7 +146,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getAverageEncoderDistance() 
     {
-		return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2.0;
+		return (m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0) + m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0)) / 2.0;
 	}
 
 	/**
@@ -177,7 +184,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void zeroHeading() 
     {
-		m_gyro.setFusedHeading(0.0, Constants.DriveConstants.kTimeoutMs);
+		m_gyro.setCompassAngle(0.0, Constants.DriveConstants.kTimeoutMs);
 	}
 
 	/**
@@ -187,7 +194,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getHeading() 
     {
-		return Math.IEEEremainder(m_gyro.getFusedHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		return Math.IEEEremainder(m_gyro.getCompassHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
 
 	/**
@@ -197,6 +204,24 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getTurnRate() 
     {
-		return (new double[3])[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		double[] mXYZDegreePerSecond = new double[3];
+		m_gyro.getRawGyro(mXYZDegreePerSecond);
+
+   		return mXYZDegreePerSecond[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
+
+	/* void VoltageCheck()
+	{
+		if(PDP.getCurrent(RobotMap.kLeftMotor1PDPChannel) > Constants.NEOVoltageLimit
+		|| PDP.getCurrent(RobotMap.kLeftMotor2PDPChannel) > Constants.NEOVoltageLimit)
+        {
+            m_leftMotors.setVoltage(0);
+		}
+		
+		if(PDP.getCurrent(RobotMap.kRightMotor1PDPChannel) > Constants.NEOVoltageLimit
+		|| PDP.getCurrent(RobotMap.kRightMotor2PDPChannel) > Constants.NEOVoltageLimit)
+		{
+			m_rightMotors.setVoltage(0);
+		}
+	}*/
 }

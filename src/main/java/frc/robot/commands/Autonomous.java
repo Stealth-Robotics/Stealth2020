@@ -5,58 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.IntakeCommands;
+package frc.robot.commands;
 
-import frc.robot.subsystems.Intake;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class IntakeFuel extends CommandBase 
+public class Autonomous extends SequentialCommandGroup 
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Intake intake;
+    private final DriveBase driveBase;
+    private final Shooter shooter;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public IntakeFuel(Intake intake) 
+    public Autonomous(DriveBase driveBase, Shooter shooter) 
     {
-        this.intake = intake;
+        this.driveBase = driveBase;
+        this.shooter = shooter;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(intake);
+        addRequirements(driveBase, shooter);
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {
-        intake.toggle();
-        intake.run();
-    }
-
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() 
-    {
-        if (intake.getBeamBreak1())
-        {
-            intake.runBelt();
-        }
-        else
-        {
-            intake.stopBelt();
-        }
+        addCommands(new ScoreFuel(driveBase, shooter));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) 
     {
-        intake.toggle();
+        
     }
 
     // Returns true when the command should end.

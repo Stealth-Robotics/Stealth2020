@@ -29,23 +29,24 @@ public class RobotMap
     public static final int shooter2 = 5;
     public static final int hood = 1;
 
-    public static final int winch1 = 7;
-    public static final int winch2 = 8;
-    public static final int claw1 = 9;
-    public static final int claw2 = 10;
+    public static final int winch = 7;
+    public static final int climber1 = 8;
+    public static final int climber2 = 9;
 
-    public static final int intake = 11;
-    public static final int belt1 =  12;
-    public static final int belt2 = 13;
-    public static final int belt3 = 14;
+    public static final int intake = 10;
+    public static final int belt1 =  11;
+    public static final int belt2 = 12;
+    public static final int belt3 = 13;
 
-    public static final int panelWheelMotor = 15;
+    public static final int panelWheelMotor = 14;
 
-    public static final int PCM = 16;
+    public static final int PCM = 15;
     public static final int colorWheelPistonChannel = 1;
     public static final int intakeDeployPistons = 2;
 
     public static final int beamBreak1 = 0;
     public static final int beamBreak2 = 1;
     public static final int beamBreak3 = 2;
+    public static final int leftLimitSwitch = 3;
+    public static final int rightLimitSwitch = 4;
 }

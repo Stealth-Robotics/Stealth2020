@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.IntakeCommands;
+package frc.robot.commands;
 
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -35,19 +35,25 @@ public class IntakeFuel extends CommandBase
     public void initialize() 
     {
         intake.toggle();
-        intake.run();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() 
     {
+        intake.run();
         if (intake.getBeamBreak1())
         {
-            intake.runBelt();
+            if (!intake.breakTracker)
+            {
+                intake.fuelCount++;
+                intake.breakTracker = true;
+                intake.runBelt();
+            }
         }
-        else
+        else if (intake.breakTracker)
         {
+            intake.breakTracker = false;
             intake.stopBelt();
         }
     }
@@ -63,6 +69,6 @@ public class IntakeFuel extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return false;
+        return intake.fuelCount > 4;
     }
 }

@@ -21,11 +21,15 @@ public class Intake extends SubsystemBase
     public double fuelCount;
     public boolean breakTracker;
 
+    //PowerDistributionPanel PDP;
+
     /**
      * Creates a new Intake.
      */
     public Intake() 
     {
+        //this.PDP = PDP;
+
         intake = new WPI_TalonSRX(RobotMap.intake);
         belt = new WPI_TalonSRX(RobotMap.belt3);
 
@@ -41,6 +45,8 @@ public class Intake extends SubsystemBase
     public void periodic() 
     {
         // This method will be called once per scheduler run
+
+        //VoltageCheck();
     }
 
     /**
@@ -98,7 +104,20 @@ public class Intake extends SubsystemBase
      */
     public boolean getBeamBreak1()
     {
-        return beamBreak1.get();
+        return !beamBreak1.get();
         // return false;
     }
+
+    /*public void VoltageCheck() 
+    {
+        if(PDP.getCurrent(RobotMap.intakePDPChannel) > Constants.RedlineVoltageLimit)
+        {
+            intake.setVoltage(0);
+		}
+		
+		if(PDP.getCurrent(RobotMap.belt3PDPChannel) > Constants.RedlineVoltageLimit)
+		{
+			belt.setVoltage(0);
+		}   
+    }*/
 }

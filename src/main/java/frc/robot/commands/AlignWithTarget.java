@@ -1,9 +1,9 @@
 
-package frc.robot.commands.DrivebaseCommands;
+package frc.robot.commands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Limelight;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -15,17 +15,15 @@ public class AlignWithTarget extends CommandBase
     private final DriveBase driveBase;
     private final PIDController controller;
 
-    Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public AlignWithTarget(DriveBase driveBase, Limelight limelight) 
+    public AlignWithTarget(DriveBase driveBase) 
     {
         this.driveBase = driveBase;
-        this.limelight = limelight;
         
         controller = new PIDController(Constants.basekP, Constants.basekI, Constants.basekD);
 
@@ -35,8 +33,9 @@ public class AlignWithTarget extends CommandBase
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
-    {       
-        controller.setSetpoint(limelight.GetTargetHorizontalOffset());
+    {
+        double target = NetworkTableInstance.getDefault().getEntry("Target").getDouble(0); //TODO Figure out how this is actually going to be done
+        controller.setSetpoint(target);
         controller.setTolerance(5);
     }
 
