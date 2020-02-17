@@ -15,28 +15,28 @@ package frc.robot;
  */
 public class RobotMap 
 {  
-    public static final int kLeftMotor1Port = 0;
-    public static final int kLeftMotor2Port = 6;
-    public static final int kRightMotor1Port = 2;
-    public static final int kRightMotor2Port = 3;
+    public static final int kLeftMotor1Port = 26;
+    public static final int kLeftMotor2Port = 25;
+    public static final int kRightMotor1Port = 22;
+    public static final int kRightMotor2Port = 24;
 
-    public static final int kLeftEncoderPort = 1;
-    public static final int kRightEncoderPort = 2;
+    public static final int kLeftEncoderPort = 51;
+    public static final int kRightEncoderPort = 50;
 
     public static final int kGyroPort = 3;
 
-    public static final int shooter1 = 4;
-    public static final int shooter2 = 5;
-    public static final int hood = 1;
+    public static final int shooter1 = 28;
+    public static final int shooter2 = 1;
+    public static final int hood = 31;
 
-    public static final int winch = 7;
-    public static final int climber1 = 8;
-    public static final int climber2 = 9;
+    public static final int winch = 29;
+    public static final int climber1 = 30;
+    public static final int climber2 = 36;
 
-    public static final int intake = 10;
-    public static final int belt1 =  11;
-    public static final int belt2 = 12;
-    public static final int belt3 = 13;
+    public static final int intake = 35;
+    public static final int belt1 =  33;
+    public static final int belt2 = 34;
+    // does not exist public static final int belt3 = 13;
 
     public static final int panelWheelMotor = 14;
 

@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase
         //this.PDP = PDP;
 
         intake = new WPI_TalonSRX(RobotMap.intake);
-        belt = new WPI_TalonSRX(RobotMap.belt3);
+        belt = new WPI_TalonSRX(RobotMap.belt1);
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
 

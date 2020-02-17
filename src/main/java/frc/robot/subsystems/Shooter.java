@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
         shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
         hood = new WPI_TalonSRX(RobotMap.hood);
-        belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt1), new WPI_TalonSRX(RobotMap.belt2));
+        belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt2));
 
         shooterEncoder = new CANCoder(RobotMap.shooter1);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
