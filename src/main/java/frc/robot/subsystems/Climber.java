@@ -20,41 +20,16 @@ public class Climber extends SubsystemBase
     private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 
-    //PowerDistributionPanel PDP;
-
     /**
      * Creates a new Climber.
      */
 
     public Climber() 
     {    
-        //this.PDP = PDP;
-
         leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
         climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
-    }
-
-    @Override
-   
-    public void periodic() 
-    {
-        //VoltageCheck();
-
-        //TODO Figure when to stop winch
-
-        if(leftLimitSwitch.get())
-        {
-           setClimbElevatorSpeed(0);
-           setWinchSpeed(1);
-        }
-
-        if(rightLimitSwitch.get())
-        {
-            setClimbElevatorSpeed(0);
-            setWinchSpeed(1);
-        }
     }
 
     /**
@@ -64,7 +39,15 @@ public class Climber extends SubsystemBase
      */
     public void setClimbElevatorSpeed(double speed)
     {
-        climbElevators.set(speed);
+        if(leftLimitSwitch.get() || rightLimitSwitch.get())
+        {
+            climbElevators.set(speed);
+        }
+
+        else
+        {
+            climbElevators.set(0);
+        }
     }
     
 
@@ -76,19 +59,6 @@ public class Climber extends SubsystemBase
     public void setWinchSpeed(double speed)
     {
         winch.set(speed);
+        climbElevators.set(-speed);
     }
-
-    /*public void VoltageCheck()
-    {
-        if(PDP.getCurrent(RobotMap.climber1PDPChannel) > Constants.RedlineVoltageLimit
-        || PDP.getCurrent(RobotMap.climber2PDPChannel) > Constants.RedlineVoltageLimit)
-        {
-            climbElevators.setVoltage(0);
-        }
-
-        if(PDP.getCurrent(RobotMap.winchPDPChannel) > Constants.NEOVoltageLimit)
-        {
-            winch.setVoltage(0);
-        }
-    }*/
 }

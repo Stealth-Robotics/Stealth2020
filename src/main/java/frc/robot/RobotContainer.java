@@ -97,8 +97,6 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        //'A' button pressed, if game message released spin panel to color otherwise spin five times
-        //We should consider putting this into two buttons and/or onto drive station buttons
         new JoystickButton(mechJoystick, 1).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
         {
 			@Override
@@ -123,23 +121,13 @@ public class RobotContainer
                         }
                     }).withTimeout(5));
 
-    //     new JoystickButton(mechJoystick, 5).whileHeld(new RunCommand(() -> climber.climb()))
-    //             .whenReleased(new InstantCommand(() -> climber.stopClimb()));
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()),
-             () -> climber.setClimbElevatorSpeed(mechJoystick.getMagnitude()), climber));
+        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
+            () -> climber.setClimbElevatorSpeed(0.2),
+            () -> climber.setClimbElevatorSpeed(0), climber));
 
-        // new JoystickButton(driveJoystick, 1).whenPressed(new AimHood(shooter));
-
-        //speed of 5 may be changed just placeholder. // button may also be changed
-        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> climber.setWinchSpeed(mechJoystick.getMagnitude()),
-             () -> climber.setWinchSpeed(mechJoystick.getMagnitude()), climber));
-          //Move elevator motrs down when the winch goes up
-             new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-                () -> climber.setClimbElevatorSpeed(-mechJoystick.getMagnitude()),
-                 () -> climber.setClimbElevatorSpeed(-mechJoystick.getMagnitude()), climber));
-       
+        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
+            () -> climber.setWinchSpeed(0.2),
+            () -> climber.setWinchSpeed(0), climber));
     }
   
   
