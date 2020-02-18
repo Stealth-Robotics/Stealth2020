@@ -23,7 +23,7 @@ public class RobotMap
     public static final int kLeftEncoderPort = 51;
     public static final int kRightEncoderPort = 50;
 
-    public static final int kGyroPort = 3;
+    public static final int kGyroPort = 30;
 
     public static final int shooter1 = 28;
     public static final int shooter2 = 1;
@@ -37,13 +37,14 @@ public class RobotMap
     public static final int rightLimitSwitch = 9;
 
     public static final int intake = 35;
+    public static final int intakeHelper = 32;
     public static final int belt1 =  33;
     public static final int belt2 = 34;
     // does not exist public static final int belt3 = 13;
 
     public static final int panelWheelMotor = 14;
 
-    public static final int PCM = 15;
+    public static final int PCM = 20;
     public static final int colorWheelPistonChannel = 1;
     public static final int intakeDeployPistons = 2;
 
