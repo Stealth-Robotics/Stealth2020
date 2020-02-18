@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.ControlPanelCommands.SpinPanel;
 import frc.robot.commands.IntakeCommands.IntakeDefault;
-import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 // import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.ShooterDefault;
@@ -74,14 +73,14 @@ public class RobotContainer
         mechJoystick = new Joystick(1);
 
         driveJoystick.setYChannel(1);
-        driveJoystick.setXChannel(0);
+        driveJoystick.setXChannel(4);
 
         // Configure the button bindings
         configureButtonBindings();
 
         driveBase.setDefaultCommand(
                 new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
-                    driveJoystick.getX(GenericHID.Hand.kRight)),
+                    driveJoystick.getRawAxis(4)),
                 driveBase));
 
         intake.setDefaultCommand(new IntakeDefault(intake, shooter));
@@ -97,7 +96,7 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        new JoystickButton(mechJoystick, 1).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
+        new JoystickButton(mechJoystick, 2).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
         {
 			@Override
             public boolean getAsBoolean() 
@@ -108,18 +107,11 @@ public class RobotContainer
 
         // new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
+        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(
+            () -> this.intake.run(),
+            () -> this.intake.stopIntake()));
 
-        //runs the intake, then reverses intake belt to prepare for other balls
-        new JoystickButton(mechJoystick, 4).whenHeld(new IntakeFuel(intake)
-                .andThen(() -> intake.reverseBelt(), intake)
-                    .withInterrupt(new BooleanSupplier()
-                    {
-                        public boolean getAsBoolean()
-                        {
-                            return intake.getBeamBreak1();
-                        }
-                    }).withTimeout(5));
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
             () -> climber.setClimbElevatorSpeed(0.2),
@@ -128,6 +120,8 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
             () -> climber.setWinchSpeed(0.2),
             () -> climber.setWinchSpeed(0), climber));
+
+        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
     }
   
   
