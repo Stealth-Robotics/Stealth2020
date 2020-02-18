@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
@@ -43,10 +44,12 @@ public class DriveBase extends SubsystemBase
 	private final CANCoder m_rightEncoder = new CANCoder(RobotMap.kRightEncoderPort);
 
 	// The gyro sensor
-	private final PigeonIMU m_gyro = new PigeonIMU(RobotMap.kGyroPort);
+	private final PigeonIMU m_gyro = new PigeonIMU(new TalonSRX(RobotMap.kGyroPort));
 
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
+
+	private float driveSensitivity = 0.6f;
 
 	//PowerDistributionPanel PDP;
 	
