@@ -42,6 +42,8 @@ public class ScoreFuel extends SequentialCommandGroup
     @Override
     public void initialize() 
     {
+        limelight.SetLedMode(3);
+
         addCommands(
             new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
             new FireShooter(shooter),
@@ -53,6 +55,8 @@ public class ScoreFuel extends SequentialCommandGroup
                     return shooter.getBeamBreak2();
                 }
             }));
+
+        limelight.SetLedMode(0);
     }
 
     // Called once the command ends or is interrupted.
