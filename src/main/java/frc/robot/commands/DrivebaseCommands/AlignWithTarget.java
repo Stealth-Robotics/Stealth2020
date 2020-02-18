@@ -15,7 +15,7 @@ public class AlignWithTarget extends CommandBase
     private final DriveBase driveBase;
     private final PIDController controller;
 
-    Limelight limelight;
+    private final Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
@@ -29,13 +29,15 @@ public class AlignWithTarget extends CommandBase
         
         controller = new PIDController(Constants.basekP, Constants.basekI, Constants.basekD);
 
-        addRequirements(driveBase);
+        addRequirements(driveBase, limelight);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {       
+        limelight.SetLedMode(3);
+
         controller.setSetpoint(limelight.GetTargetHorizontalOffset());
         controller.setTolerance(5);
     }
@@ -51,7 +53,7 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
-        
+        limelight.SetLedMode(1);
     }
 
     // Returns true when the command should end.
