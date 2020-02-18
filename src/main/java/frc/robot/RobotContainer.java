@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.ControlPanelCommands.SpinPanel;
+import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeDefault;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 // import frc.robot.commands.ShooterCommands.AimHood;
@@ -122,6 +123,8 @@ public class RobotContainer
             () -> climber.setWinchSpeed(0), climber));
 
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
+
+        new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));     
     }
   
   
