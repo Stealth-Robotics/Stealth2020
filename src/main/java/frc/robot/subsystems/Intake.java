@@ -11,6 +11,7 @@ import frc.robot.RobotMap;
 public class Intake extends SubsystemBase 
 {
     private final WPI_TalonSRX intake;
+    private final WPI_TalonSRX intakeHelper;
 
     private final WPI_TalonSRX belt;
 
@@ -31,6 +32,7 @@ public class Intake extends SubsystemBase
         //this.PDP = PDP;
 
         intake = new WPI_TalonSRX(RobotMap.intake);
+        intakeHelper = new WPI_TalonSRX(RobotMap.intakeHelper);
         belt = new WPI_TalonSRX(RobotMap.belt1);
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
@@ -45,8 +47,6 @@ public class Intake extends SubsystemBase
     public void periodic() 
     {
         // This method will be called once per scheduler run
-
-        //VoltageCheck();
     }
 
     /**
@@ -54,7 +54,8 @@ public class Intake extends SubsystemBase
      */
     public void run()
     {
-        intake.set(1);
+        intake.set(-0.4);
+        intakeHelper.set(0.4);
     }
 
     /**
@@ -63,6 +64,7 @@ public class Intake extends SubsystemBase
     public void stopIntake()
     {
         intake.set(0);
+        intakeHelper.set(0);
     }
 
     /**
