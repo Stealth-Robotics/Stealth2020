@@ -44,13 +44,13 @@ public class Climber extends SubsystemBase
 
         //TODO Figure when to stop winch
 
-        if(leftLimitSwitch.get())
+        if(leftLimitSwitch.get() == false)
         {
            setClimbElevatorSpeed(0);
            setWinchSpeed(1);
         }
 
-        if(rightLimitSwitch.get())
+        if(rightLimitSwitch.get() == false)
         {
             setClimbElevatorSpeed(0);
             setWinchSpeed(1);
