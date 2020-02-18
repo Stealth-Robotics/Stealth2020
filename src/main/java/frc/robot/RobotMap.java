@@ -33,6 +33,9 @@ public class RobotMap
     public static final int climber1 = 30;
     public static final int climber2 = 36;
 
+    public static final int leftLimitSwitch = 8;
+    public static final int rightLimitSwitch = 9;
+
     public static final int intake = 35;
     public static final int belt1 =  33;
     public static final int belt2 = 34;
@@ -47,6 +50,4 @@ public class RobotMap
     public static final int beamBreak1 = 0;
     public static final int beamBreak2 = 1;
     public static final int beamBreak3 = 2;
-    public static final int leftLimitSwitch = 3;
-    public static final int rightLimitSwitch = 4;
 }
