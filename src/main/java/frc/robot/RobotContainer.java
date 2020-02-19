@@ -80,7 +80,7 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(
-                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
+                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(getRawAxis.Hand.kLeft),
                     driveJoystick.getRawAxis(4)),
                 driveBase));
 
