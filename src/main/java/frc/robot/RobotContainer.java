@@ -114,14 +114,6 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
 
-        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> climber.setClimbElevatorSpeed(0.2),
-            () -> climber.setClimbElevatorSpeed(0), climber));
-
-        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
-            () -> climber.setWinchSpeed(0.2),
-            () -> climber.setWinchSpeed(0), climber));
-
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
 
         new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));     

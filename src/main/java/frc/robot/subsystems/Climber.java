@@ -33,62 +33,34 @@ public class Climber extends SubsystemBase
         leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
-        climbElevators = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.climber1), new WPI_TalonSRX(RobotMap.climber2));
+        WPI_TalonSRX leftClimber = new WPI_TalonSRX(RobotMap.climber1);
+        WPI_TalonSRX rightClimber = new WPI_TalonSRX(RobotMap.climber2);
+
+        rightClimber.setInverted(true);
+
+        climbElevators = new SpeedControllerGroup(leftClimber,  rightClimber);
     }
 
     @Override
    
     public void periodic() 
     {
-        //VoltageCheck();
-
-        //TODO Figure when to stop winch
-
-        if(leftLimitSwitch.get() == false)
+        if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && climbElevators.get() > 0)
         {
-           setClimbElevatorSpeed(0);
-           setWinchSpeed(1);
-        }
-
-        if(rightLimitSwitch.get() == false)
-        {
-            setClimbElevatorSpeed(0);
-            setWinchSpeed(1);
+            runClimb(0, 0);
         }
     }
+
 
     /**
-     * Sets the speed of the climb elevator
+     * Sets the speed of the climb motors
      * 
-     * @param speed The speed to run
+     * @param elevatorSpeed The speed to run elevator
+     * @param winchSpeed The speed to run winch
      */
-    public void setClimbElevatorSpeed(double speed)
+    public void runClimb(double elevatorSpeed, double winchSpeed)
     {
-        climbElevators.set(speed);
+        climbElevators.set(elevatorSpeed);
+        winch.set(winchSpeed);
     }
-    
-
-    /**
-     * Sets the speed of the winch
-     * 
-     * @param speed The speed to run
-     */
-    public void setWinchSpeed(double speed)
-    {
-        winch.set(speed);
-    }
-
-    /*public void VoltageCheck()
-    {
-        if(PDP.getCurrent(RobotMap.climber1PDPChannel) > Constants.RedlineVoltageLimit
-        || PDP.getCurrent(RobotMap.climber2PDPChannel) > Constants.RedlineVoltageLimit)
-        {
-            climbElevators.setVoltage(0);
-        }
-
-        if(PDP.getCurrent(RobotMap.winchPDPChannel) > Constants.NEOVoltageLimit)
-        {
-            winch.setVoltage(0);
-        }
-    }*/
 }
