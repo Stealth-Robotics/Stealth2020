@@ -116,6 +116,7 @@ public class RobotContainer
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
 
         new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));  
+        new JoystickButton(mechJoystick, 5).whenPressed(new PosPanel(panelControl));
        // new JoystickButton(mechJoystick , 4 /*neds to be changed to the buttons on the driver station*/).whenPressed(() -> Climber.runClimb());
     }
   
