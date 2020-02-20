@@ -18,7 +18,7 @@ public class Shooter extends SubsystemBase
     private final SpeedControllerGroup shooter;
     protected final WPI_TalonSRX hood;
 
-    private final SpeedControllerGroup belt;
+    private final WPI_TalonSRX belt;
 
     private final CANCoder shooterEncoder;
     private final PIDController shooterController;
@@ -43,7 +43,7 @@ public class Shooter extends SubsystemBase
         // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
         shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
         hood = new WPI_TalonSRX(RobotMap.hood);
-        belt = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.belt2));
+        belt = new WPI_TalonSRX(RobotMap.belt2);
 
         shooterEncoder = new CANCoder(RobotMap.shooter1);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
@@ -57,26 +57,29 @@ public class Shooter extends SubsystemBase
         beamBreak3 = new DigitalInput(RobotMap.beamBreak3);
 
         enabled = false;
+
+        shooter.set(-1); //TODO remove this 
     }
 
     @Override
     public void periodic() 
     {
+        
         //VoltageCheck();
 
         // This method will be called once per scheduler run
         // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
         // System.out.println(hoodEncoder.getPosition());
-        hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
+        /*hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         System.out.println(hood.getSelectedSensorPosition(0));
         if (enabled)
         {
-            shooter.set(shooterController.calculate(shooterEncoder.getVelocity()));
+            shooter.set(-shooterController.calculate(shooterEncoder.getVelocity()));
         }
         else
         {
             shooter.set(0);
-        }
+        }*/
     }
 
     /**
@@ -110,7 +113,7 @@ public class Shooter extends SubsystemBase
      */
     public void setShooterSpeed(double speed) 
     {
-        shooterController.setSetpoint(speed);
+        shooterController.setSetpoint(-speed);
     }
 
     /**

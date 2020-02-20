@@ -84,9 +84,9 @@ public class RobotContainer
                     driveJoystick.getRawAxis(2)),
                 driveBase));
 
-        intake.setDefaultCommand(new IntakeDefault(intake, shooter));
-
-        shooter.setDefaultCommand(new ShooterDefault(shooter));
+        // intake.setDefaultCommand(new IntakeDefault(intake, shooter));
+        //TODO uncomment when hardware installed
+        // shooter.setDefaultCommand(new ShooterDefault(shooter));
     }
   
     /**
@@ -116,7 +116,9 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(
             () -> this.intake.run(),
-            () -> this.intake.stopIntake()));
+            () -> this.intake.stopIntake()).alongWith(new StartEndCommand(
+                () -> this.shooter.runBelt(),
+                () -> this.shooter.stopBelt())));
 
          
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));

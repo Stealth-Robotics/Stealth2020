@@ -5,13 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase 
 {
-    private final WPI_TalonSRX intake;
-    private final WPI_TalonSRX intakeHelper;
+    private final SpeedControllerGroup intake;
 
     private final WPI_TalonSRX belt;
 
@@ -31,8 +31,9 @@ public class Intake extends SubsystemBase
     {
         //this.PDP = PDP;
 
-        intake = new WPI_TalonSRX(RobotMap.intake);
-        intakeHelper = new WPI_TalonSRX(RobotMap.intakeHelper);
+        WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.intake);
+        mainIntake.setInverted(true);
+        intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.intakeHelper));
         belt = new WPI_TalonSRX(RobotMap.belt1);
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
@@ -54,8 +55,8 @@ public class Intake extends SubsystemBase
      */
     public void run()
     {
-        intake.set(-0.7);
-        intakeHelper.set(0.7);
+        intake.set(0.7);
+        belt.set(1);
     }
 
     /**
@@ -64,7 +65,6 @@ public class Intake extends SubsystemBase
     public void stopIntake()
     {
         intake.set(0);
-        intakeHelper.set(0);
     }
 
     /**
