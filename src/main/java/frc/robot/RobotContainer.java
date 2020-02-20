@@ -80,7 +80,7 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(
-                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(getRawAxis.Hand.kLeft),
+                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
                     driveJoystick.getRawAxis(4)),
                 driveBase));
 
@@ -112,8 +112,7 @@ public class RobotContainer
             () -> this.intake.run(),
             () -> this.intake.stopIntake()));
 
-        new JoystickButton(mechJoystick, 8).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
-
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
 
         new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));  

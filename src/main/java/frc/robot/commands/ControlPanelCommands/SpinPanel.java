@@ -47,7 +47,7 @@ public class SpinPanel extends CommandBase
     {
         if (panelControl.red > 6.5)
         {
-            if (panelConrol.green > 15.0)
+            if (panelControl.green > 15.0)
             {
                greenCounter ++;
                System.out.println("We have found the green on the control panel. The gree")
