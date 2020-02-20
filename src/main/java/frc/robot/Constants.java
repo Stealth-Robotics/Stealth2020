@@ -35,15 +35,13 @@ public final class Constants
     public static final double hoodkI = 0.005;
     public static final double hoodkD = 0.0;
 
-    public static final double basekP = 0.5;
-    public static final double basekI = 0.05;
-    public static final double basekD = 0.05;
+    public static final double limekP = 0.065;
+    public static final double limekI = 0.0;
+    public static final double limekD = 0.01;
 
-    // Voltage Limits
-
-    public static final int NEOVoltageLimit = 12;
-    public static final int RedlineVoltageLimit = 12;
-    public static final int Neverest60VoltageLimit = 12;
+    public static final double basekP = 0.05;
+    public static final double basekI = 0.0;
+    public static final double basekD = 0.0;
 
     public static final class DriveConstants 
     {

@@ -54,8 +54,8 @@ public class Intake extends SubsystemBase
      */
     public void run()
     {
-        intake.set(-0.4);
-        intakeHelper.set(0.4);
+        intake.set(-0.7);
+        intakeHelper.set(0.7);
     }
 
     /**

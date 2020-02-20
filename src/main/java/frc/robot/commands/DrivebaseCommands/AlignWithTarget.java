@@ -27,7 +27,7 @@ public class AlignWithTarget extends CommandBase
         this.driveBase = driveBase;
         this.limelight = limelight;
         
-        controller = new PIDController(Constants.basekP, Constants.basekI, Constants.basekD);
+        controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
 
         addRequirements(driveBase, limelight);
     }
@@ -36,30 +36,30 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void initialize() 
     {       
-        limelight.SetLedMode(3);
+        //limelight.SetLedMode(3);
 
-        controller.setSetpoint(limelight.GetTargetHorizontalOffset());
-        controller.setTolerance(5);
+        controller.setSetpoint(0);
+        controller.setTolerance(0.5);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() 
     {
-        driveBase.arcadeDrive(0, controller.calculate(driveBase.getHeading()));
+        driveBase.arcadeDrive(0, -controller.calculate(limelight.GetTargetHorizontalOffset()));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) 
     {
-        limelight.SetLedMode(1);
+        //limelight.SetLedMode(1);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() 
     {
-        return controller.atSetpoint();
+        return controller.atSetpoint() || !limelight.HasValidTarget();
     }
 }

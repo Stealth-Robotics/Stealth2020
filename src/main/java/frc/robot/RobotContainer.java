@@ -80,8 +80,8 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(
-                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getY(GenericHID.Hand.kLeft),
-                    driveJoystick.getRawAxis(4)),
+                new RunCommand(() -> driveBase.arcadeDrive(-driveJoystick.getRawAxis(1),
+                    driveJoystick.getRawAxis(2)),
                 driveBase));
 
         intake.setDefaultCommand(new IntakeDefault(intake, shooter));
@@ -97,14 +97,20 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        new JoystickButton(mechJoystick, 2).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
+
+        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
+
+        new JoystickButton(driveJoystick, 2).whileHeld(new AlignWithTarget(driveBase, limelight));     
+
+        /*new JoystickButton(mechJoystick, 2).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
         {
 			@Override
             public boolean getAsBoolean() 
             {
 				return DriverStation.getInstance().getGameSpecificMessage().equals("");
 			}
-        }));
+        }));*/
 
         // new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
 
@@ -112,11 +118,15 @@ public class RobotContainer
             () -> this.intake.run(),
             () -> this.intake.stopIntake()));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
-
-        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-
-        new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));     
+        new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(
+            () -> this.climber.runClimb(0.4, -0.2),
+            () -> this.climber.runClimb(0, 0)
+        ));
+        
+        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
+            () -> this.climber.runClimb(-0.4, 0.2),
+            () -> this.climber.runClimb(0, 0)
+        ));
     }
   
   

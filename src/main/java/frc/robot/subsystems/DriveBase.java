@@ -77,6 +77,8 @@ public class DriveBase extends SubsystemBase
 		// Update the odometry in the periodic block
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
 				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
+
+		System.out.println("LEFT CANCoder: " + m_leftEncoder.getPosition() + " RIGHT CANCoder: " + m_rightEncoder.getPosition() + " Angle: " + m_gyro.getFusedHeading());
 	}
 
 	/**
@@ -118,7 +120,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void arcadeDrive(double fwd, double rot) 
     {
-		m_drive.arcadeDrive(fwd * driveSensitivity, rot * driveSensitivity);
+		m_drive.arcadeDrive(fwd * driveSensitivity, rot * Math.abs(driveSensitivity));
 	}
 
 	public void reverseDrive()
@@ -202,7 +204,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getHeading() 
     {
-		return Math.IEEEremainder(m_gyro.getCompassHeading(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+		return m_gyro.getAbsoluteCompassHeading();
 	}
 
 	/**

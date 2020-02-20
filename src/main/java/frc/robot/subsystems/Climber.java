@@ -45,10 +45,6 @@ public class Climber extends SubsystemBase
    
     public void periodic() 
     {
-        if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && climbElevators.get() > 0)
-        {
-            runClimb(0, 0);
-        }
     }
 
 
