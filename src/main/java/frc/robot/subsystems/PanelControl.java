@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class PanelControl extends SubsystemBase 
-{
+{3
     private final WPI_TalonSRX wheelMotor;
     private final ColorSensorV3 colorSensor;
     private final Solenoid colorWheelPiston;
