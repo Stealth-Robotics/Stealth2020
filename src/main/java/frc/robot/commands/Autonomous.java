@@ -7,7 +7,9 @@
 
 package frc.robot.commands;
 
+import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -19,18 +21,20 @@ public class Autonomous extends SequentialCommandGroup
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DriveBase driveBase;
     private final Shooter shooter;
+    private final Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public Autonomous(DriveBase driveBase, Shooter shooter) 
+    public Autonomous(DriveBase driveBase, Shooter shooter, Limelight limelight) 
     {
         this.driveBase = driveBase;
         this.shooter = shooter;
+        this.limelight = limelight;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(driveBase, shooter);
+        addRequirements(driveBase, shooter, limelight);
 
     }
 
@@ -38,7 +42,7 @@ public class Autonomous extends SequentialCommandGroup
     @Override
     public void initialize() 
     {
-        addCommands(new ScoreFuel(driveBase, shooter));
+        addCommands(new ScoreFuel(driveBase, shooter, limelight));
     }
 
     // Called once the command ends or is interrupted.
