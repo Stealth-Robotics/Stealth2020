@@ -26,6 +26,7 @@ public class AlignWithTarget extends CommandBase
         this.driveBase = driveBase;
         
         controller = new PIDController(Constants.basekP, Constants.basekI, Constants.basekD);
+        controller.setTolerance(5);
 
         addRequirements(driveBase);
     }
@@ -34,9 +35,7 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void initialize() 
     {
-        double target = NetworkTableInstance.getDefault().getEntry("Target").getDouble(0); //TODO Figure out how this is actually going to be done
-        controller.setSetpoint(target);
-        controller.setTolerance(5);
+        //TODO turn lights on on init, off on finished
     }
 
     // Called every time the scheduler runs while the command is scheduled.

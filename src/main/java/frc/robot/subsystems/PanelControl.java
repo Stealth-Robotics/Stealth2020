@@ -83,13 +83,4 @@ public class PanelControl extends SubsystemBase
     {
         colorWheelPiston.set(!colorWheelPiston.get());
     }
-
-    /*public void VoltageCheck() 
-    {
-        if(PDP.getCurrent(RobotMap.panelWheelMotorPDPChannel) > Constants.RedlineVoltageLimit) 
-        // TODO Find out what motor is wheelMotor is
-        {
-            wheelMotor.setVoltage(0);
-		}
-    }*/
 }

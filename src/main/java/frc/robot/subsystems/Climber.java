@@ -16,7 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Climber extends SubsystemBase
 {
     private final CANSparkMax winch;
-    private final DigitalInput leftLimitSwitch; 
+    private final DigitalInput leftLimitSwitch;  
     private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 

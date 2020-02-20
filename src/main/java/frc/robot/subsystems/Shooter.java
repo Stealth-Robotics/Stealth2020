@@ -191,8 +191,6 @@ public class Shooter extends SubsystemBase
         hood.getSelectedSensorPosition(0);
     }
 
-    //TODO find out how beam break voltage actually works
-
     /**
      * Gets if the beam break at the bottom of the shooter belt is triggered
      * 
