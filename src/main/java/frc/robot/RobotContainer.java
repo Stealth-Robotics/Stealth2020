@@ -118,15 +118,13 @@ public class RobotContainer
             () -> this.intake.run(),
             () -> this.intake.stopIntake()));
 
-        new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(0.4, -0.2),
-            () -> this.climber.runClimb(0, 0)
-        ));
-        
-        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(-0.4, 0.2),
-            () -> this.climber.runClimb(0, 0)
-        ));
+         
+        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
+        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
+
+        new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));  
+        new JoystickButton(mechJoystick, 5).whenPressed(new PosPanel(panelControl));
+       // new JoystickButton(mechJoystick , 4 /*neds to be changed to the buttons on the driver station*/).whenPressed(() -> Climber.runClimb());
     }
   
   
