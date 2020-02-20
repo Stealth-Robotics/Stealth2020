@@ -112,7 +112,7 @@ public class RobotContainer
             () -> this.intake.run(),
             () -> this.intake.stopIntake()));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
+        new JoystickButton(mechJoystick, 8).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
 
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
 
