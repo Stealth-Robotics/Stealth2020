@@ -49,7 +49,7 @@ public class DriveBase extends SubsystemBase
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
 
-	private float driveSensitivity = 0.6f;
+	private float driveSensitivity;
 
 	//PowerDistributionPanel PDP;
 	
@@ -67,6 +67,8 @@ public class DriveBase extends SubsystemBase
 
 		resetEncoders();
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+
+		driveSensitivity = 0.6f;
 	}
 
 	@Override
