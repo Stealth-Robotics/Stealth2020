@@ -16,6 +16,10 @@ import frc.util.StopWatch;
 public class Shooter extends SubsystemBase 
 {
     private final SpeedControllerGroup shooter;
+
+    private final CANSparkMax shooter1;
+    private final CANSparkMax shooter2;
+
     protected final WPI_TalonSRX hood;
 
     private final WPI_TalonSRX belt;
@@ -38,10 +42,12 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
-        //this.PDP = PDP;
+        shooter1 = new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless);
+        shooter2 = new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless);
+        shooter2.setInverted(true);
 
-        // shooter = new SpeedControllerGroup(new PWMSparkMax(RobotMap.shooter1), new PWMSparkMax(RobotMap.shooter2));
-        shooter = new SpeedControllerGroup(new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless), new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless));
+        shooter = new SpeedControllerGroup(shooter1, shooter2);
+
         hood = new WPI_TalonSRX(RobotMap.hood);
         belt = new WPI_TalonSRX(RobotMap.belt2);
 
@@ -64,9 +70,6 @@ public class Shooter extends SubsystemBase
     @Override
     public void periodic() 
     {
-        
-        //VoltageCheck();
-
         // This method will be called once per scheduler run
         // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
         // System.out.println(hoodEncoder.getPosition());
