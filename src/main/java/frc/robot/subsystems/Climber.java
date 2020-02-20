@@ -45,6 +45,17 @@ public class Climber extends SubsystemBase
    
     public void periodic() 
     {
+        if(leftLimitSwitch.get() == false)
+        {
+           setClimbElevatorSpeed(0);
+           setWinchSpeed(1);
+        }
+
+        
+        if(rightLimitSwitch.get() == false)
+        {
+            setClimbElevatorSpeed(0);
+            setWinchSpeed(1);
     }
 
 
