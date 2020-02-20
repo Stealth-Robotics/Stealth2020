@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
+import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
@@ -89,35 +90,11 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
+        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
+        new JoystickButton(driveJoystick, 2).whileHeld(new AlignWithTarget(driveBase, limelight));
+
         new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
 
-        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-
-        new JoystickButton(driveJoystick, 2).whileHeld(new AlignWithTarget(driveBase, limelight));     
-
-        /*new JoystickButton(mechJoystick, 2).whenPressed(new ConditionalCommand(new PosPanel(panelControl), new SpinPanel(panelControl), new BooleanSupplier()
-        {
-			@Override
-            public boolean getAsBoolean() 
-            {
-				return DriverStation.getInstance().getGameSpecificMessage().equals("");
-			}
-        }));*/
-
-        // new JoystickButton(mechJoystick, 2).whenPressed(new PosPanel(panelControl));
-
-        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(
-            () -> this.intake.run(),
-            () -> this.intake.stopIntake()).alongWith(new StartEndCommand(
-                () -> this.shooter.runBelt(),
-                () -> this.shooter.stopBelt())));
-
-         
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
-        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-
-        new JoystickButton(driveJoystick, 2).whenPressed(new AlignWithTarget(driveBase, limelight));  
-        new JoystickButton(mechJoystick, 5).whenPressed(new PosPanel(panelControl));
        // new JoystickButton(mechJoystick , 4 /*neds to be changed to the buttons on the driver station*/).whenPressed(() -> Climber.runClimb());
     }
   
