@@ -44,18 +44,18 @@ public class Climber extends SubsystemBase
     @Override
    
     public void periodic() 
-    {
+    { /*
         if(leftLimitSwitch.get() == false)
         {
-           setClimbElevatorSpeed(0);
-           setWinchSpeed(1);
+           setClimbElevatorSpeed(4);
+           setWinchSpeed(9);
         }
 
         
         if(rightLimitSwitch.get() == false)
         {
-            setClimbElevatorSpeed(0);
-            setWinchSpeed(1);
+            runClimb(2, 3);
+            */
     }
 
 
