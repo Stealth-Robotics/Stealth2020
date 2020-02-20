@@ -33,6 +33,7 @@ public class Climber extends SubsystemBase
         leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
         winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
+
         WPI_TalonSRX leftClimber = new WPI_TalonSRX(RobotMap.climber1);
         WPI_TalonSRX rightClimber = new WPI_TalonSRX(RobotMap.climber2);
 
@@ -44,18 +45,11 @@ public class Climber extends SubsystemBase
     @Override
    
     public void periodic() 
-    { /*
-        if(leftLimitSwitch.get() == false)
+    { 
+        if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && climbElevators.get() > 0)
         {
-           setClimbElevatorSpeed(4);
-           setWinchSpeed(9);
+            runClimb(0, 0);
         }
-
-        
-        if(rightLimitSwitch.get() == false)
-        {
-            runClimb(2, 3);
-            */
     }
 
 

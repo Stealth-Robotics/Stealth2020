@@ -56,7 +56,6 @@ public class Intake extends SubsystemBase
     public void run()
     {
         intake.set(0.7);
-        belt.set(1);
     }
 
     /**

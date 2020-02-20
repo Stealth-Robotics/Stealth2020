@@ -93,9 +93,20 @@ public class RobotContainer
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
         new JoystickButton(driveJoystick, 2).whileHeld(new AlignWithTarget(driveBase, limelight));
 
-        new JoystickButton(mechJoystick, 3).whenPressed(new ScoreFuel(driveBase, shooter, limelight));
+        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(
+            () -> this.intake.run(),
+            () -> this.intake.stopIntake()
+        ));
 
-       // new JoystickButton(mechJoystick , 4 /*neds to be changed to the buttons on the driver station*/).whenPressed(() -> Climber.runClimb());
+        new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(
+            () -> climber.runClimb(0.4, -0.2),
+            () -> climber.runClimb(0, 0)
+        ));
+
+        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
+            () -> climber.runClimb(-0.4, 0.2),
+            () -> climber.runClimb(0, 0)
+        ));
     }
   
   
