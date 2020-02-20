@@ -8,10 +8,23 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -52,8 +65,6 @@ public class RobotContainer
      */
     public RobotContainer() 
     {
-        //PDP = new PowerDistributionPanel(RobotMap.PDPCanID);
-
         driveBase = new DriveBase();
         shooter = new Shooter();
         intake = new Intake();
@@ -119,7 +130,40 @@ public class RobotContainer
      */
     public Command getAutonomousCommand() 
     {
-        // An ExampleCommand will run in autonomous
-        return m_autoCommand;
+        // TODO : Add Choosing Functionality
+        String trajectoryJSON = "paths/YourPath.wpilib.json";
+
+        Path trajectoryPath;
+        Trajectory trajectory = null;
+
+        try
+        {
+            trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        }
+    
+        catch (IOException ex)
+        {
+            DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+        }
+
+        RamseteCommand ramseteCommand = new RamseteCommand(
+            trajectory,
+            driveBase::getPose,
+            new RamseteController(Constants.AutoConstants.kRamseteB, Constants.AutoConstants.kRamseteZeta),
+            new SimpleMotorFeedforward(Constants.DriveConstants.ksVolts,
+                                       Constants.DriveConstants.kvVoltSecondsPerMeter,
+                                       Constants.DriveConstants.kaVoltSecondsSquaredPerMeter),
+            Constants.DriveConstants.kDriveKinematics,
+            driveBase::getWheelSpeeds,
+            new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
+            new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
+            // RamseteCommand passes volts to the callback
+            driveBase::tankDriveVolts,
+            driveBase
+        );
+
+        // Run path following command, then stop at the end.
+        return ramseteCommand.andThen(() -> driveBase.tankDriveVolts(0, 0));
     }
 }
