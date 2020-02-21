@@ -15,23 +15,19 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ControlPanelCommands.PosPanel;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
-import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
@@ -102,7 +98,7 @@ public class RobotContainer
     private void configureButtonBindings() 
     {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        new JoystickButton(driveJoystick, 2).whileHeld(new AlignWithTarget(driveBase, limelight));
+        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, limelight));
 
         new JoystickButton(mechJoystick, 1).whenPressed(() -> intake.toggle());
 
@@ -130,8 +126,8 @@ public class RobotContainer
      */
     public Command getAutonomousCommand() 
     {
-        //TODO : Add Choosing Functionality
-        String trajectoryJSON = "Stealth2020/PathWeaver/Output/output/BlueCenter_SimpleShoot.wpilib.json";
+        // TODO : Add Choosing Functionality
+        String trajectoryJSON = "PathWeaver/Output/output/BlueCenter_SimpleShoot.wpilib.json";
 
         Path trajectoryPath;
         Trajectory trajectory = null;

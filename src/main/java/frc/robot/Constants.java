@@ -43,6 +43,15 @@ public final class Constants
     public static final double basekI = 0.0;
     public static final double basekD = 0.0;
 
+    // Estimating Distance With Limelight
+    // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
+    
+    // TODO : Find Real Values
+
+    public static final double targetHeight = 83.25; // in inches
+    public static final double cameraHeight = 12; // in inches
+    public static final double mountingAngle = 32; // in degrees
+
     public static final class DriveConstants 
     {
         public static final boolean kLeftEncoderReversed = false;
