@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class SpinPanel extends CommandBase 
 {
-    StopWatch timer;
+    ////StopWatch timer;
+    boolean weAreDone = false;
+
     int greenCounter;
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -59,6 +61,7 @@ public class SpinPanel extends CommandBase
         {
             panelControl.setWheelSpeed(0.0);
             System.out.printf("We have seen green 6 times , the color wheel has stopped spiining");
+            weAreDone = true;
         }
     }
 
@@ -73,6 +76,12 @@ public class SpinPanel extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return timer.isExpired();
+       if(weAreDone ==  true)
+       {
+           return false;
+       }
+       else{
+           return true;
+       }
     }
 }
