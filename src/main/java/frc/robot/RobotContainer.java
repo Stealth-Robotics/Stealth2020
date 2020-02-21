@@ -51,8 +51,6 @@ public class RobotContainer
     private final PanelControl panelControl;
     private final Limelight limelight;
   
-    private final ScoreFuel m_autoCommand;
-  
     private Joystick driveJoystick;
     private Joystick mechJoystick;
   
@@ -67,8 +65,6 @@ public class RobotContainer
         climber = new Climber();
         panelControl = new PanelControl();
         limelight = new Limelight();
-        
-        m_autoCommand = new ScoreFuel(driveBase, shooter, limelight);
 
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);
