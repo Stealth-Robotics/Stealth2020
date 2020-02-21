@@ -131,7 +131,7 @@ public class RobotContainer
     public Command getAutonomousCommand() 
     {
         // TODO : Add Choosing Functionality
-        String trajectoryJSON = "paths/YourPath.wpilib.json";
+        String trajectoryJSON = "Stealth2020/PathWeaver/Output/output/BlueCenter_SimpleShoot.wpilib.json";
 
         Path trajectoryPath;
         Trajectory trajectory = null;
