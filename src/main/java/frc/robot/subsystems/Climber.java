@@ -25,17 +25,16 @@ public class Climber extends SubsystemBase
     /**
      * Creates a new Climber.
      */
-
     public Climber() 
     {    
         //this.PDP = PDP;
 
-        leftLimitSwitch = new DigitalInput(RobotMap.leftLimitSwitch);
-        rightLimitSwitch  = new DigitalInput(RobotMap.rightLimitSwitch);
-        winch = new CANSparkMax(RobotMap.winch, MotorType.kBrushless);
+        leftLimitSwitch = new DigitalInput(RobotMap.LeftLimitSwitch);
+        rightLimitSwitch  = new DigitalInput(RobotMap.LightLimitSwitch);
+        winch = new CANSparkMax(RobotMap.Winch, MotorType.kBrushless);
 
-        WPI_TalonSRX leftClimber = new WPI_TalonSRX(RobotMap.climber1);
-        WPI_TalonSRX rightClimber = new WPI_TalonSRX(RobotMap.climber2);
+        WPI_TalonSRX leftClimber = new WPI_TalonSRX(RobotMap.Climber1);
+        WPI_TalonSRX rightClimber = new WPI_TalonSRX(RobotMap.Climber2);
 
         rightClimber.setInverted(true);
 
@@ -43,7 +42,6 @@ public class Climber extends SubsystemBase
     }
 
     @Override
-   
     public void periodic() 
     { 
         if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && climbElevators.get() > 0)
@@ -51,7 +49,6 @@ public class Climber extends SubsystemBase
             runClimb(0, 0);
         }
     }
-
 
     /**
      * Sets the speed of the climb motors

@@ -85,7 +85,7 @@ public class RobotContainer
                 driveBase));
 
         // intake.setDefaultCommand(new IntakeDefault(intake, shooter));
-        //TODO uncomment when hardware installed
+        //TODO: uncomment when hardware installed
         // shooter.setDefaultCommand(new ShooterDefault(shooter));
     }
   
