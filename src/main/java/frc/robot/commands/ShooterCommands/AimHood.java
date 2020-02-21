@@ -2,8 +2,8 @@
 package frc.robot.commands.ShooterCommands;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -13,44 +13,31 @@ public class AimHood extends CommandBase
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Shooter shooter;
+    private final Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public AimHood(Shooter subsystem) 
+    public AimHood(Shooter shooter, Limelight limelight) 
     {
-        shooter = subsystem;
-        
+        this.shooter = shooter;
+        this.limelight = limelight;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(subsystem);
+        addRequirements(shooter, limelight);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {
-        // NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").setDouble(1);
-    }
-
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() 
-    {
-        double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO Figure out how this is actually going to be done
+        double dist = (Constants.targetHeight - Constants.cameraHeight) / Math.tan(Constants.mountingAngle + limelight.GetTargetVerticalOffset());
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
         System.out.println("Dist: " + dist);
         System.out.println("Angle: " + angle * 180 / Math.PI);
         shooter.setHoodPos(angle);
-    }
-
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) 
-    {
-        
     }
 
     // Returns true when the command should end.

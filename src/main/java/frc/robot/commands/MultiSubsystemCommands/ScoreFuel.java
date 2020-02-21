@@ -1,19 +1,13 @@
 
 package frc.robot.commands.MultiSubsystemCommands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
-import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-
-import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * An example command that uses an example subsystem.
@@ -45,18 +39,18 @@ public class ScoreFuel extends SequentialCommandGroup
         limelight.SetLedMode(3);
 
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
-            new FireShooter(shooter),
-            new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
+            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter, limelight)));
+            //new FireShooter(shooter),
+            /*new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
             {
                 @Override
                 public boolean getAsBoolean()
                 {
                     return shooter.getBeamBreak2();
                 }
-            }));
+            }));*/
 
-        limelight.SetLedMode(0);
+        limelight.SetLedMode(1);
     }
 
     // Called once the command ends or is interrupted.
@@ -70,6 +64,7 @@ public class ScoreFuel extends SequentialCommandGroup
     @Override
     public boolean isFinished() 
     {
+        // TODO : Find Out When To End Command
         return false;
     }
 }

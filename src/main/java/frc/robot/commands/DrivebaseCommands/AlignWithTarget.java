@@ -36,9 +36,6 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void initialize() 
     {       
-        limelight.SetLedMode(3);
-        //limelight.SetLedMode(3);
-
         controller.setSetpoint(0);
         controller.setTolerance(0.5);
     }
@@ -54,7 +51,7 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
-        limelight.SetLedMode(1);
+        
     }
 
     // Returns true when the command should end.
