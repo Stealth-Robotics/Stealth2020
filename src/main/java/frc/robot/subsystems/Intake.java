@@ -108,17 +108,4 @@ public class Intake extends SubsystemBase
         return !beamBreak1.get();
         // return false;
     }
-
-    /*public void VoltageCheck() 
-    {
-        if(PDP.getCurrent(RobotMap.intakePDPChannel) > Constants.RedlineVoltageLimit)
-        {
-            intake.setVoltage(0);
-		}
-		
-		if(PDP.getCurrent(RobotMap.belt3PDPChannel) > Constants.RedlineVoltageLimit)
-		{
-			belt.setVoltage(0);
-		}   
-    }*/
 }

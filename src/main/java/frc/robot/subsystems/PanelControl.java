@@ -31,8 +31,6 @@ public class PanelControl extends SubsystemBase
     @Override
     public void periodic() 
     {
-        //VoltageCheck();
-
         // This method will be called once per scheduler run
         // double prox = Math.pow(colorSensor.getProximity(), 1.25);
         // System.out.println((int)colorSensor.getRed() / prox + " " + (int)colorSensor.getBlue() / prox + " " + (int)colorSensor.getGreen() / prox + " " + colorSensor.getProximity());

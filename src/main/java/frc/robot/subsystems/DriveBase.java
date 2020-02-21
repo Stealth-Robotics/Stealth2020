@@ -74,8 +74,6 @@ public class DriveBase extends SubsystemBase
 	@Override
     public void periodic()
     {
-		//VoltageCheck();
-
 		// Update the odometry in the periodic block
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
 				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
@@ -221,19 +219,4 @@ public class DriveBase extends SubsystemBase
 
    		return mXYZDegreePerSecond[2] * (Constants.DriveConstants.kGyroReversed ? -1.0 : 1.0);
 	}
-
-	/* void VoltageCheck()
-	{
-		if(PDP.getCurrent(RobotMap.kLeftMotor1PDPChannel) > Constants.NEOVoltageLimit
-		|| PDP.getCurrent(RobotMap.kLeftMotor2PDPChannel) > Constants.NEOVoltageLimit)
-        {
-            m_leftMotors.setVoltage(0);
-		}
-		
-		if(PDP.getCurrent(RobotMap.kRightMotor1PDPChannel) > Constants.NEOVoltageLimit
-		|| PDP.getCurrent(RobotMap.kRightMotor2PDPChannel) > Constants.NEOVoltageLimit)
-		{
-			m_rightMotors.setVoltage(0);
-		}
-	}*/
 }

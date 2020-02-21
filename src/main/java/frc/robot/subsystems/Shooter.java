@@ -66,9 +66,6 @@ public class Shooter extends SubsystemBase
         beamBreak3 = new DigitalInput(RobotMap.BeamBreak3);
 
         enabled = false;
-
-        //TODO: Remove after testing and uncomment periodic code
-        shooter.set(-1);
     }
 
     @Override
@@ -231,24 +228,4 @@ public class Shooter extends SubsystemBase
     {
         return !beamBreak3.get();
     }
-
-    /*public void VoltageCheck()
-    {
-        if(PDP.getCurrent(RobotMap.shooter1PDPChannel) > Constants.NEOVoltageLimit
-        || PDP.getCurrent(RobotMap.shooter2PDPChannel) > Constants.NEOVoltageLimit)
-        {
-            shooter.setVoltage(0);
-        }
-
-        if(PDP.getCurrent(RobotMap.hoodPDPChannel) > Constants.Neverest60VoltageLimit)
-        {
-            hood.setVoltage(0);
-        }
-
-        if(PDP.getCurrent(RobotMap.belt1PDPChannel) > Constants.RedlineVoltageLimit
-        ||PDP.getCurrent(RobotMap.belt2PDPChannel) > Constants.RedlineVoltageLimit)
-        {
-            belt.setVoltage(0);
-        }
-    }*/
 }
