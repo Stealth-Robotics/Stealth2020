@@ -17,7 +17,7 @@ public class Limelight extends SubsystemBase
 
     public void IntializeLimelight()
     {
-        SetLedMode(1);
+        SetLedMode(3);
         SetCamMode(0);
     }
 

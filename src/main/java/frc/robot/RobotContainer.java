@@ -104,13 +104,13 @@ public class RobotContainer
         ));
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0.4, -0.2),
-            () -> climber.runClimb(0, 0)
+            () -> this.climber.runClimb(0.4, -0.2),
+            () -> this.climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(-0.4, 0.2),
-            () -> climber.runClimb(0, 0)
+            () -> this.climber.runClimb(-0.4, 0.2),
+            () -> this.climber.runClimb(0, 0)
         ));
     }
   

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.util.StopWatch;
 
 public class Shooter extends SubsystemBase 
 {
