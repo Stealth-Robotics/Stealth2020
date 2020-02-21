@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -20,11 +20,12 @@ public class Shooter extends SubsystemBase
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
 
+    private final CANEncoder shooterEncoder;
+
     protected final WPI_TalonSRX hood;
 
     private final WPI_TalonSRX belt;
 
-    private final CANCoder shooterEncoder;
     private final PIDController shooterController;
     
     // protected final CANCoder hoodEncoder;
@@ -42,39 +43,43 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
-        shooter1 = new CANSparkMax(RobotMap.shooter1, MotorType.kBrushless);
-        shooter2 = new CANSparkMax(RobotMap.shooter2, MotorType.kBrushless);
+        shooter1 = new CANSparkMax(RobotMap.Shooter1, MotorType.kBrushless);
+        shooter2 = new CANSparkMax(RobotMap.Shooter2, MotorType.kBrushless);
         shooter2.setInverted(true);
 
         shooter = new SpeedControllerGroup(shooter1, shooter2);
 
-        hood = new WPI_TalonSRX(RobotMap.hood);
-        belt = new WPI_TalonSRX(RobotMap.belt2);
+        shooterEncoder = shooter1.getEncoder();
 
-        shooterEncoder = new CANCoder(RobotMap.shooter1);
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
+
+        hood = new WPI_TalonSRX(RobotMap.Hood);
+        
+        belt = new WPI_TalonSRX(RobotMap.Belt2);
 
         // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(3);
 
-        beamBreak2 = new DigitalInput(RobotMap.beamBreak2);
-        beamBreak3 = new DigitalInput(RobotMap.beamBreak3);
+        beamBreak2 = new DigitalInput(RobotMap.BeamBreak2);
+        beamBreak3 = new DigitalInput(RobotMap.BeamBreak3);
 
         enabled = false;
 
-        shooter.set(-1); //TODO remove this 
+        //TODO: Remove after testing and uncomment periodic code
+        shooter.set(-1);
     }
 
     @Override
     public void periodic() 
     {
         // This method will be called once per scheduler run
-        // hood.set(hoodController.calculate(hoodEncoder.getPosition()));
-        // System.out.println(hoodEncoder.getPosition());
-        /*hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
+
+        /*
+        hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         System.out.println(hood.getSelectedSensorPosition(0));
+
         if (enabled)
         {
             shooter.set(-shooterController.calculate(shooterEncoder.getVelocity()));
@@ -82,7 +87,18 @@ public class Shooter extends SubsystemBase
         else
         {
             shooter.set(0);
-        }*/
+        }
+        */
+    }
+
+    /**
+     * Checks if the shooter is enabled (spinning)
+     * 
+     * @return Returns boolean true if enabled
+     */
+    public boolean isEnabled()
+    {
+        return enabled;
     }
 
     /**
@@ -167,12 +183,14 @@ public class Shooter extends SubsystemBase
         enabled = false;
     }
 
+
+    //TODO: Rework InitHoodPosition
     /**
      * Allows the shooter to zero itself at the start of the match
      */
+    /*
     public void initializePosition()
     {
-        // double previousEncoderPosition = hoodEncoder.getPosition();
         double previousEncoderPosition = hood.getSelectedSensorPosition(0);
         
         hood.set(-0.1);
@@ -192,7 +210,7 @@ public class Shooter extends SubsystemBase
 
         hood.set(0);
         hood.getSelectedSensorPosition(0);
-    }
+    }*/
 
     /**
      * Gets if the beam break at the bottom of the shooter belt is triggered
@@ -202,7 +220,6 @@ public class Shooter extends SubsystemBase
     public boolean getBeamBreak2()
     {
         return !beamBreak2.get(); //true == no break
-        // return false;
     }
 
     /**
@@ -213,7 +230,6 @@ public class Shooter extends SubsystemBase
     public boolean getBeamBreak3()
     {
         return !beamBreak3.get();
-        // return false;
     }
 
     /*public void VoltageCheck()

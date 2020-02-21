@@ -31,14 +31,14 @@ public class Intake extends SubsystemBase
     {
         //this.PDP = PDP;
 
-        WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.intake);
+        WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.Intake);
         mainIntake.setInverted(true);
-        intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.intakeHelper));
-        belt = new WPI_TalonSRX(RobotMap.belt1);
+        intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.IntakeHelper));
+        belt = new WPI_TalonSRX(RobotMap.Belt1);
 
-        deployPistons = new Solenoid(RobotMap.PCM, RobotMap.intakeDeployPistons);
+        deployPistons = new Solenoid(RobotMap.PCM, RobotMap.IntakeDeployPCMChannel);
 
-        beamBreak1 = new DigitalInput(RobotMap.beamBreak1);
+        beamBreak1 = new DigitalInput(RobotMap.BeamBreak1);
 
         fuelCount = 0;
         breakTracker = false;

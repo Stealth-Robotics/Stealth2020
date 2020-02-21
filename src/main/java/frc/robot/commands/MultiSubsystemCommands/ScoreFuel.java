@@ -42,10 +42,13 @@ public class ScoreFuel extends SequentialCommandGroup
     @Override
     public void initialize() 
     {
-        limelight.SetLedMode(3);
+        //limelight.SetLedMode(3);
 
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter), new InstantCommand(() -> shooter.enable())),
+            new ParallelCommandGroup(
+                new AlignWithTarget(driveBase, limelight), 
+                new AimHood(shooter), 
+                new InstantCommand(() -> shooter.enable())),
             new FireShooter(shooter),
             new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
             {
@@ -56,7 +59,7 @@ public class ScoreFuel extends SequentialCommandGroup
                 }
             }));
 
-        limelight.SetLedMode(0);
+        //limelight.SetLedMode(0);
     }
 
     // Called once the command ends or is interrupted.

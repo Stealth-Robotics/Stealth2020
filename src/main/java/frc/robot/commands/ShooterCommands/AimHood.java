@@ -38,7 +38,7 @@ public class AimHood extends CommandBase
     @Override
     public void execute() 
     {
-        double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO Figure out how this is actually going to be done
+        double dist = NetworkTableInstance.getDefault().getEntry("LiveWindow/Ungrouped/dist").getDouble(-1); //TODO: Figure out how this is actually going to be done
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
         System.out.println("Dist: " + dist);

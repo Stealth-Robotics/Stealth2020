@@ -23,9 +23,9 @@ public class PanelControl extends SubsystemBase
     {
         //this.PDP = PDP;
 
-        wheelMotor = new WPI_TalonSRX(RobotMap.panelWheelMotor);
+        wheelMotor = new WPI_TalonSRX(RobotMap.ColorWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
-        colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.colorWheelPistonChannel);
+        colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.ColorWheelPCMChannel);
     }
 
     @Override

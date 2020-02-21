@@ -89,7 +89,7 @@ public class RobotContainer
                 driveBase));
 
         // intake.setDefaultCommand(new IntakeDefault(intake, shooter));
-        //TODO uncomment when hardware installed
+        //TODO: uncomment when hardware installed
         // shooter.setDefaultCommand(new ShooterDefault(shooter));
     }
   
@@ -130,7 +130,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand() 
     {
-        // TODO : Add Choosing Functionality
+        //TODO : Add Choosing Functionality
         String trajectoryJSON = "Stealth2020/PathWeaver/Output/output/BlueCenter_SimpleShoot.wpilib.json";
 
         Path trajectoryPath;

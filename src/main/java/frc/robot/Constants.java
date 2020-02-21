@@ -22,7 +22,7 @@ public final class Constants
     public static final double fuelAirTime = 0.713; //seconds
     public static final double fuelInitVelocY = 6.986; //meters / second
     
-    public static final double shooterkP = 0.3; //TODO find real values
+    public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
     public static final double shooterkI = 0.0;
     public static final double shooterkD = 0.0;
 
@@ -31,15 +31,15 @@ public final class Constants
     public static final double maxAngle = 14 * Math.PI / 36;
     public static final double minAngle = maxAngle - Math.PI / 12;
     
-    public static final double hoodkP = 0.01; //these ones work I think
-    public static final double hoodkI = 0.005;
+    public static final double hoodkP = 0.01; //TODO: Tune hood PID
+    public static final double hoodkI = 0.005; //these ones work I think
     public static final double hoodkD = 0.0;
 
-    public static final double limekP = 0.065;
+    public static final double limekP = 0.065; //TODO: Tune limelight PID on carpet
     public static final double limekI = 0.0;
     public static final double limekD = 0.01;
 
-    public static final double basekP = 0.05;
+    public static final double basekP = 0.05; //TODO: Tune drivebase PID on carpet
     public static final double basekI = 0.0;
     public static final double basekD = 0.0;
 

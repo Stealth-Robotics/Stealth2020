@@ -27,24 +27,24 @@ import frc.robot.RobotMap;
 public class DriveBase extends SubsystemBase 
 {
 	// The motors on the left side of the drive.
-	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.kLeftMotor1Port, MotorType.kBrushless),
-			new CANSparkMax(RobotMap.kLeftMotor2Port, MotorType.kBrushless));
+	private final SpeedControllerGroup m_leftMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.LeftDriveMotor1, MotorType.kBrushless),
+			new CANSparkMax(RobotMap.LeftDriveMotor2, MotorType.kBrushless));
 
 	// The motors on the right side of the drive.
-	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.kRightMotor1Port, MotorType.kBrushless),
-			new CANSparkMax(RobotMap.kRightMotor2Port, MotorType.kBrushless));
+	private final SpeedControllerGroup m_rightMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.RightDriveMotor1, MotorType.kBrushless),
+			new CANSparkMax(RobotMap.RightDriveMotor2, MotorType.kBrushless));
 
 	// The robot's drive
 	private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
 	// Left Side Drive Encoder
-	private final CANCoder m_leftEncoder = new CANCoder(RobotMap.kLeftEncoderPort);
+	private final CANCoder m_leftEncoder = new CANCoder(RobotMap.LeftEncoder);
 
 	// Right Side Drive Encoder
-	private final CANCoder m_rightEncoder = new CANCoder(RobotMap.kRightEncoderPort);
+	private final CANCoder m_rightEncoder = new CANCoder(RobotMap.RightEncoder);
 
 	// The gyro sensor
-	private final PigeonIMU m_gyro = new PigeonIMU(new TalonSRX(RobotMap.kGyroPort));
+	private final PigeonIMU m_gyro = new PigeonIMU(new TalonSRX(RobotMap.GyroPort));
 
 	// Odometry class for tracking robot pose
 	private final DifferentialDriveOdometry m_odometry;
