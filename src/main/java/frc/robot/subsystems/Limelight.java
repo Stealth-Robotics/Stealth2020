@@ -29,12 +29,7 @@ public class Limelight extends SubsystemBase
 
     public double getTargetHorizontalOffset()
     {
-        if(hasValidTarget())
-        {
-            return limelightTableEntry.getEntry("tx").getDouble(0);
-        }
-
-        return Double.NaN;
+        return hasValidTarget() ? limelightTableEntry.getEntry("tx").getDouble(0) : Double.NaN;
     }
 
     /**
@@ -44,22 +39,12 @@ public class Limelight extends SubsystemBase
      */
     public double getTargetVerticalOffset()
     {
-        if(hasValidTarget())
-        {
-            return limelightTableEntry.getEntry("ty").getDouble(0) * Math.PI / 180;
-        }
-
-        return Double.NaN;
+        return hasValidTarget() ? limelightTableEntry.getEntry("ty").getDouble(0) * Math.PI / 180 : Double.NaN;
     }
 
     public double getTargetArea()
     {
-        if(hasValidTarget())
-        {
-            return limelightTableEntry.getEntry("ta").getDouble(0);
-        }
-
-        return Double.NaN;
+        return hasValidTarget() ? limelightTableEntry.getEntry("ta").getDouble(0) : Double.NaN;
     }
 
     /**
