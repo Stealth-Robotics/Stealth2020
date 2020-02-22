@@ -5,25 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.BeltCommands;
+package frc.robot.commands.BeltsCommands;
 
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Belts;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class BeltDefault extends CommandBase 
+public class BeltsDefault extends CommandBase 
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Indexer indexer;
+    private final Belts indexer;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public BeltDefault(Indexer indexer) 
+    public BeltsDefault(Belts indexer) 
     {
         this.indexer = indexer;
         // Use addRequirements() here to declare subsystem dependencies.
@@ -34,14 +34,35 @@ public class BeltDefault extends CommandBase
     @Override
     public void initialize() 
     {
-        
+
+    }
+
+    @Override
+    public void execute()
+    {
+        if (indexer.getBeamBreak1())
+        {
+            indexer.runBelt1();
+        }
+        else
+        {
+            indexer.stopBelt1();
+        }
+        if (indexer.getBeamBreak2())
+        {
+            indexer.runBelt2();
+        }
+        else
+        {
+            indexer.stopBelt2();;
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) 
     {
-        intake.toggle();
+        
     }
 
     // Returns true when the command should end.

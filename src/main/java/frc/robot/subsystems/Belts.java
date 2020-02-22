@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class Indexer extends SubsystemBase
+public class Belts extends SubsystemBase
 {
     private final WPI_TalonSRX belt1;
     private final WPI_TalonSRX belt2;
@@ -16,7 +16,7 @@ public class Indexer extends SubsystemBase
     private final DigitalInput beamBreak3;
 
     
-    public Indexer()
+    public Belts()
     {
         beamBreak1 = new DigitalInput(RobotMap.BeamBreak1);
         beamBreak2 = new DigitalInput(RobotMap.BeamBreak2);
@@ -40,6 +40,16 @@ public class Indexer extends SubsystemBase
     public void runBelt2()
     {
         belt2.set(1);
+    }
+
+    public void stopBelt1()
+    {
+        belt1.set(0);
+    }
+
+    public void stopBelt2()
+    {
+        belt2.set(0);
     }
 
     public void reverseBelt1()

@@ -26,11 +26,12 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.PanelControl;
@@ -50,7 +51,7 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final PanelControl panelControl;
-    private final Indexer indexer;
+    private final Belts indexer;
     private final Limelight limelight;
   
     private Joystick driveJoystick;
@@ -65,7 +66,7 @@ public class RobotContainer
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
-        indexer = new Indexer();
+        indexer = new Belts();
         panelControl = new PanelControl();
         
         limelight = new Limelight();
@@ -84,9 +85,7 @@ public class RobotContainer
                     driveJoystick.getRawAxis(4)),
                 driveBase));
 
-        // intake.setDefaultCommand(new IntakeDefault(intake, shooter));
-        //TODO: uncomment when hardware installed
-        // shooter.setDefaultCommand(new ShooterDefault(shooter));
+        indexer.setDefaultCommand(new BeltsDefault(indexer));
     }
   
     /**
