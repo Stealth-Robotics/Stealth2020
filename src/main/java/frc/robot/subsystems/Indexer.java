@@ -29,4 +29,24 @@ public class Indexer extends SubsystemBase
     {
         System.out.println(beamBreak1.get());
     }
+
+    public void runBelt1()
+    {
+        belt1.set(1);
+    }
+
+    public void runBelt2()
+    {
+        belt2.set(1);
+    }
+
+    public void reverseBelt1()
+    {
+        belt1.set(-1);
+    }
+
+    public void reverseBelt2()
+    {
+        belt2.set(-1);
+    }
 }
