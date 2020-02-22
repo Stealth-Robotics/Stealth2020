@@ -44,7 +44,7 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void execute() 
     {
-        driveBase.arcadeDrive(0, -controller.calculate(limelight.GetTargetHorizontalOffset()));
+        driveBase.arcadeDrive(0, -controller.calculate(limelight.getTargetHorizontalOffset()));
     }
 
     // Called once the command ends or is interrupted.
@@ -58,6 +58,6 @@ public class AlignWithTarget extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return controller.atSetpoint() || !limelight.HasValidTarget();
+        return controller.atSetpoint() || !limelight.hasValidTarget();
     }
 }

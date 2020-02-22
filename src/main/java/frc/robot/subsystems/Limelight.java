@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase 
 {
@@ -12,30 +13,23 @@ public class Limelight extends SubsystemBase
     {
         limelightTableEntry = NetworkTableInstance.getDefault().getTable("limelight");
 
-        IntializeLimelight();
+        intializeLimelight();
     }
 
-    public void IntializeLimelight()
+    public void intializeLimelight()
     {
         SetLedMode(3);
         SetCamMode(0);
     }
 
-    public boolean HasValidTarget()
+    public boolean hasValidTarget()
     {
-        double tv = limelightTableEntry.getEntry("tv").getDouble(0);
-
-        if(tv == 1)
-        {
-            return true;
-        }
-
-        return false;
+        return limelightTableEntry.getEntry("tv").getDouble(0) == 1;
     }
 
-    public double GetTargetHorizontalOffset()
+    public double getTargetHorizontalOffset()
     {
-        if(HasValidTarget())
+        if(hasValidTarget())
         {
             return limelightTableEntry.getEntry("tx").getDouble(0);
         }
@@ -43,24 +37,39 @@ public class Limelight extends SubsystemBase
         return Double.NaN;
     }
 
-    public double GetTargetVerticalOffset()
+    /**
+     * The angle between the camera and the target
+     * 
+     * @return The angle, in radians
+     */
+    public double getTargetVerticalOffset()
     {
-        if(HasValidTarget())
+        if(hasValidTarget())
         {
-            return limelightTableEntry.getEntry("ty").getDouble(0);
+            return limelightTableEntry.getEntry("ty").getDouble(0) * Math.PI / 180;
         }
 
         return Double.NaN;
     }
 
-    public double GetTargetArea()
+    public double getTargetArea()
     {
-        if(HasValidTarget())
+        if(hasValidTarget())
         {
             return limelightTableEntry.getEntry("ta").getDouble(0);
         }
 
         return Double.NaN;
+    }
+
+    /**
+     * Gets the distance from the shooter to the power port
+     * 
+     * @return The distance, in meters
+     */
+    public double getTargetDistance()
+    {
+        return (Constants.targetHeightM - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
     }
 
     public void GetCamMode(double defaultValue)

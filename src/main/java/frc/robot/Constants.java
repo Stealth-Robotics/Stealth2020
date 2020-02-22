@@ -19,8 +19,16 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants 
 {
-    public static final double fuelAirTime = 0.713; //seconds
-    public static final double fuelInitVelocY = 6.986; //meters / second
+    public static final double targetHeightM = 2.49; //meters
+    public static final double shooterHeight = 0.6858; //meters
+    public static final double fuelAirTimeSquared = (targetHeightM - shooterHeight) * 2 / 9.8; //seconds^2
+    public static final double fuelAirTime = 0.608; //seconds
+    public static final double fuelInitVelocY = 9.8 * fuelAirTime; //meters / second
+    
+    // Estimating Distance With Limelight
+    // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
+    public static final double cameraHeight = 0.635; // in meters
+    public static final double cameraAngle = 32 * Math.PI / 180; // in radians
     
     public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
     public static final double shooterkI = 0.0;
@@ -42,15 +50,6 @@ public final class Constants
     public static final double basekP = 0.05; //TODO: Tune drivebase PID on carpet
     public static final double basekI = 0.0;
     public static final double basekD = 0.0;
-
-    // Estimating Distance With Limelight
-    // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
-    
-    // TODO : Find Real Values
-
-    public static final double targetHeight = 83.25; // in inches
-    public static final double cameraHeight = 12; // in inches
-    public static final double mountingAngle = 32; // in degrees
 
     public static final class DriveConstants 
     {

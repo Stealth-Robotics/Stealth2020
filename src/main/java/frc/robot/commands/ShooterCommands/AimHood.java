@@ -32,11 +32,13 @@ public class AimHood extends CommandBase
     @Override
     public void initialize() 
     {
-        double dist = (Constants.targetHeight - Constants.cameraHeight) / Math.tan(Constants.mountingAngle + limelight.GetTargetVerticalOffset());
+        double dist = limelight.getTargetDistance();
+        
         double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
         System.out.println("Dist: " + dist);
         System.out.println("Angle: " + angle * 180 / Math.PI);
+
         shooter.setHoodPos(angle);
     }
 
