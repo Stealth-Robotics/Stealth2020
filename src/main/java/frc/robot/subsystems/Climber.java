@@ -58,7 +58,7 @@ public class Climber extends SubsystemBase
      */
     public void runClimb(double elevatorSpeed, double winchSpeed)
     {
-        climbElevators.set(elevatorSpeed);
+        climbElevators.set(-elevatorSpeed);
         winch.set(winchSpeed);
     }
 }
