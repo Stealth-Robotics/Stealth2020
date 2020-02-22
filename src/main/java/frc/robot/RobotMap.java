@@ -48,6 +48,7 @@ public class RobotMap
 
     public static final int BeamBreak1 = 7; // intake beam break
     public static final int BeamBreak2 = 1;
+    public static final int BeamBreak3 = 2;
 
     //ColorWheel
     public static final int ColorWheelMotor = 14;
