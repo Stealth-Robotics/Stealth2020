@@ -30,6 +30,7 @@ import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.PanelControl;
@@ -49,6 +50,7 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final PanelControl panelControl;
+    private final Indexer indexer;
     private final Limelight limelight;
   
     private Joystick driveJoystick;
@@ -63,7 +65,9 @@ public class RobotContainer
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
+        indexer = new Indexer();
         panelControl = new PanelControl();
+        
         limelight = new Limelight();
 
         driveJoystick = new Joystick(0);
@@ -167,5 +171,15 @@ public class RobotContainer
 
         // Run path following command, then stop at the end.
         return ramseteCommand.andThen(() -> driveBase.tankDriveVolts(0, 0));
+    }
+
+    public void TurnOffLimelight()
+    {
+        limelight.SetLedMode(1);
+    }
+
+    public void TurnOnLimelight()
+    {
+        limelight.SetLedMode(3);
     }
 }

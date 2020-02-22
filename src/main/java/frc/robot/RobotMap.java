@@ -46,9 +46,8 @@ public class RobotMap
     public static final int Belt1 =  33;
     public static final int Belt2 = 34;
 
-    public static final int BeamBreak1 = 3;
+    public static final int BeamBreak1 = 7; // intake beam break
     public static final int BeamBreak2 = 1;
-    public static final int BeamBreak3 = 2;
 
     //ColorWheel
     public static final int ColorWheelMotor = 14;
@@ -56,7 +55,7 @@ public class RobotMap
     //Pneumatics
     public static final int PCM = 20;
     public static final int ColorWheelPCMChannel = 1;
-    public static final int IntakeDeployPCMChannel = 2;
+    public static final int IntakeDeployPCMChannel = 0;
 
     
 }

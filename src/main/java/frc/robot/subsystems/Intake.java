@@ -13,11 +13,7 @@ public class Intake extends SubsystemBase
 {
     private final SpeedControllerGroup intake;
 
-    private final WPI_TalonSRX belt;
-
     private final Solenoid deployPistons;
-
-    private final DigitalInput beamBreak1;
 
     public double fuelCount;
     public boolean breakTracker;
@@ -34,14 +30,8 @@ public class Intake extends SubsystemBase
         WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.Intake);
         mainIntake.setInverted(true);
         intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.IntakeHelper));
-        belt = new WPI_TalonSRX(RobotMap.Belt1);
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.IntakeDeployPCMChannel);
-
-        beamBreak1 = new DigitalInput(RobotMap.BeamBreak1);
-
-        fuelCount = 0;
-        breakTracker = false;
     }
 
     @Override
@@ -67,45 +57,10 @@ public class Intake extends SubsystemBase
     }
 
     /**
-     * Sets the belt connected to the intake to 1
-     */
-    public void runBelt()
-    {
-        belt.set(1);
-    }
-
-    /**
-     * Stops the belt connected to the belt
-     */
-    public void stopBelt()
-    {
-        belt.set(0);
-    }
-
-    /**
-     * Sets the belt connected to the belt to -1
-     */
-    public void reverseBelt()
-    {
-        belt.set(-1);
-    }
-
-    /**
      * Toggles the deployment state of the intake
      */
     public void toggle()
     {
         deployPistons.set(!deployPistons.get());
-    }
-
-    /**
-     * Gets the state of the beam break at the front of the belts
-     * 
-     * @return If the beam is broken
-     */
-    public boolean getBeamBreak1()
-    {
-        return !beamBreak1.get();
-        // return false;
     }
 }

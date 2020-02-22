@@ -23,15 +23,10 @@ public class Shooter extends SubsystemBase
 
     protected final WPI_TalonSRX hood;
 
-    private final WPI_TalonSRX belt;
-
     private final PIDController shooterController;
     
     // protected final CANCoder hoodEncoder;
     private final PIDController hoodController;
-
-    private final DigitalInput beamBreak2;
-    private final DigitalInput beamBreak3;
 
     private boolean enabled;
 
@@ -54,15 +49,10 @@ public class Shooter extends SubsystemBase
         shooterController.setTolerance(100);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
-        
-        belt = new WPI_TalonSRX(RobotMap.Belt2);
 
         // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(3);
-
-        beamBreak2 = new DigitalInput(RobotMap.BeamBreak2);
-        beamBreak3 = new DigitalInput(RobotMap.BeamBreak3);
 
         enabled = false;
     }
@@ -96,30 +86,6 @@ public class Shooter extends SubsystemBase
     public boolean isEnabled()
     {
         return enabled;
-    }
-
-    /**
-     * Runs the belt connected to the shooter in the forward direction
-     */
-    public void runBelt()
-    {
-        belt.set(1);
-    }
-
-    /**
-     * Stops the belt connected to the shooter
-     */
-    public void stopBelt()
-    {
-        belt.set(0);
-    }
-
-    /**
-     * Reverses the belt connected to the shooter
-     */
-    public void reverseBelt()
-    {
-        belt.set(-1);
     }
 
     /**
@@ -213,24 +179,4 @@ public class Shooter extends SubsystemBase
         hood.set(0);
         hood.getSelectedSensorPosition(0);
     }*/
-
-    /**
-     * Gets if the beam break at the bottom of the shooter belt is triggered
-     * 
-     * @return If triggered
-     */
-    public boolean getBeamBreak2()
-    {
-        return !beamBreak2.get(); //true == no break
-    }
-
-    /**
-     * Gets if the beam break at the top of the shooter belt is triggered
-     * 
-     * @return If triggered
-     */
-    public boolean getBeamBreak3()
-    {
-        return !beamBreak3.get();
-    }
 }

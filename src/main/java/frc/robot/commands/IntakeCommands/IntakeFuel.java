@@ -38,20 +38,6 @@ public class IntakeFuel extends CommandBase
         intake.run();
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() 
-    {
-        if (intake.getBeamBreak1())
-        {
-            intake.runBelt();
-        }
-        else
-        {
-            intake.stopBelt();
-        }
-    }
-
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) 
