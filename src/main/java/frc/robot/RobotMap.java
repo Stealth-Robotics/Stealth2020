@@ -25,11 +25,11 @@ public class RobotMap
     public static final int LeftEncoder = 51;
     public static final int RightEncoder = 50;
 
-    public static final int GyroPort = 30;
+    public static final int GyroPort = 35;
 
     //Shooter
     public static final int Shooter1 = 28;
-    public static final int Shooter2 = 1;
+    public static final int Shooter2 = 21;
     public static final int Hood = 31;
 
     //Climber
@@ -46,7 +46,7 @@ public class RobotMap
     public static final int Belt1 =  33;
     public static final int Belt2 = 34;
 
-    public static final int BeamBreak1 = 0;
+    public static final int BeamBreak1 = 3;
     public static final int BeamBreak2 = 1;
     public static final int BeamBreak3 = 2;
 

@@ -49,8 +49,8 @@ public final class Constants
     // TODO : Find Real Values
 
     public static final double targetHeight = 83.25; // in inches
-    public static final double cameraHeight = 12; // in inches
-    public static final double mountingAngle = 32; // in degrees
+    public static final double cameraHeight = 25; // in inches
+    public static final double mountingAngle = 110; // in degrees
 
     public static final class DriveConstants 
     {

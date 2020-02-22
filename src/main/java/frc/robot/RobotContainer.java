@@ -76,8 +76,8 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(
-                new RunCommand(() -> driveBase.arcadeDrive(-driveJoystick.getRawAxis(1),
-                    driveJoystick.getRawAxis(2)),
+                new RunCommand(() -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1),
+                    driveJoystick.getRawAxis(4)),
                 driveBase));
 
         // intake.setDefaultCommand(new IntakeDefault(intake, shooter));
@@ -104,12 +104,22 @@ public class RobotContainer
         ));
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(0.4, -0.2),
+            () -> this.climber.runClimb(0.6, 0),
             () -> this.climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(-0.4, 0.2),
+            () -> this.climber.runClimb(-0.5, 0),
+            () -> this.climber.runClimb(0, 0)
+        ));
+
+        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
+            () -> this.climber.runClimb(0, -0.5),
+            () -> this.climber.runClimb(0, 0)
+        ));
+
+        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
+            () -> this.climber.runClimb(0, 0.5),
             () -> this.climber.runClimb(0, 0)
         ));
     }
