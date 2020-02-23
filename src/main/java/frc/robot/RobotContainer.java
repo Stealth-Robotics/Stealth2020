@@ -27,19 +27,16 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import frc.robot.commands.BeltsCommands.BeltsDefault;
-import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
+import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Shooter;
 
 /**
