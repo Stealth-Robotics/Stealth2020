@@ -1,10 +1,15 @@
 
 package frc.robot.commands.MultiSubsystemCommands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
+import frc.robot.commands.ShooterCommands.FireShooter;
+import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -16,6 +21,7 @@ public class ScoreFuel extends SequentialCommandGroup
 {
     DriveBase driveBase;
     Shooter shooter;
+    Belts belts;
 
     Limelight limelight;
 
@@ -24,13 +30,14 @@ public class ScoreFuel extends SequentialCommandGroup
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ScoreFuel(DriveBase driveBase, Shooter shooter, Limelight limelight) 
+    public ScoreFuel(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight) 
     {
         this.driveBase = driveBase;
         this.shooter = shooter;
         this.limelight = limelight;
+        this.belts = belts;
 
-        addRequirements(shooter, driveBase, limelight);
+        addRequirements(shooter, driveBase, belts);
     }
 
     @Override
@@ -39,16 +46,25 @@ public class ScoreFuel extends SequentialCommandGroup
         //limelight.SetLedMode(3);
 
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter, limelight)));
-            //new FireShooter(shooter),
-            /*new RunCommand(() -> shooter.reverseBelt(), shooter).withInterrupt(new BooleanSupplier()
+            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter, limelight), new RunCommand(() -> belts.runAllBelts(), belts)
+                    .withInterrupt(new BooleanSupplier()
+                    {
+                        @Override
+                        public boolean getAsBoolean()
+                        {
+                            return belts.getBeamBreak3();
+                        }
+                    })
+                    .withTimeout(3)),
+            new FireShooter(shooter, belts),
+            new RunCommand(() -> belts.reverseAllBelts(), shooter).withInterrupt(new BooleanSupplier()
             {
                 @Override
                 public boolean getAsBoolean()
                 {
-                    return shooter.getBeamBreak2();
+                    return belts.getBeamBreak1();
                 }
-            }));*/
+            }));
 
         //limelight.SetLedMode(0);
     }

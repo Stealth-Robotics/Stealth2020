@@ -51,7 +51,7 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final PanelControl panelControl;
-    private final Belts indexer;
+    private final Belts belts;
     private final Limelight limelight;
   
     private Joystick driveJoystick;
@@ -66,7 +66,7 @@ public class RobotContainer
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
-        indexer = new Belts();
+        belts = new Belts();
         panelControl = new PanelControl();
         
         limelight = new Limelight();
@@ -85,7 +85,7 @@ public class RobotContainer
                     driveJoystick.getRawAxis(4)),
                 driveBase));
 
-        indexer.setDefaultCommand(new BeltsDefault(indexer));
+        belts.setDefaultCommand(new BeltsDefault(belts));
     }
   
     /**
@@ -97,7 +97,7 @@ public class RobotContainer
     private void configureButtonBindings() 
     {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, limelight));
+        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight));
 
         new JoystickButton(mechJoystick, 1).whenPressed(() -> intake.toggle());
 

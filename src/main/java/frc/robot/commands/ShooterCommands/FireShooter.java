@@ -1,6 +1,7 @@
 
 package frc.robot.commands.ShooterCommands;
 
+import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -10,17 +11,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class FireShooter extends CommandBase 
 {
     private final Shooter shooter;
+    private final Belts belts;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public FireShooter(Shooter shooter) 
+    public FireShooter(Shooter shooter, Belts belts) 
     {
         this.shooter = shooter;
+        this.belts = belts;
 
-        addRequirements(shooter);
+        addRequirements(shooter, belts);
     }
 
     // Called when the command is initially scheduled.
@@ -28,6 +31,7 @@ public class FireShooter extends CommandBase
     public void initialize() 
     {
         shooter.enable();
+        belts.runAllBelts();
     }
 
     // Called once the command ends or is interrupted.
@@ -35,6 +39,7 @@ public class FireShooter extends CommandBase
     public void end(boolean interrupted) 
     {
         shooter.disable();
+        belts.stopAllBelts();
     }
 
     // Returns true when the command should end.

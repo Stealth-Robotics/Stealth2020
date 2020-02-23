@@ -16,18 +16,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class BeltsDefault extends CommandBase 
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Belts indexer;
+    private final Belts belts;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public BeltsDefault(Belts indexer) 
+    public BeltsDefault(Belts belts) 
     {
-        this.indexer = indexer;
+        this.belts = belts;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(indexer);
+        addRequirements(belts);
     }
 
     // Called when the command is initially scheduled.
@@ -40,21 +40,21 @@ public class BeltsDefault extends CommandBase
     @Override
     public void execute()
     {
-        if (indexer.getBeamBreak1())
+        if (belts.getBeamBreak1())
         {
-            indexer.runBelt1();
+            belts.runBelt1();
         }
         else
         {
-            indexer.stopBelt1();
+            belts.stopBelt1();
         }
-        if (indexer.getBeamBreak2())
+        if (belts.getBeamBreak2() && !belts.getBeamBreak3())
         {
-            indexer.runBelt2();
+            belts.runBelt2();
         }
         else
         {
-            indexer.stopBelt2();;
+            belts.stopBelt2();;
         }
     }
 
