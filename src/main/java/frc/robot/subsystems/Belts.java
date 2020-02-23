@@ -34,18 +34,18 @@ public class Belts extends SubsystemBase
 
     public void runBelt1()
     {
-        belt1.set(1);
+        belt1.set(0.75);
     }
 
     public void runBelt2()
     {
-        belt2.set(1);
+        belt2.set(0.75);
     }
 
     public void runAllBelts()
     {
-        belt1.set(1);
-        belt2.set(1);
+        belt1.set(0.75);
+        belt2.set(0.75);
     }
 
     public void stopBelt1()
@@ -66,18 +66,18 @@ public class Belts extends SubsystemBase
 
     public void reverseBelt1()
     {
-        belt1.set(-1);
+        belt1.set(-0.75);
     }
 
     public void reverseBelt2()
     {
-        belt2.set(-1);
+        belt2.set(-0.75);
     }
 
     public void reverseAllBelts()
     {
-        belt1.set(-1);
-        belt2.set(-1);
+        belt1.set(-0.75);
+        belt2.set(-0.75);
     }
 
     /**
