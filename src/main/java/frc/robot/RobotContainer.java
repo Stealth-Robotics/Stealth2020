@@ -49,13 +49,14 @@ import frc.robot.subsystems.Shooter;
  * scheduler calls). Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer
+{
     // The robot's subsystems and commands are defined here...
     private final DriveBase driveBase;
     private final Shooter shooter;
     private final Intake intake;
     private final Climber climber;
-    private final PanelControl panelControl;
+    //private final PanelControl panelControl;
     private final Belts belts;
     private final Limelight limelight;
 
@@ -65,13 +66,14 @@ public class RobotContainer {
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() {
+    public RobotContainer()
+    {
         driveBase = new DriveBase();
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
         belts = new Belts();
-        panelControl = new PanelControl();
+        //panelControl = new PanelControl();
 
         limelight = new Limelight();
 
