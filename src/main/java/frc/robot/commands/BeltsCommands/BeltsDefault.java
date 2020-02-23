@@ -8,6 +8,7 @@
 package frc.robot.commands.BeltsCommands;
 
 import frc.robot.subsystems.Belts;
+import frc.util.StopWatch;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -18,6 +19,10 @@ public class BeltsDefault extends CommandBase
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Belts belts;
 
+    private StopWatch timer;
+
+    private boolean previousBeamBreak;
+
     /**
      * Creates a new ExampleCommand.
      *
@@ -26,6 +31,10 @@ public class BeltsDefault extends CommandBase
     public BeltsDefault(Belts belts) 
     {
         this.belts = belts;
+
+        timer = new StopWatch(50);
+
+        previousBeamBreak = false;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(belts);
     }
@@ -34,20 +43,31 @@ public class BeltsDefault extends CommandBase
     @Override
     public void initialize() 
     {
-
+        previousBeamBreak = false;
     }
 
     @Override
     public void execute()
     {
-        if (belts.getBeamBreak1())
+        if(belts.getBeamBreak1())
         {
-            belts.runBelt1();
+            belts.runAllBelts();
+            timer.reset();
         }
-        else
+        
+        if(timer.isExpired())
         {
-            belts.stopBelt1();
+            belts.stopAllBelts();
         }
+
+        if (belts.getBeamBreak1() && !previousBeamBreak)
+        {
+            belts.addBall();
+        }
+
+        previousBeamBreak = belts.getBeamBreak1();
+
+        /*
         if (belts.getBeamBreak2() && !belts.getBeamBreak3())
         {
             belts.runBelt2();
@@ -56,6 +76,7 @@ public class BeltsDefault extends CommandBase
         {
             belts.stopBelt2();;
         }
+        */
     }
 
     // Called once the command ends or is interrupted.

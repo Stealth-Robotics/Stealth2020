@@ -1,6 +1,7 @@
 
 package frc.robot.commands.ShooterCommands;
 
+import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -42,6 +43,8 @@ public class FireShooter extends CommandBase
         shooter.disable();
         belts.stopAllBelts();
         shooter.setShooterSpeedDirect(0);
+
+        belts.resetBallCount();
     }
 
     // Returns true when the command should end.

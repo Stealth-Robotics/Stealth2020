@@ -15,6 +15,8 @@ public class Belts extends SubsystemBase
     private final DigitalInput beamBreak2;
     private final DigitalInput beamBreak3;
 
+    private int ballCount;
+
     
     public Belts()
     {
@@ -24,12 +26,15 @@ public class Belts extends SubsystemBase
 
         belt1 = new WPI_TalonSRX(RobotMap.Belt1);
         belt2 = new WPI_TalonSRX(RobotMap.Belt2);
+
+        ballCount = 0;
     }
 
     @Override
     public void periodic()
     {
         // System.out.println(beamBreak1.get());
+        System.out.println("Ball Count: " + ballCount);
     }
 
     public void runBelt1()
@@ -111,5 +116,20 @@ public class Belts extends SubsystemBase
     {
         return !beamBreak3.get();
         // return false;
+    }
+
+    public void addBall()
+    {
+        ballCount++;
+    }
+
+    public void resetBallCount()
+    {
+        ballCount = 0;
+    }
+
+    public int getBallCount()
+    {
+        return ballCount;
     }
 }
