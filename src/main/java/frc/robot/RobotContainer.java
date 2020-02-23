@@ -115,7 +115,7 @@ public class RobotContainer
         ));
 
         new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(-0.5, 0),
+            () -> climber.runClimb(-0.4, 0),
             () -> climber.runClimb(0, 0)
         ));
 

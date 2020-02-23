@@ -47,18 +47,22 @@ public class ScoreFuel extends SequentialCommandGroup
         //limelight.SetLedMode(3);
 
         addCommands(
-            new ParallelCommandGroup(new AlignWithTarget(driveBase, limelight), new AimHood(shooter, limelight), new RunCommand(() -> belts.runAllBelts(), belts)
-                    .withInterrupt(new BooleanSupplier()
+            new ParallelCommandGroup(
+                new AlignWithTarget(driveBase, limelight), 
+                new AimHood(shooter, limelight), 
+                new RunCommand(() -> belts.runAllBelts(), belts).withInterrupt(new BooleanSupplier()
                     {
                         @Override
                         public boolean getAsBoolean()
                         {
                             return belts.getBeamBreak3();
                         }
-                    })
-                    .withTimeout(3)),
+                    }
+                ).withTimeout(3)
+            ),
             new FireShooter(shooter, belts).withTimeout(10),
-            new ResetBelts(belts).withTimeout(3));
+            new ResetBelts(belts).withTimeout(3)
+        );
 
         //limelight.SetLedMode(0);
     }
