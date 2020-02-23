@@ -57,7 +57,7 @@ public class ScoreFuel extends SequentialCommandGroup
                         }
                     })
                     .withTimeout(3)),
-            new FireShooter(shooter, belts),
+            new FireShooter(shooter, belts).withTimeout(10),
             new ResetBelts(belts).withTimeout(3));
 
         //limelight.SetLedMode(0);

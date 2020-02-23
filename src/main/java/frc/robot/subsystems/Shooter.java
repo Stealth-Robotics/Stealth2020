@@ -97,6 +97,11 @@ public class Shooter extends SubsystemBase
         shooterController.setSetpoint(speed);
     }
 
+    public void setShooterSpeedDirect(double speed) 
+    {
+        shooter.set(speed);
+    }
+
     /**
      * Sets the angle to aim the shooter hood
      * 
