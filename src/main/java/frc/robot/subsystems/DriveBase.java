@@ -50,6 +50,7 @@ public class DriveBase extends SubsystemBase
 	private final DifferentialDriveOdometry m_odometry;
 
 	private float driveSensitivity;
+	private float driveRotSensitivity;
 
 	//PowerDistributionPanel PDP;
 	
@@ -68,7 +69,8 @@ public class DriveBase extends SubsystemBase
 		resetEncoders();
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-		driveSensitivity = 0.6f;
+		driveSensitivity = 1.0f;
+		driveRotSensitivity = 0.6f;
 	}
 
 	@Override
@@ -120,7 +122,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void arcadeDrive(double fwd, double rot) 
     {
-		m_drive.arcadeDrive(fwd * driveSensitivity, rot * Math.abs(driveSensitivity));
+		m_drive.arcadeDrive(fwd * driveSensitivity, rot * Math.abs(driveRotSensitivity));
 	}
 
 	public void reverseDrive()

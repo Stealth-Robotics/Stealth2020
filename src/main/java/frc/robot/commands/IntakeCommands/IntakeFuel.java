@@ -43,6 +43,7 @@ public class IntakeFuel extends CommandBase
     public void end(boolean interrupted) 
     {
         intake.toggle();
+        intake.stopIntake();
     }
 
     // Returns true when the command should end.

@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -84,7 +85,7 @@ public class RobotContainer {
         configureButtonBindings();
 
         driveBase.setDefaultCommand(new RunCommand(
-                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(4)), driveBase));
+                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1) * (driveJoystick.getRawButton(4) ? 1 : 0.6), driveJoystick.getRawAxis(4)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
     }
@@ -98,6 +99,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
         new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight));
+        new JoystickButton(driveJoystick, 3).whenPressed(new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)));
 
         new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
 
@@ -109,26 +111,33 @@ public class RobotContainer {
         new JoystickButton(mechJoystick, 2).whenHeld(new AimHood(shooter, limelight));
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(0.6, 0),
-            () -> this.climber.runClimb(0, 0)
+            () -> climber.runClimb(0.6, 0),
+            () -> climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(-0.5, 0),
-            () -> this.climber.runClimb(0, 0)
+            () -> climber.runClimb(-0.5, 0),
+            () -> climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(0, -0.5),
-            () -> this.climber.runClimb(0, 0)
+            () -> climber.runClimb(0, -0.5),
+            () -> climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
-            () -> this.climber.runClimb(0, 0.5),
-            () -> this.climber.runClimb(0, 0)
+            () -> climber.runClimb(0, 0.5),
+            () -> climber.runClimb(0, 0)
         ));
 
         new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
+
+        StartEndCommand runBelts = new StartEndCommand(
+            () -> belts.runAllBelts(),
+            () -> belts.stopAllBelts()
+        );
+        runBelts.addRequirements(belts);
+        new JoystickButton(mechJoystick, 8).whenHeld(runBelts);
     }
   
   

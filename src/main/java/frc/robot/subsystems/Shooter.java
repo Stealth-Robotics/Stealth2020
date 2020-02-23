@@ -105,7 +105,7 @@ public class Shooter extends SubsystemBase
     /**
      * Sets the angle to aim the shooter hood
      * 
-     * @param angle The angle to set, based on the forward hood edge
+     * @param angle The angle to set, based on the forward hood edge, in radians
      */
     public void setHoodPos(double angle)
     {

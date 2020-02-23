@@ -32,7 +32,7 @@ public class FireShooter extends CommandBase
     {
         shooter.enable();
         belts.runAllBelts();
-        shooter.setShooterSpeed(1); //TODO remove once pid controller tested
+        shooter.setShooterSpeedDirect(1); //TODO remove once pid controller tested
     }
 
     // Called once the command ends or is interrupted.
@@ -41,6 +41,7 @@ public class FireShooter extends CommandBase
     {
         shooter.disable();
         belts.stopAllBelts();
+        shooter.setShooterSpeedDirect(0);
     }
 
     // Returns true when the command should end.

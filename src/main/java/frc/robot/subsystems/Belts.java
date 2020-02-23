@@ -29,7 +29,7 @@ public class Belts extends SubsystemBase
     @Override
     public void periodic()
     {
-        System.out.println(beamBreak1.get());
+        // System.out.println(beamBreak1.get());
     }
 
     public void runBelt1()
