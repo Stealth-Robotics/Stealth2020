@@ -6,6 +6,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.BeltsCommands.ResetBelts;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
@@ -57,14 +58,7 @@ public class ScoreFuel extends SequentialCommandGroup
                     })
                     .withTimeout(3)),
             new FireShooter(shooter, belts),
-            new RunCommand(() -> belts.reverseAllBelts(), shooter).withInterrupt(new BooleanSupplier()
-            {
-                @Override
-                public boolean getAsBoolean()
-                {
-                    return belts.getBeamBreak1();
-                }
-            }));
+            new ResetBelts(belts).withTimeout(3));
 
         //limelight.SetLedMode(0);
     }
