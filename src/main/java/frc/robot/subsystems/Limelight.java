@@ -54,7 +54,7 @@ public class Limelight extends SubsystemBase
      */
     public double getTargetDistance()
     {
-        return (Constants.targetHeightM - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
+        return (Constants.targetHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
     }
 
     public void GetCamMode(double defaultValue)

@@ -19,11 +19,15 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants 
 {
-    public static final double targetHeightM = 2.49; //meters
+    public static final double targetHeight = 2.49; //meters
     public static final double shooterHeight = 0.6858; //meters
-    public static final double fuelAirTimeSquared = (targetHeightM - shooterHeight) * 2 / 9.8; //seconds^2
+    public static final double heightDiff = targetHeight - shooterHeight; //meters
+    public static final double fuelAirTimeSquared = heightDiff * 2 / 9.8; //seconds^2
     public static final double fuelAirTime = 0.608; //seconds
     public static final double fuelInitVelocY = 9.8 * fuelAirTime; //meters / second
+
+    public static final double shooterMaxVeloc = 8.967; //meters / second
+    public static final double g = 9.8; //meters / second^2
     
     // Estimating Distance With Limelight
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html

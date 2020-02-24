@@ -49,4 +49,24 @@ public class AimHood extends CommandBase
         return shooter.hoodAimed();
         // return false;
     }
+
+    private double calcAngle(double dist)
+    {
+        double sqrtPort = Math.sqrt(4 * Math.pow(Constants.shooterMaxVeloc, 4) / (Constants.g * Constants.g * dist * dist)
+                 + 8 * Constants.shooterMaxVeloc * Constants.shooterMaxVeloc * Constants.heightDiff / (Constants.g * dist * dist)
+                 - 4);
+        double quadResult;
+        if (dist > 2.5)
+        {
+            quadResult = (-2 * Constants.shooterMaxVeloc * Constants.shooterMaxVeloc / (Constants.g * dist)
+                 + sqrtPort) / 2;
+        }
+        else
+        {
+            quadResult = (-2 * Constants.shooterMaxVeloc * Constants.shooterMaxVeloc / (Constants.g * dist)
+                 - sqrtPort) / 2;
+        }
+
+        return 1 / Math.atan(quadResult); //TODO figure out inverse of cotangent
+    }
 }
