@@ -57,6 +57,8 @@ public class RobotContainer
     private final Belts belts;
     private final Limelight limelight;
 
+    private final ScoreFuel autoCommand;
+
     private Joystick driveJoystick;
     private Joystick mechJoystick;
 
@@ -87,6 +89,8 @@ public class RobotContainer
                 () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1) * (driveJoystick.getRawButton(4) ? 1 : 0.6), driveJoystick.getRawAxis(4)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
+
+        autoCommand = new ScoreFuel(driveBase, shooter, belts, limelight);
     }
 
     /**
@@ -147,41 +151,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand() 
     {
-        // TODO : Add Choosing Functionality
-        String trajectoryJSON = "PathWeaver/Output/output/BlueCenter_SimpleShoot.wpilib.json";
-
-        Path trajectoryPath;
-        Trajectory trajectory = null;
-
-        try
-        {
-            trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-        }
-    
-        catch (IOException ex)
-        {
-            DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-        }
-
-        RamseteCommand ramseteCommand = new RamseteCommand(
-            trajectory,
-            driveBase::getPose,
-            new RamseteController(Constants.AutoConstants.kRamseteB, Constants.AutoConstants.kRamseteZeta),
-            new SimpleMotorFeedforward(Constants.DriveConstants.ksVolts,
-                                       Constants.DriveConstants.kvVoltSecondsPerMeter,
-                                       Constants.DriveConstants.kaVoltSecondsSquaredPerMeter),
-            Constants.DriveConstants.kDriveKinematics,
-            driveBase::getWheelSpeeds,
-            new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
-            new PIDController(Constants.DriveConstants.kPDriveVel, 0, 0),
-            // RamseteCommand passes volts to the callback
-            driveBase::tankDriveVolts,
-            driveBase
-        );
-
-        // Run path following command, then stop at the end.
-        return ramseteCommand.andThen(() -> driveBase.tankDriveVolts(0, 0));
+        return autoCommand;
     }
 
     public void TurnOffLimelight()
