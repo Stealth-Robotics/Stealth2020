@@ -34,7 +34,8 @@ public class AimHood extends CommandBase
     {
         double dist = limelight.getTargetDistance();
         
-        double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+        // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+        double angle = calcAngle(dist);
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
         System.out.println("Dist: " + dist);
         System.out.println("Angle: " + angle * 180 / Math.PI);
@@ -67,6 +68,6 @@ public class AimHood extends CommandBase
                  - sqrtPort) / 2;
         }
 
-        return 1 / Math.atan(quadResult); //TODO figure out inverse of cotangent
+        return Math.atan(1 / quadResult);
     }
 }
