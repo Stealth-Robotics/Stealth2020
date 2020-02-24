@@ -16,17 +16,30 @@ public class Limelight extends SubsystemBase
         intializeLimelight();
     }
 
+    /**
+     * Intializes Limelight LED Mode & Camera Mode
+     */
     public void intializeLimelight()
     {
         SetLedMode(3);
         SetCamMode(0);
     }
 
+    /**
+     * Checks if Limelight has a valid target
+     * 
+     * @return if the Limelight has a valid target
+     */
     public boolean hasValidTarget()
     {
         return limelightTableEntry.getEntry("tv").getDouble(0) == 1;
     }
 
+    /**
+     * Returns Horizontal Offset Of The Target From The Crosshair
+     * 
+     * @return If the limelight has a valid target, it will return the horizontal offset of the target from the crosshair. If the limelight doesn't have a valid target, it will return NaN.
+     */
     public double getTargetHorizontalOffset()
     {
         return hasValidTarget() ? limelightTableEntry.getEntry("tx").getDouble(0) : Double.NaN;

@@ -33,8 +33,6 @@ public class Belts extends SubsystemBase
 
         ballCount = 0;
         
-        
-
         //Get the default instance of NetworkTables that was created automatically
         //when your program starts
         NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -55,48 +53,75 @@ public class Belts extends SubsystemBase
         ballCountNet.setDouble(getBallCount());
     }
 
+    /**
+     * Runs belt 1
+     */
     public void runBelt1()
     {
         belt1.set(0.8);
     }
 
+    /**
+     * Runs belt 2
+     */
     public void runBelt2()
     {
         belt2.set(0.8);
     }
 
+    /**
+     * Runs all belts
+     */
     public void runAllBelts()
     {
         belt1.set(0.8);
         belt2.set(0.8);
     }
 
+    /**
+     * Stops belt 1
+     */
     public void stopBelt1()
     {
         belt1.set(0);
     }
 
+    /**
+     * Stops belt 2
+     */
     public void stopBelt2()
     {
         belt2.set(0);
     }
 
+    /**
+     * Stops all belt
+     */
     public void stopAllBelts()
     {
         belt2.set(0);
         belt1.set(0);
     }
 
+    /**
+     * Reverses belt 1
+     */
     public void reverseBelt1()
     {
         belt1.set(-0.75);
     }
 
+    /**
+     * Reverses belt 2
+     */
     public void reverseBelt2()
     {
         belt2.set(-0.8);
     }
 
+    /**
+     * Reverses all belts
+     */
     public void reverseAllBelts()
     {
         belt1.set(-0.8);

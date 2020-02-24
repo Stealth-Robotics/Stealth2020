@@ -38,7 +38,6 @@ public class Shooter extends SubsystemBase
     {
         shooter1 = new CANSparkMax(RobotMap.Shooter1, MotorType.kBrushless);
         shooter2 = new CANSparkMax(RobotMap.Shooter2, MotorType.kBrushless);
-        shooter1.setInverted(true);
 
         shooter = new SpeedControllerGroup(shooter1, shooter2);
 
@@ -88,7 +87,7 @@ public class Shooter extends SubsystemBase
     }
 
     /**
-     * Sets the speed of the shooter
+     * Sets the speed of the shooter through Shooter PID
      * 
      * @param speed The speed to set
      */
@@ -97,6 +96,11 @@ public class Shooter extends SubsystemBase
         shooterController.setSetpoint(speed);
     }
 
+    /**
+     * Sets the speed of the shooter directly
+     * 
+     * @param speed The speed to set
+     */
     public void setShooterSpeedDirect(double speed) 
     {
         shooter.set(speed);
@@ -148,11 +152,6 @@ public class Shooter extends SubsystemBase
     public void disable()
     {
         enabled = false;
-    }
-
-    public void runShooter(double speed)
-    {
-        shooter.set(speed);
     }
 
 

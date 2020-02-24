@@ -32,7 +32,7 @@ public final class Constants
     // Estimating Distance With Limelight
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
     public static final double cameraHeight = 0.635; // in meters
-    public static final double cameraAngle = 32 * Math.PI / 180; // in radians
+    public static final double cameraAngle = 32 * (Math.PI / 180); // in radians
     
     public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
     public static final double shooterkI = 0.0;
