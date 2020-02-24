@@ -13,8 +13,7 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase 
 {
-    private final SpeedControllerGroup shooter;
-
+    // IMPORTANT : Speed Controller Group Does Not Respect Inversion. Do not use Speed Controller Group For Shooter
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
 
@@ -39,7 +38,7 @@ public class Shooter extends SubsystemBase
         shooter1 = new CANSparkMax(RobotMap.Shooter1, MotorType.kBrushless);
         shooter2 = new CANSparkMax(RobotMap.Shooter2, MotorType.kBrushless);
 
-        shooter = new SpeedControllerGroup(shooter1, shooter2);
+        shooter2.follow(shooter1, true);
 
         shooterEncoder = shooter1.getEncoder();
 
@@ -103,7 +102,7 @@ public class Shooter extends SubsystemBase
      */
     public void setShooterSpeedDirect(double speed) 
     {
-        shooter.set(speed);
+        shooter1.set(speed);
     }
 
     /**
