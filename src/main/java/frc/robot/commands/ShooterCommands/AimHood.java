@@ -68,6 +68,6 @@ public class AimHood extends CommandBase
                  - sqrtPort) / 2;
         }
 
-        return Math.atan(1 / quadResult);
+        return Math.atan(quadResult);
     }
 }

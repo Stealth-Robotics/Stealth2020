@@ -51,7 +51,7 @@ public class BeltsDefault extends CommandBase
     @Override
     public void execute()
     {
-        if(belts.getBeamBreak1())
+        if(belts.getBeamBreak1() && belts.getBallCount() < 5)
         {
             belts.runAllBelts();
             timer.reset();
