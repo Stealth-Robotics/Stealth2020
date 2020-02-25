@@ -41,7 +41,7 @@ public final class Constants
     public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
 
     public static final double maxAngle = 14 * Math.PI / 36;
-    public static final double minAngle = maxAngle - Math.PI / 12;
+    public static final double minAngle = maxAngle - 5 * Math.PI / 36;
     
     public static final double hoodkP = 0.01; 
     public static final double hoodkI = 0.005; //these ones work I think
