@@ -16,6 +16,12 @@ public class Limelight extends SubsystemBase
         intializeLimelight();
     }
 
+    @Override
+    public void periodic()
+    {
+        //System.out.println(getTargetDistance() * 100 / 2.54 / 12);
+    }
+
     /**
      * Intializes Limelight LED Mode & Camera Mode
      */
@@ -67,7 +73,7 @@ public class Limelight extends SubsystemBase
      */
     public double getTargetDistance()
     {
-        return (Constants.targetHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
+        return (Constants.crosshairHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset()) ;
     }
 
     public void GetCamMode(double defaultValue)

@@ -23,6 +23,7 @@ import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -42,6 +43,7 @@ public class RobotContainer
     private final Shooter shooter;
     private final Intake intake;
     private final Climber climber;
+    private final DistanceSensor distanceSensor;
     //private final PanelControl panelControl;
     private final Belts belts;
     private final Limelight limelight;
@@ -60,6 +62,7 @@ public class RobotContainer
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
+        distanceSensor = new DistanceSensor();
         belts = new Belts();
         //panelControl = new PanelControl();
 
@@ -75,7 +78,7 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(new RunCommand(
-                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1) * (driveJoystick.getRawButton(4) ? 1 : 0.6), driveJoystick.getRawAxis(4)), driveBase));
+                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(2)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 

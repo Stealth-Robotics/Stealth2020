@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants 
 {
     public static final double targetHeight = 2.49; //meters
+    public static final double crosshairHeight = 2.23; //meters | old: 2.3876
     public static final double shooterHeight = 0.6858; //meters
     public static final double heightDiff = targetHeight - shooterHeight; //meters
     public static final double fuelAirTimeSquared = heightDiff * 2 / 9.8; //seconds^2
@@ -31,8 +32,8 @@ public final class Constants
     
     // Estimating Distance With Limelight
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
-    public static final double cameraHeight = 0.635; // in meters
-    public static final double cameraAngle = 32 * (Math.PI / 180); // in radians
+    public static final double cameraHeight = 0.65405; // in meters
+    public static final double cameraAngle = 20 * (Math.PI / 180); // in radians
     
     public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
     public static final double shooterkI = 0.0;
@@ -47,7 +48,7 @@ public final class Constants
     public static final double hoodkI = 0.005; //these ones work I think
     public static final double hoodkD = 0.0;
 
-    public static final double limekP = 0.065; //TODO: Tune limelight PID on carpet
+    public static final double limekP = 0.09; //TODO: Tune limelight PID on carpet
     public static final double limekI = 0.0;
     public static final double limekD = 0.01;
 
