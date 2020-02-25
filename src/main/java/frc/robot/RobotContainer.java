@@ -105,25 +105,8 @@ public class RobotContainer
 
         new JoystickButton(mechJoystick, 2).whenHeld(new AimHood(shooter, limelight));
 
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0.6, 0),
-            () -> climber.runClimb(0, 0)
-        ));
-
-        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(-0.4, 0),
-            () -> climber.runClimb(0, 0)
-        ));
-
-        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0, -0.5),
-            () -> climber.runClimb(0, 0)
-        ));
-
-        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0, 0.5),
-            () -> climber.runClimb(0, 0)
-        ));
+        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> climber.UpClimb(0.3), climber));
+        new JoystickButton(mechJoystick, 3).whenHeld(new RunCommand(() -> climber.DownClimb(-0.3, -0.3)));
 
         new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
 

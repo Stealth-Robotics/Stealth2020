@@ -2,6 +2,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.*;
+import frc.util.StopWatch;
 // import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -39,26 +40,44 @@ public class Climber extends SubsystemBase
         rightClimber.setInverted(true);
 
         climbElevators = new SpeedControllerGroup(leftClimber,  rightClimber);
+        climbElevators.setInverted(true);
     }
 
-    @Override
-    public void periodic() 
-    { 
-        if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && climbElevators.get() > 0)
+    // TODO : Make Into Commands
+    /**
+     * Climb Motion Upward
+     * 
+     * @param elevatorSpeed The speed to run elevator
+     */
+    public void UpClimb(double elevatorSpeed)
+    {   
+        climbElevators.set(0.3);
+
+        while (!leftLimitSwitch.get() || !rightLimitSwitch.get())
         {
-            runClimb(0, 0);
+            
         }
+
+        climbElevators.set(0);
     }
 
     /**
-     * Sets the speed of the climb motors
+     * Climb Motion Downward
      * 
      * @param elevatorSpeed The speed to run elevator
-     * @param winchSpeed The speed to run winch
      */
-    public void runClimb(double elevatorSpeed, double winchSpeed)
-    {
-        climbElevators.set(-elevatorSpeed);
+    public void DownClimb(double elevatorSpeed, double winchSpeed)
+    {   
+        StopWatch stopWatch = new StopWatch(3000);
+        climbElevators.set(elevatorSpeed);
+
+        while (!stopWatch.isExpired())
+        {
+            
+        }
+
+        climbElevators.set(0);
+
         winch.set(winchSpeed);
     }
 }
