@@ -31,6 +31,7 @@ public class RobotMap
     public static final int Shooter1 = 28;
     public static final int Shooter2 = 21;
     public static final int Hood = 31;
+    public static final int DistanceSensor = 7;
 
     //Climber
     public static final int Winch = 29;
