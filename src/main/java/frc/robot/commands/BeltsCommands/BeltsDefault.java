@@ -22,7 +22,7 @@ public class BeltsDefault extends CommandBase
     private StopWatch timer;
 
     private boolean previousBeamBreak1;
-    private boolean previousBeamBreak2;
+    //private boolean previousBeamBreak2;
 
     /**
      * Creates a new ExampleCommand.
@@ -36,16 +36,10 @@ public class BeltsDefault extends CommandBase
         timer = new StopWatch(150);
 
         previousBeamBreak1 = false;
-        previousBeamBreak2 = false;
+        //previousBeamBreak2 = false;
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(belts);
-    }
-
-    // Called when the command is initially scheduled.
-    @Override
-    public void initialize() 
-    {
     }
 
     @Override
@@ -68,7 +62,7 @@ public class BeltsDefault extends CommandBase
         }
 
         previousBeamBreak1 = belts.getBeamBreak1();
-        previousBeamBreak2 = belts.getBeamBreak2();
+        //previousBeamBreak2 = belts.getBeamBreak2();
 
         /*
         if (belts.getBeamBreak2() && !belts.getBeamBreak3())
@@ -80,13 +74,6 @@ public class BeltsDefault extends CommandBase
             belts.stopBelt2();;
         }
         */
-    }
-
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) 
-    {
-        
     }
 
     // Returns true when the command should end.

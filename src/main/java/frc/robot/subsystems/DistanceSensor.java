@@ -35,10 +35,4 @@ public class DistanceSensor extends SubsystemBase
 
         return mReading-139.7-100;
     }
-
-    @Override
-    public void periodic()
-    {
-        //System.out.println("Distance : " + getDistance()/1000 + ", Heading : " + getHeading()/1000);
-    }
 }

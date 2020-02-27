@@ -4,7 +4,6 @@ package frc.robot.commands.MultiSubsystemCommands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -50,7 +49,7 @@ public class ScoreFuel extends SequentialCommandGroup
     public void initialize() 
     {
         addCommands(
-            new ParallelCommandGroup(
+            new SequentialCommandGroup(
                 new AlignWithTarget(driveBase, limelight), 
                 new AimHood(shooter, distanceSensor), 
                 new RunCommand(() -> belts.runAllBelts(0.6, 0.8), belts).withInterrupt(new BooleanSupplier()

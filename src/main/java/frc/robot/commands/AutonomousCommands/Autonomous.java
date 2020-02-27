@@ -43,13 +43,6 @@ public class Autonomous extends SequentialCommandGroup
         addRequirements(driveBase, shooter, limelight, distanceSensor);
 
     }
-    
-    public void execute()
-    {
-
-   
-        
-    }
 
     // Called when the command is initially scheduled.
     @Override

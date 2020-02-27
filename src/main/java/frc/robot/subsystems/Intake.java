@@ -33,12 +33,6 @@ public class Intake extends SubsystemBase
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.IntakeDeployPCMChannel);
     }
 
-    @Override
-    public void periodic() 
-    {
-        // This method will be called once per scheduler run
-    }
-
     /**
      * Sets the intake speed to 1
      */

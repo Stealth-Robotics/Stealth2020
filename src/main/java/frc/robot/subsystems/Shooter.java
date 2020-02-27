@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -15,7 +14,7 @@ public class Shooter extends SubsystemBase
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
 
-    private final CANEncoder shooterEncoder;
+    //private final CANEncoder shooterEncoder;
 
     protected final WPI_TalonSRX hood;
 
@@ -38,7 +37,7 @@ public class Shooter extends SubsystemBase
 
         shooter2.follow(shooter1, true);
 
-        shooterEncoder = shooter1.getEncoder();
+        //shooterEncoder = shooter1.getEncoder();
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
@@ -62,7 +61,6 @@ public class Shooter extends SubsystemBase
         
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         /*System.out.println(hood.getSelectedSensorPosition(0));
-
         if (enabled)
         {
             shooter.set(-shooterController.calculate(shooterEncoder.getVelocity()));
