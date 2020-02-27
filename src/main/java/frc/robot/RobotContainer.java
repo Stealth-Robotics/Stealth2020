@@ -12,11 +12,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoCommands.AutoPaths.SixBallAutoCommandGroup;
+import frc.robot.commands.AutoCommands.AutoPaths.SixBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
@@ -50,7 +49,7 @@ public class RobotContainer
     private final Limelight limelight;
     private final DistanceSensor distanceSensor;
 
-    private final SixBallAutoCommandGroup autoCommand;
+    private final SixBallAuto autoCommand;
 
     private Joystick driveJoystick;
     private Joystick mechJoystick;
@@ -84,7 +83,7 @@ public class RobotContainer
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
-        autoCommand = new SixBallAutoCommandGroup(driveBase, shooter, belts, limelight, intake, distanceSensor);
+        autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
     }
 
     /**
