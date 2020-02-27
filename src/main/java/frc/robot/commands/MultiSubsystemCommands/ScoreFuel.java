@@ -11,6 +11,7 @@ import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
+import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -25,17 +26,19 @@ public class ScoreFuel extends SequentialCommandGroup
     Belts belts;
 
     Limelight limelight;
+    DistanceSensor distanceSensor;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public ScoreFuel(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight) 
+    public ScoreFuel(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, DistanceSensor distanceSensor) 
     {
         this.driveBase = driveBase;
         this.shooter = shooter;
         this.limelight = limelight;
+        this.distanceSensor = distanceSensor;
         this.belts = belts;
 
         addRequirements(shooter, driveBase, belts);
@@ -47,7 +50,7 @@ public class ScoreFuel extends SequentialCommandGroup
         addCommands(
             new ParallelCommandGroup(
                 new AlignWithTarget(driveBase, limelight), 
-                new AimHood(shooter, limelight), 
+                new AimHood(shooter, distanceSensor), 
                 new RunCommand(() -> belts.runAllBelts(), belts).withInterrupt(new BooleanSupplier()
                     {
                         @Override

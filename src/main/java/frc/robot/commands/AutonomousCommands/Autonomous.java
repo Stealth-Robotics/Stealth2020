@@ -9,6 +9,7 @@ package frc.robot.commands.AutonomousCommands;
 
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.Belts;
+import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -24,20 +25,22 @@ public class Autonomous extends SequentialCommandGroup
     private final Shooter shooter;
     private final Limelight limelight;
     private final Belts belts;
+    public final DistanceSensor distanceSensor;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public Autonomous(DriveBase driveBase, Shooter shooter, Limelight limelight, Belts belts) 
+    public Autonomous(DriveBase driveBase, Shooter shooter, Limelight limelight, Belts belts, DistanceSensor distanceSensor) 
     {
         this.driveBase = driveBase;
         this.shooter = shooter;
         this.limelight = limelight;
         this.belts = belts;
+        this.distanceSensor = distanceSensor;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(driveBase, shooter, limelight);
+        addRequirements(driveBase, shooter, limelight, distanceSensor);
 
     }
     
@@ -52,7 +55,7 @@ public class Autonomous extends SequentialCommandGroup
     @Override
     public void initialize() 
     {
-        addCommands(new ScoreFuel(driveBase, shooter, belts, limelight));
+        addCommands(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
     }
 
     // Called once the command ends or is interrupted.

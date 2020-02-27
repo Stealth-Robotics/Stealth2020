@@ -28,7 +28,8 @@ public final class Constants
     public static final double fuelInitVelocY = 9.8 * fuelAirTime; //meters / second
 
     public static final double shooterMaxVeloc = 8.967; //meters / second
-    public static final double g = 9.8; //meters / second^2
+    public static final double shooterMaxVelocToTheFourth = shooterMaxVeloc * shooterMaxVeloc * shooterMaxVeloc * shooterMaxVeloc;
+    public static final double g = -9.8; //meters / second^2
     
     // Estimating Distance With Limelight
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
@@ -42,7 +43,7 @@ public final class Constants
     public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
 
     public static final double maxAngle = 14 * Math.PI / 36;
-    public static final double minAngle = maxAngle - 5 * Math.PI / 36;
+    public static final double minAngle = maxAngle - 2 * Math.PI / 9;
     
     public static final double hoodkP = 0.01; 
     public static final double hoodkI = 0.005; //these ones work I think

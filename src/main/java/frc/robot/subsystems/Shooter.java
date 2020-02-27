@@ -4,8 +4,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -59,10 +57,10 @@ public class Shooter extends SubsystemBase
     {
         // This method will be called once per scheduler run
 
-        //TODO uncomment later
-        /*
+        
+        
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
-        System.out.println(hood.getSelectedSensorPosition(0));
+        /*System.out.println(hood.getSelectedSensorPosition(0));
 
         if (enabled)
         {
@@ -71,8 +69,8 @@ public class Shooter extends SubsystemBase
         else
         {
             shooter.set(0);
-        }
-        */
+        }*/
+        
     }
 
     /**
@@ -112,8 +110,8 @@ public class Shooter extends SubsystemBase
      */
     public void setHoodPos(double angle)
     {
-        System.out.println("Target: " + (Math.PI / 4 - angle) * Constants.ticksPerRadian);
-        hoodController.setSetpoint((Math.PI / 4 - angle) * Constants.ticksPerRadian);
+        System.out.println("Target: " + ((Math.PI / 4) - angle) * Constants.ticksPerRadian);
+        hoodController.setSetpoint(((Math.PI / 4) - angle) * Constants.ticksPerRadian);
     }
 
     /**

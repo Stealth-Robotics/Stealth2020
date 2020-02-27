@@ -43,10 +43,11 @@ public class RobotContainer
     private final Shooter shooter;
     private final Intake intake;
     private final Climber climber;
-    private final DistanceSensor distanceSensor;
-    //private final PanelControl panelControl;
     private final Belts belts;
+    //private final PanelControl panelControl;
+    
     private final Limelight limelight;
+    private final DistanceSensor distanceSensor;
 
     private final ScoreFuel autoCommand;
 
@@ -62,11 +63,11 @@ public class RobotContainer
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
-        distanceSensor = new DistanceSensor();
         belts = new Belts();
         //panelControl = new PanelControl();
 
         limelight = new Limelight();
+        distanceSensor = new DistanceSensor();
 
         driveJoystick = new Joystick(0);
         mechJoystick = new Joystick(1);
@@ -82,7 +83,7 @@ public class RobotContainer
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
-        autoCommand = new ScoreFuel(driveBase, shooter, belts, limelight);
+        autoCommand = new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor);
     }
 
     /**
@@ -93,7 +94,7 @@ public class RobotContainer
      */
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight));
+        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 3).whenPressed(new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)));
 
         new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
@@ -103,10 +104,27 @@ public class RobotContainer
         // () -> this.intake.stopIntake()
         // ));
 
-        new JoystickButton(mechJoystick, 2).whenHeld(new AimHood(shooter, limelight));
+        new JoystickButton(mechJoystick, 2).whenHeld(new AimHood(shooter, distanceSensor));
 
-        new JoystickButton(mechJoystick, 4).whenPressed(new RunCommand(() -> climber.UpClimb(0.3), climber));
-        new JoystickButton(mechJoystick, 3).whenHeld(new RunCommand(() -> climber.DownClimb(-0.3, -0.3)));
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
+            () -> climber.runClimb(0.6, 0),
+            () -> climber.runClimb(0, 0)
+        ));
+
+        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(-0.4, 0),	
+            () -> climber.runClimb(0, 0)	
+        ));	
+
+        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, -0.5),	
+            () -> climber.runClimb(0, 0)	
+        ));	
+
+        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, 0.5),	
+            () -> climber.runClimb(0, 0)	
+        ));
 
         new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
 
