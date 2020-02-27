@@ -44,6 +44,7 @@ public class Shooter extends SubsystemBase
         shooterController.setTolerance(100);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
+        hood.setSelectedSensorPosition(0);
 
         // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
@@ -70,7 +71,9 @@ public class Shooter extends SubsystemBase
         {
             shooter.set(0);
         }*/
-        
+        System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
+        System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
+        System.out.println("Hood Power: " + hood.get());
     }
 
     /**
@@ -103,6 +106,11 @@ public class Shooter extends SubsystemBase
         shooter1.set(speed);
     }
 
+    public void setHoodSpeedDirect(double speed) 
+    {
+        hood.set(speed);
+    }
+
     /**
      * Sets the angle to aim the shooter hood
      * 
@@ -110,8 +118,9 @@ public class Shooter extends SubsystemBase
      */
     public void setHoodPos(double angle)
     {
-        System.out.println("Target: " + ((Math.PI / 4) - angle) * Constants.ticksPerRadian);
-        hoodController.setSetpoint(((Math.PI / 4) - angle) * Constants.ticksPerRadian);
+        System.out.println("Target: " + ((Constants.maxAngle) - angle) * Constants.ticksPerRadian);
+        hoodController.setSetpoint(((Constants.maxAngle) - angle) * Constants.ticksPerRadian);
+        hoodController.reset();
     }
 
     /**

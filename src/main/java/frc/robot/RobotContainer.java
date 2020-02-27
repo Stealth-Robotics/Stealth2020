@@ -84,7 +84,7 @@ public class RobotContainer
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
-        autoCommand = new SixBallAutoCommandGroup(driveBase, shooter, belts, limelight, intake);
+        autoCommand = new SixBallAutoCommandGroup(driveBase, shooter, belts, limelight, intake, distanceSensor);
     }
 
     /**
@@ -97,6 +97,8 @@ public class RobotContainer
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
         new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 3).whenPressed(new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)));
+        new JoystickButton(driveJoystick, 4).whenPressed(new InstantCommand(() -> shooter.setHoodPos(Constants.maxAngle)));
+        new JoystickButton(driveJoystick, 4).whenPressed(new InstantCommand(() -> shooter.setHoodSpeedDirect(Constants.maxAngle)));
 
         new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
 
