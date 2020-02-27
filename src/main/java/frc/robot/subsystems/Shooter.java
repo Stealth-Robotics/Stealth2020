@@ -159,33 +159,4 @@ public class Shooter extends SubsystemBase
     {
         enabled = false;
     }
-
-
-    //TODO: Rework InitHoodPosition
-    /**
-     * Allows the shooter to zero itself at the start of the match
-     */
-    /*
-    public void initializePosition()
-    {
-        double previousEncoderPosition = hood.getSelectedSensorPosition(0);
-        
-        hood.set(-0.1);
-        StopWatch timer = new StopWatch(1000);
-        StopWatch  timerShort = new StopWatch(50);
-
-        while(!timer.isExpired())
-        {
-            while(!timerShort.isExpired());
-            // if(previousEncoderPosition == hoodEncoder.getPosition())
-            if(previousEncoderPosition == hood.getSelectedSensorPosition(0))
-            {
-                break;
-            }
-                    
-        }
-
-        hood.set(0);
-        hood.getSelectedSensorPosition(0);
-    }*/
 }

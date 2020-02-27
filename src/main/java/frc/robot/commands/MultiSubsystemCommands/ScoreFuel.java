@@ -3,9 +3,11 @@ package frc.robot.commands.MultiSubsystemCommands;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.BeltsCommands.ResetBelts;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
@@ -62,7 +64,8 @@ public class ScoreFuel extends SequentialCommandGroup
                 ).withTimeout(3)
             ),
             new FireShooter(shooter, belts).withTimeout(10),
-            new ResetBelts(belts).withTimeout(3)
+            new ResetBelts(belts).withTimeout(3),
+            new InstantCommand(() -> shooter.setHoodPos(Constants.maxAngle))
         );
     }
 
