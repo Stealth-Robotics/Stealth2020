@@ -24,12 +24,13 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
   public SixBallAutoCommandGroup(DriveBase drive, Shooter shooter, Belts belt, Limelight limelight, Intake intake, DistanceSensor distanceSensor) {
     addCommands(
         // Drive forward the specified distance
+        //3 ball auto
         new AlignWithTarget(drive, limelight),
         new AimHood(shooter, distanceSensor),
        new FireShooter(shooter, belt).withTimeout(10),
        new TurnToAngle(0, drive),
        new DriveBackwards(1000, drive),
-       //3 ball auto above
+      //comment out for 6 ball auto, TODO: TEST
       /*
        new IntakeDown(intake),
        new DriveBackwards(1000, drive),
