@@ -206,7 +206,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getHeading() 
     {
-		return m_gyro.getAbsoluteCompassHeading();
+		return m_gyro.getFusedHeading();
 	}
 
 	/**

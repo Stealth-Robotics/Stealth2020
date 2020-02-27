@@ -53,10 +53,6 @@ public final class Constants
     public static final double limekI = 0.0;
     public static final double limekD = 0.01;
 
-    public static final double basekP = 0.05; //TODO: Tune drivebase PID on carpet
-    public static final double basekI = 0.0;
-    public static final double basekD = 0.0;
-
     public static final class DriveConstants 
     {
         public static final boolean kLeftEncoderReversed = false;
@@ -87,6 +83,7 @@ public final class Constants
         public static final double kvVoltSecondsPerMeter = 1.98;
         public static final double kaVoltSecondsSquaredPerMeter = 0.2;
 
+
         // Example value only - as above, this must be tuned for your drive!
         public static final double kPDriveVel = 8.5;
 
@@ -95,11 +92,24 @@ public final class Constants
 
     public static final class AutoConstants 
     {
-        public static final double kMaxSpeedMetersPerSecond = 3;
+        /*public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
+        public static final double kRamseteZeta = 0.7;*/
+
+        private static final double tickPerMotorRevolution = 360;
+        private static final double driveGearReduction = 1;
+        private static final double wheeldiameterInches = 2.95276;
+        public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
+
+        public static final double basekP = 0.05; //TODO: Tune drivebase PID on carpet
+        public static final double basekI = 0.0;
+        public static final double basekD = 0.0;
+
+        public static final double baseTurnkP = 0.05; //TODO: Tune drivebase PID on carpet
+        public static final double baseTurnkI = 0.0;
+        public static final double baseTurnkD = 0.0;        
     }
 }

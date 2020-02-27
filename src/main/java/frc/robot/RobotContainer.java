@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoCommands.AutoPaths.SixBallAutoCommandGroup;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
-import frc.robot.commands.EncoderAutoCommands.SixBallAutoCommandGroup;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
@@ -95,7 +95,7 @@ public class RobotContainer
      */
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        new JoystickButton(driveJoystick, 2).whileHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
+        new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
 
         new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
 
