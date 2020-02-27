@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase
 
         // hoodEncoder = new CANCoder(RobotMap.hood);
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
-        hoodController.setTolerance(3);
+        hoodController.setTolerance(20);
 
         enabled = false;
     }

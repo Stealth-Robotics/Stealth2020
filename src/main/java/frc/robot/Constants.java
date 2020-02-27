@@ -40,13 +40,13 @@ public final class Constants
     public static final double shooterkI = 0.0;
     public static final double shooterkD = 0.0;
 
-    public static final double ticksPerRadian = 1680 * 4 / (Math.PI / 4);
+    public static final double ticksPerRadian = 2850 / (5 * Math.PI / 18);
 
     public static final double maxAngle = 14 * Math.PI / 36;
     public static final double minAngle = maxAngle - 2 * Math.PI / 9;
     
-    public static final double hoodkP = 0.015; 
-    public static final double hoodkI = 0.005; //these ones work I think
+    public static final double hoodkP = 0.01; 
+    public static final double hoodkI = 0.007; //these ones work I think
     public static final double hoodkD = 0.0;
 
     public static final double limekP = 0.09; //TODO: Tune limelight PID on carpet
