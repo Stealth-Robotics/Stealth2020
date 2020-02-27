@@ -26,17 +26,18 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
         // Drive forward the specified distance
         new AlignWithTarget(drive, limelight),
         new AimHood(shooter, limelight),
-       new FireShooter(shooter, belt),
+       new FireShooter(shooter, belt).withTimeout(10),
        new TurnToAngle(0, drive),
        new DriveBackwards(1000, drive),
        //3 ball auto above
       
-       new IntakeFuel(intake),
+       new IntakeDown(intake),
        new DriveBackwards(1000, drive),
+       new IntakeUp(intake),
        new DriveForward(1000, drive),
        new AlignWithTarget(drive, limelight),
        new AimHood(shooter, limelight),
-       new FireShooter(shooter, belt)
+       new FireShooter(shooter, belt).withTimeout(10)
       // new TurnToAngle(0, drive)
     );
         
