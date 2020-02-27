@@ -38,8 +38,6 @@ public class AimHood extends CommandBase
         double angle = calcAngle(dist) - Math.PI / 9;
         // System.out.println("Angle: " + angle * 180 / Math.PI);
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
-        System.out.println("Dist: " + dist);
-        System.out.println("Angle: " + angle * 180 / Math.PI);
 
         shooter.setHoodPos(angle);
     }

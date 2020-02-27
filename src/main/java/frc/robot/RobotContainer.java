@@ -79,7 +79,7 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(new RunCommand(
-                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(2)), driveBase));
+                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(4)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
@@ -95,6 +95,11 @@ public class RobotContainer
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
         new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
+        /*new JoystickButton(driveJoystick, 2).whenHeld(new AlignWithTarget(driveBase, limelight)
+        .andThen(new AimHood(shooter, distanceSensor)
+        .andThen(new FireShooter(shooter, belts)))
+        .andThen(() -> shooter.setHoodPos(Constants.maxAngle))
+        );*/
 
         new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
 

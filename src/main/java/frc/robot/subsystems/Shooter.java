@@ -116,7 +116,6 @@ public class Shooter extends SubsystemBase
      */
     public void setHoodPos(double angle)
     {
-        System.out.println("Target: " + ((Constants.maxAngle) - angle) * Constants.ticksPerRadian);
         hoodController.setSetpoint(((Constants.maxAngle) - angle) * Constants.ticksPerRadian);
         hoodController.reset();
     }

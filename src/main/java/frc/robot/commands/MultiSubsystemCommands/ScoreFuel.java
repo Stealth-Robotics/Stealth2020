@@ -50,21 +50,10 @@ public class ScoreFuel extends SequentialCommandGroup
     {
         addCommands(
             new SequentialCommandGroup(
-                new AlignWithTarget(driveBase, limelight), 
-                new AimHood(shooter, distanceSensor), 
-                new RunCommand(() -> belts.runAllBelts(0.6, 0.8), belts).withInterrupt(new BooleanSupplier()
-                    {
-                        @Override
-                        public boolean getAsBoolean()
-                        {
-                            return belts.getBeamBreak3();
-                        }
-                    }
-                ).withTimeout(3)
-            ),
-            new FireShooter(shooter, belts).withTimeout(10),
-            new ResetBelts(belts).withTimeout(3),
-            new InstantCommand(() -> shooter.setHoodPos(Constants.maxAngle))
+                new AlignWithTarget(driveBase, limelight),
+                new AimHood(shooter, distanceSensor),
+                new FireShooter(shooter, belts)),
+                new InstantCommand(() -> shooter.setHoodPos(Constants.maxAngle))
         );
     }
 
