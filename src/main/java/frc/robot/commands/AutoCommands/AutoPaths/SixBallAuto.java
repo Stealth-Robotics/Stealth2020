@@ -3,6 +3,7 @@ package frc.robot.commands.AutoCommands.AutoPaths;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoCommands.DriveForInches;
 import frc.robot.commands.AutoCommands.TurnToAngle;
+import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.DistanceSensor;
@@ -25,9 +26,21 @@ public class SixBallAuto extends SequentialCommandGroup {
     (
         // Drive forward the specified distance
         //3 ball auto
-      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
-      new TurnToAngle(0, driveBase),
-      new DriveForInches(-5, driveBase)//,
+     
+       new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
+       new DriveForInches(2.5, driveBase)
+       /*
+       new TurnToAngle(0, driveBase)
+       new RunCommand(() -> intake.toggle()),
+        new RunCommand(() -> intake.run()),
+       new DriveForInches(1000, driveBase),
+       new RunCommand(() -> intake.stop()),
+        new RunCommand(() -> intake.toggle()),
+        new DriveForInches(1000,driveBase),
+        new ScoreFuel(driveBase, shooter, belts,limelight,distanceSensor)
+       
+      *
+      //new DriveForInches(-5, driveBase)//,
       //comment out for 6 ball auto, TODO: TEST
       /*
       new RunCommand(() -> intake.toggle()),
