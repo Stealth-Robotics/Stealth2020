@@ -51,7 +51,7 @@ public class ScoreFuel extends SequentialCommandGroup
             new ParallelCommandGroup(
                 new AlignWithTarget(driveBase, limelight), 
                 new AimHood(shooter, distanceSensor), 
-                new RunCommand(() -> belts.runAllBelts(), belts).withInterrupt(new BooleanSupplier()
+                new RunCommand(() -> belts.runAllBelts(0.6, 0.8), belts).withInterrupt(new BooleanSupplier()
                     {
                         @Override
                         public boolean getAsBoolean()

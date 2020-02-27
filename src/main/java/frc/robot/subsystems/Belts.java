@@ -72,10 +72,10 @@ public class Belts extends SubsystemBase
     /**
      * Runs all belts
      */
-    public void runAllBelts()
+    public void runAllBelts(double belt1Speed, double belt2Speed)
     {
-        belt1.set(0.8);
-        belt2.set(0.8);
+        belt1.set(belt1Speed);
+        belt2.set(belt2Speed);
     }
 
     /**

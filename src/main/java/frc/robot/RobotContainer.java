@@ -131,7 +131,7 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
 
         StartEndCommand runBelts = new StartEndCommand(
-            () -> belts.runAllBelts(),
+            () -> belts.runAllBelts(0.6, 0.8),
             () -> belts.stopAllBelts()
         );
         runBelts.addRequirements(belts);

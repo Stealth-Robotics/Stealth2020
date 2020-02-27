@@ -33,7 +33,7 @@ public class BeltsDefault extends CommandBase
     {
         this.belts = belts;
 
-        timer = new StopWatch(50);
+        timer = new StopWatch(150);
 
         previousBeamBreak1 = false;
         previousBeamBreak2 = false;
@@ -53,7 +53,7 @@ public class BeltsDefault extends CommandBase
     {
         if(belts.getBeamBreak1() && belts.getBallCount() < 5)
         {
-            belts.runAllBelts();
+            belts.runAllBelts(0.8, 0.6);
             timer.reset();
         }
         
