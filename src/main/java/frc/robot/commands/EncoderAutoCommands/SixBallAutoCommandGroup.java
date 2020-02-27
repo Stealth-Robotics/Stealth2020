@@ -30,7 +30,7 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
        new TurnToAngle(0, drive),
        new DriveBackwards(1000, drive),
        //3 ball auto above
-      
+      /*
        new IntakeDown(intake),
        new DriveBackwards(1000, drive),
        new IntakeUp(intake),
@@ -39,6 +39,7 @@ public class SixBallAutoCommandGroup extends SequentialCommandGroup {
        new AimHood(shooter, distanceSensor),
        new FireShooter(shooter, belt).withTimeout(10)
       // new TurnToAngle(0, drive)
+      */
     );
         
         
