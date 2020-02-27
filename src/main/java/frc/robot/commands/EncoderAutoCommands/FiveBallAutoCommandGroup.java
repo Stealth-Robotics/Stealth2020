@@ -22,17 +22,17 @@ public class FiveBallAutoCommandGroup extends SequentialCommandGroup {
    * @param drive The drive subsystem this command will run on
    * 
    */
-  public FiveBallAutoCommandGroup(DriveBase drive, Shooter shooter, Belts belt, Limelight limelight, Intake intake) {
+  public FiveBallAutoCommandGroup(DriveBase drive, Shooter shooter, Belts belt, Limelight limelight, Intake intake , DistanceSensor distanceSensor) {
     addCommands(
         // Drive forward the specified distance
         new AlignWithTarget(drive, limelight),
-        new AimHood(shooter, limelight),
+        new AimHood(shooter, distanceSensor),
        new FireShooter(shooter, belt),
        new IntakeFuel(intake),
        new DriveBackwards(1000, drive),
        new DriveForward(1000, drive),
        new AlignWithTarget(drive, limelight),
-       new AimHood(shooter, limelight),
+       new AimHood(shooter, distanceSensor),
        new FireShooter(shooter, belt)
 
 

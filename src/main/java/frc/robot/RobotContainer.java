@@ -84,7 +84,7 @@ public class RobotContainer
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
-        autoCommand = new SixBallAutoCommandGroup(driveBase, shooter, belts, limelight, intake);
+        autoCommand = new SixBallAutoCommandGroup(driveBase , shooter,  belts,  limelight,  intake , distanceSensor);
     }
 
     /**
