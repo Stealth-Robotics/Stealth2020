@@ -106,7 +106,7 @@ public class RobotContainer {
         // shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 2).whenHeld(
                 new SequentialCommandGroup(new InstantCommand(() -> limelight.SetLedMode(3)), new WaitCommand(0.5),
-                        new AlignWithTarget(driveBase, limelight), new AimHood(shooter, distanceSensor),
+                        new AlignWithTarget(driveBase, limelight), new AimHood(shooter, distanceSensor, limelight),
                         new ReverseBelt(belts, 300), new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
                         new WaitCommand(0.5), new FireShooter(shooter, belts)));
         new JoystickButton(driveJoystick, 2).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));

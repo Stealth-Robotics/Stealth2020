@@ -3,6 +3,7 @@ package frc.robot.commands.ShooterCommands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.DistanceSensor;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -14,16 +15,18 @@ public class AimHood extends CommandBase
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Shooter shooter;
     private final DistanceSensor distanceSensor;
+    private final Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public AimHood(Shooter shooter, DistanceSensor distanceSensor) 
+    public AimHood(Shooter shooter, DistanceSensor distanceSensor, Limelight limelight) 
     {
         this.shooter = shooter;
         this.distanceSensor = distanceSensor;
+        this.limelight = limelight;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(shooter, distanceSensor);
     }
@@ -39,7 +42,14 @@ public class AimHood extends CommandBase
         // System.out.println("Angle: " + angle * 180 / Math.PI);
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
 
-        shooter.setHoodPos(angle);
+        if(limelight.hasValidTarget())
+        {
+            shooter.setHoodPos(angle);
+        }
+        else
+        {
+            shooter.setHoodPos(Constants.maxAngle);
+        }
     }
 
     // Returns true when the command should end.
