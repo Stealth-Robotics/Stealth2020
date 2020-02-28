@@ -43,18 +43,17 @@ public class ScoreFuel extends SequentialCommandGroup
         this.belts = belts;
 
         addRequirements(shooter, driveBase, belts);
+
+        addCommands(
+            new AlignWithTarget(driveBase, limelight),
+            new AimHood(shooter, distanceSensor),
+            new FireShooter(shooter, belts)
+        );
     }
 
     @Override
     public void initialize() 
     {
-        addCommands(
-            new SequentialCommandGroup(
-                new AlignWithTarget(driveBase, limelight),
-                new AimHood(shooter, distanceSensor),
-                new FireShooter(shooter, belts)),
-                new InstantCommand(() -> shooter.setHoodPos(Constants.maxAngle))
-        );
     }
 
     // Called once the command ends or is interrupted.
@@ -62,6 +61,7 @@ public class ScoreFuel extends SequentialCommandGroup
     public void end(boolean interrupted) 
     {
         shooter.disable();
+        shooter.setHoodPos(Constants.maxAngle);
     }
 
     // Returns true when the command should end.

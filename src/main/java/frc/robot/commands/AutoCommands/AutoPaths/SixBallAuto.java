@@ -1,10 +1,16 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutoCommands.DriveForInches;
 import frc.robot.commands.AutoCommands.TurnToAngle;
+import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
+import frc.robot.commands.ShooterCommands.AimHood;
+import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
@@ -22,13 +28,19 @@ public class SixBallAuto extends SequentialCommandGroup {
    */
   public SixBallAuto(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, Intake intake,
       DistanceSensor distanceSensor) {
+
     addCommands
     (
         // Drive forward the specified distance
         //3 ball auto
      
-       new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
-       new DriveForInches(2.5, driveBase)
+        new AlignWithTarget(driveBase, limelight),
+        new AimHood(shooter, distanceSensor),
+        // new ReverseBelt(belts, 300),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
+        // new WaitCommand(0.5),
+        new FireShooter(shooter, belts),
+        new DriveForInches(360, driveBase)
        /*
        new TurnToAngle(0, driveBase)
        new RunCommand(() -> intake.toggle()),

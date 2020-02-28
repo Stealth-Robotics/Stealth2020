@@ -12,11 +12,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCommands.AutoPaths.SixBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
+import frc.robot.commands.BeltsCommands.ReverseBelt;
+import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
@@ -79,7 +84,7 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(new RunCommand(
-                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(4)), driveBase));
+                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(2)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
@@ -94,7 +99,19 @@ public class RobotContainer
      */
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
+        //new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
+        new JoystickButton(driveJoystick, 2).whenHeld(
+            new SequentialCommandGroup(
+                new AlignWithTarget(driveBase, limelight),
+                new AimHood(shooter, distanceSensor),
+                new ReverseBelt(belts, 300),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                new WaitCommand(0.5),
+                new FireShooter(shooter, belts)
+            )
+        );
+        new JoystickButton(driveJoystick, 2).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        
         /*new JoystickButton(driveJoystick, 2).whenHeld(new AlignWithTarget(driveBase, limelight)
         .andThen(new AimHood(shooter, distanceSensor)
         .andThen(new FireShooter(shooter, belts)))

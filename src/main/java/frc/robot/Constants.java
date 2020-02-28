@@ -49,9 +49,9 @@ public final class Constants
     public static final double hoodkI = 0.007; //these ones work I think
     public static final double hoodkD = 0.0;
 
-    public static final double limekP = 0.09; //TODO: Tune limelight PID on carpet
-    public static final double limekI = 0.0;
-    public static final double limekD = 0.01;
+    public static final double limekP = 0.06; //TODO: Tune limelight PID on carpet
+    public static final double limekI = 0.06;
+    public static final double limekD = 0.02;
 
     public static final class DriveConstants 
     {

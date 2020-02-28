@@ -47,6 +47,11 @@ public class AlignWithTarget extends CommandBase
         driveBase.arcadeDrive(0, -controller.calculate(limelight.getTargetHorizontalOffset()));
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        driveBase.arcadeDrive(0, 0);
+    }
+
     // Returns true when the command should end.
     @Override
     public boolean isFinished() 

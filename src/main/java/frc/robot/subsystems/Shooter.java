@@ -69,9 +69,9 @@ public class Shooter extends SubsystemBase
         {
             shooter.set(0);
         }*/
-        System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
-        System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
-        System.out.println("Hood Power: " + hood.get());
+        //System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
+        //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
+        //System.out.println("Hood Power: " + hood.get());
     }
 
     /**
