@@ -19,6 +19,8 @@ public class Climber extends SubsystemBase
     private final DigitalInput rightLimitSwitch;
     private final SpeedControllerGroup climbElevators;
 
+    public boolean armRetracted;
+
     //PowerDistributionPanel PDP;
 
     /**
@@ -38,6 +40,8 @@ public class Climber extends SubsystemBase
         rightClimber.setInverted(true);
 
         climbElevators = new SpeedControllerGroup(leftClimber,  rightClimber);
+
+        armRetracted = false;
     }
 
     @Override

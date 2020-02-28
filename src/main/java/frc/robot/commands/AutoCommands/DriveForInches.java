@@ -16,6 +16,7 @@ public class DriveForInches extends CommandBase
     public DriveForInches(double ticks, DriveBase drivebase)
     {
         controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
+        controller.setTolerance(50);
         this.driveBase = drivebase;
         // ticksToDrive = inches * Constants.AutoConstants.ticksPerInch;   
         ticksToDrive = ticks;
@@ -32,6 +33,7 @@ public class DriveForInches extends CommandBase
     public void execute()
     {
         driveBase.arcadeDrive(controller.calculate(driveBase.getAverageEncoderDistance()), 0);
+        
     }
 
     @Override

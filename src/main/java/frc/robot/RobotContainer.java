@@ -8,19 +8,22 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AutoCommands.AutoPaths.SixBallAuto;
+import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
@@ -43,20 +46,19 @@ import frc.robot.subsystems.Shooter;
  * scheduler calls). Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
-public class RobotContainer
-{
+public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final DriveBase driveBase;
     private final Shooter shooter;
     private final Intake intake;
     private final Climber climber;
     private final Belts belts;
-    //private final PanelControl panelControl;
-    
+    // private final PanelControl panelControl;
+
     private final Limelight limelight;
     private final DistanceSensor distanceSensor;
 
-    private final SixBallAuto autoCommand;
+    private final ThreeBallAuto autoCommand;
 
     private Joystick driveJoystick;
     private Joystick mechJoystick;
@@ -64,14 +66,13 @@ public class RobotContainer
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer()
-    {
+    public RobotContainer() {
         driveBase = new DriveBase();
         shooter = new Shooter();
         intake = new Intake();
         climber = new Climber();
         belts = new Belts();
-        //panelControl = new PanelControl();
+        // panelControl = new PanelControl();
 
         limelight = new Limelight();
         distanceSensor = new DistanceSensor();
@@ -94,7 +95,7 @@ public class RobotContainer
         camera.setResolution(160, 120);
         camera.setFPS(15);
 
-        autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
+        autoCommand = new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
     }
 
     /**
@@ -105,53 +106,34 @@ public class RobotContainer
      */
     private void configureButtonBindings() {
         new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
-        //new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
+        // new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase,
+        // shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 2).whenHeld(
-            new SequentialCommandGroup(
-                new InstantCommand(() -> limelight.SetLedMode(3)),
-                new WaitCommand(0.5),
-                new AlignWithTarget(driveBase, limelight),
-                new AimHood(shooter, distanceSensor),
-                new ReverseBelt(belts, 300),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
-                new WaitCommand(0.5),
-                new FireShooter(shooter, belts)
-            )
-        );
+                new SequentialCommandGroup(new InstantCommand(() -> limelight.SetLedMode(3)), new WaitCommand(0.5),
+                        new AlignWithTarget(driveBase, limelight), new AimHood(shooter, distanceSensor),
+                        new ReverseBelt(belts, 300), new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                        new WaitCommand(0.5), new FireShooter(shooter, belts)));
         new JoystickButton(driveJoystick, 2).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        
-        /*new JoystickButton(driveJoystick, 2).whenHeld(new AlignWithTarget(driveBase, limelight)
-        .andThen(new AimHood(shooter, distanceSensor)
-        .andThen(new FireShooter(shooter, belts)))
-        .andThen(() -> shooter.setHoodPos(Constants.maxAngle))
-        );*/
 
-        new JoystickButton(mechJoystick, 1).whenHeld(new IntakeFuel(intake));
+        new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
-        // new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(
-        // () -> this.intake.run(),
-        // () -> this.intake.stopIntake()
-        // ));
-
-        new JoystickButton(mechJoystick, 2).whenHeld(new AimHood(shooter, distanceSensor));
-
-        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(
+        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
             () -> climber.runClimb(0.6, 0),
             () -> climber.runClimb(0, 0)
         ));
 
-        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
+        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(-0.4, 0),	
             () -> climber.runClimb(0, 0)	
         ));	
 
-        new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, -0.5),	
-            () -> climber.runClimb(0, 0)	
-        ));	
-
-        new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
+        new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0.5),	
+            () -> climber.runClimb(0, 0)	
+        ));
+
+        new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, -0.5),	
             () -> climber.runClimb(0, 0)	
         ));
 

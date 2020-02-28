@@ -44,9 +44,9 @@ public final class Constants
 
     public static final double maxAngle = 14 * Math.PI / 36;
     public static final double minAngle = maxAngle - 2 * Math.PI / 9;
-    
+
     public static final double hoodkP = 0.01; 
-    public static final double hoodkI = 0.007; //these ones work I think
+    public static final double hoodkI = 0.009; //these ones work I think
     public static final double hoodkD = 0.0;
 
     public static final double limekP = 0.06; //TODO: Tune limelight PID on carpet
@@ -104,7 +104,7 @@ public final class Constants
         private static final double wheeldiameterInches = 2.95276;
         public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
 
-        public static final double basekP = 0.05; //TODO: Tune drivebase PID on carpet
+        public static final double basekP = 0.01; //TODO: Tune drivebase PID on carpet
         public static final double basekI = 0.0;
         public static final double basekD = 0.0;
 
