@@ -8,15 +8,12 @@
 
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -28,7 +25,6 @@ import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
-// import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
@@ -118,23 +114,23 @@ public class RobotContainer {
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0.6, 0),
-            () -> climber.runClimb(0, 0)
+            () -> climber.runClimb(0.7, 0.6, 0),
+            () -> climber.runClimb(0, 0, 0)
         ));
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(-0.4, 0),	
-            () -> climber.runClimb(0, 0)	
+            () -> climber.runClimb(-0.5, -0.4, 0),	
+            () -> climber.runClimb(0, 0, 0)	
         ));	
 
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, 0.5),	
-            () -> climber.runClimb(0, 0)	
+            () -> climber.runClimb(0, 0, 0.5),	
+            () -> climber.runClimb(0, 0, 0)	
         ));
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, -0.5),	
-            () -> climber.runClimb(0, 0)	
+            () -> climber.runClimb(0, 0, -0.5),	
+            () -> climber.runClimb(0, 0, 0)	
         ));
 
         new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
