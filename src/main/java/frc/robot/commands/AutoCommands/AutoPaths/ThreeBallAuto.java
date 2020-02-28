@@ -2,16 +2,10 @@ package frc.robot.commands.AutoCommands.AutoPaths;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.AutoCommands.DriveForInches;
-import frc.robot.commands.AutoCommands.TurnToAngle;
-import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
-import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
