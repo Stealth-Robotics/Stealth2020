@@ -51,12 +51,17 @@ public class ThreeBallAuto extends SequentialCommandGroup {
               }
             })
        /*
+       // make the bot straight
        new TurnToAngle(0, driveBase)
+       //Put the intake down and run the intake
        new RunCommand(() -> intake.toggle()),
         new RunCommand(() -> intake.run()),
+        //drive backwards to collect intake
        new DriveForInches(1000, driveBase),
+       //bring  intake up and collect balls
        new RunCommand(() -> intake.stop()),
         new RunCommand(() -> intake.toggle()),
+       //drive back to shoot in range
           new DriveForInches(-1000, driveBase),
         //shoot
         new AlignWithTarget(driveBase, limelight),
@@ -65,6 +70,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
         // new WaitCommand(0.5),
         new FireShooter(shooter, belts).withTimeout(5),
+        //drive backwards a tiny bitjust to make sure we got off the line   
         new DriveForInches(360, driveBase)
       */
       
