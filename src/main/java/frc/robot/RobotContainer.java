@@ -132,15 +132,6 @@ public class RobotContainer {
             () -> climber.runClimb(0, 0, -0.5),	
             () -> climber.runClimb(0, 0, 0)	
         ));
-
-        new JoystickButton(mechJoystick, 7).whenHeld(new FireShooter(shooter, belts));
-
-        StartEndCommand runBelts = new StartEndCommand(
-            () -> belts.runAllBelts(0.6, 0.8),
-            () -> belts.stopAllBelts()
-        );
-        runBelts.addRequirements(belts);
-        new JoystickButton(mechJoystick, 8).whenHeld(runBelts);
     }
   
   
@@ -152,15 +143,5 @@ public class RobotContainer {
     public Command getAutonomousCommand() 
     {
         return autoCommand;
-    }
-
-    public void TurnOffLimelight()
-    {
-        limelight.SetLedMode(1);
-    }
-
-    public void TurnOnLimelight()
-    {
-        limelight.SetLedMode(3);
     }
 }
