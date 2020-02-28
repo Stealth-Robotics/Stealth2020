@@ -63,20 +63,17 @@ public class ThreeBallAuto extends SequentialCommandGroup {
        new DriveForInches(1000, driveBase),
        new RunCommand(() -> intake.stop()),
         new RunCommand(() -> intake.toggle()),
-        new DriveForInches(1000,driveBase),
-        new ScoreFuel(driveBase, shooter, belts,limelight,distanceSensor)
-       
-      *
-      //new DriveForInches(-5, driveBase)//,
-      //comment out for 6 ball auto, TODO: TEST
-      /*
-      new RunCommand(() -> intake.toggle()),
-      new DriveForInches(-5, driveBase),
-      new RunCommand(() -> intake.toggle()),
-      new DriveForInches(5, driveBase),
-      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
-      new TurnToAngle(0, driveBase)
+          new DriveForInches(-1000, driveBase),
+        //shoot
+        new AlignWithTarget(driveBase, limelight),
+        new AimHood(shooter, distanceSensor),
+        // new ReverseBelt(belts, 300),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
+        // new WaitCommand(0.5),
+        new FireShooter(shooter, belts).withTimeout(5),
+        new DriveForInches(360, driveBase)
       */
+      
     );
   }
 }
