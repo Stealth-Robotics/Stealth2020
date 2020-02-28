@@ -39,7 +39,7 @@ public class SixBallAuto extends SequentialCommandGroup {
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
         // new WaitCommand(0.5),
-        new FireShooter(shooter, belts),
+        new FireShooter(shooter, belts).withTimeout(5),
         new DriveForInches(360, driveBase)
        /*
        new TurnToAngle(0, driveBase)

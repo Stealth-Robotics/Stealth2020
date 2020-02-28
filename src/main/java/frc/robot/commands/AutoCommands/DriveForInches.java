@@ -24,6 +24,7 @@ public class DriveForInches extends CommandBase
     @Override
     public void initialize() 
     {
+        driveBase.resetEncoders();
         controller.setSetpoint(ticksToDrive);
     }
 

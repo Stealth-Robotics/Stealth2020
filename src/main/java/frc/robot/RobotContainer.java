@@ -8,6 +8,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,7 +25,7 @@ import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
-import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
+// import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
@@ -88,6 +90,10 @@ public class RobotContainer
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
+        UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+        camera.setResolution(160, 120);
+        camera.setFPS(15);
+
         autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
     }
 
@@ -102,6 +108,8 @@ public class RobotContainer
         //new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 2).whenHeld(
             new SequentialCommandGroup(
+                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new WaitCommand(0.5),
                 new AlignWithTarget(driveBase, limelight),
                 new AimHood(shooter, distanceSensor),
                 new ReverseBelt(belts, 300),

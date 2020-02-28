@@ -50,6 +50,7 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void end(boolean interrupted) {
         driveBase.arcadeDrive(0, 0);
+        limelight.SetLedMode(1);
     }
 
     // Returns true when the command should end.

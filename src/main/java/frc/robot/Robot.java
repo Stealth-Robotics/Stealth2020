@@ -58,7 +58,7 @@ public class Robot extends TimedRobot
     @Override
     public void disabledInit() 
     {
-        m_robotContainer.TurnOffLimelight();
+        //m_robotContainer.TurnOffLimelight();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit() 
     {
-        m_robotContainer.TurnOnLimelight();
+        //m_robotContainer.TurnOnLimelight();
 
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit() 
     {
-        m_robotContainer.TurnOnLimelight();
+        //m_robotContainer.TurnOnLimelight();
 
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
