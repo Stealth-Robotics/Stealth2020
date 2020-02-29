@@ -60,6 +60,6 @@ public class Climber extends SubsystemBase
     {
         leftClimber.set(leftSpeed);
         rightClimber.set(rightSpeed);
-        winch.set(winchSpeed);
+        winch.set(-winchSpeed);
     }
 }

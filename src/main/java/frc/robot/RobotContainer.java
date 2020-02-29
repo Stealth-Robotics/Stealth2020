@@ -105,21 +105,29 @@ public class RobotContainer {
         // new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase,
         // shooter, belts, limelight, distanceSensor));
         new JoystickButton(driveJoystick, 2).whenHeld(
-                new SequentialCommandGroup(new InstantCommand(() -> limelight.SetLedMode(3)), new WaitCommand(0.5),
-                        new AlignWithTarget(driveBase, limelight), new AimHood(shooter, distanceSensor, limelight),
-                        new ReverseBelt(belts, 300), new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
-                        new WaitCommand(0.5), new FireShooter(shooter, belts)));
+            new SequentialCommandGroup(
+                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+                new ReverseBelt(belts, 300),
+                new WaitCommand(0.2),
+                new AlignWithTarget(driveBase, limelight),
+                new AimHood(shooter, distanceSensor, limelight),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                new WaitCommand(0.3), 
+                new FireShooter(shooter, belts)
+            )
+        );
         new JoystickButton(driveJoystick, 2).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0.7, 0.6, 0),
+            () -> climber.runClimb(0.85, 0.6, 0),
             () -> climber.runClimb(0, 0, 0)
         ));
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(-0.5, -0.4, 0),	
+            () -> climber.runClimb(-0.5, -0.5, 0),	
             () -> climber.runClimb(0, 0, 0)	
         ));	
 
