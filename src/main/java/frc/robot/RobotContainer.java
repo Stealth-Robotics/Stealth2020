@@ -122,7 +122,8 @@ public class RobotContainer {
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
-            () -> climber.runClimb(0.85, 0.6, 0),
+            ///() -> climber.runClimb(0.85, 0.6, 0),
+            () -> climber.runClimb(0.65, 0.6, 0),
             () -> climber.runClimb(0, 0, 0)
         ));
 

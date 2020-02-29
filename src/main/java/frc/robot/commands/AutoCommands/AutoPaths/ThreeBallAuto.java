@@ -57,12 +57,28 @@ public class ThreeBallAuto extends SequentialCommandGroup {
        new RunCommand(() -> intake.toggle()),
         new RunCommand(() -> intake.run()),
         //drive backwards to collect intake
-       new DriveForInches(1000, driveBase),
+        new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
+            .withInterrupt(new BooleanSupplier()
+            {
+              @Override
+              public boolean getAsBoolean() 
+              {
+                return driveBase.getLeftEncoder().getPosition() > 500;
+              }
+            }) , 
        //bring  intake up and collect balls
        new RunCommand(() -> intake.stop()),
         new RunCommand(() -> intake.toggle()),
        //drive back to shoot in range
-          new DriveForInches(-1000, driveBase),
+           new RunCommand(() -> driveBase.arcadeDrive(0.5, 0), driveBase)
+            .withInterrupt(new BooleanSupplier()
+            {
+              @Override
+              public boolean getAsBoolean() 
+              {
+                return driveBase.getLeftEncoder().getPosition() > 500;
+              }
+            }),
         //shoot
         new AlignWithTarget(driveBase, limelight),
         new AimHood(shooter, distanceSensor),
