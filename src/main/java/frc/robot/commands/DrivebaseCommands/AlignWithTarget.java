@@ -37,7 +37,7 @@ public class AlignWithTarget extends CommandBase
     public void initialize() 
     {       
         controller.setSetpoint(0);
-        controller.setTolerance(0.5);
+        controller.setTolerance(0.3);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

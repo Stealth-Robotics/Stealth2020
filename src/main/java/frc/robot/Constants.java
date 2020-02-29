@@ -50,7 +50,7 @@ public final class Constants
     public static final double hoodkD = 0.0;
 
     public static final double limekP = 0.065; //TODO: Tune limelight PID on carpet
-    public static final double limekI = 0.06;
+    public static final double limekI = 0.063;
     public static final double limekD = 0.02;
 
     public static final class DriveConstants 

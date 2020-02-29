@@ -5,6 +5,8 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.AutoCommands.DriveForInches;
+import frc.robot.commands.AutoCommands.TurnToAngle;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
@@ -15,7 +17,15 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class ThreeBallAuto extends SequentialCommandGroup {
+public class SixBallAuto extends SequentialCommandGroup 
+{
+
+  DriveBase driveBase;
+  Shooter shooter;
+  Belts belts;
+  Limelight limelight;
+  Intake intake;
+  DistanceSensor distanceSensor;
 
   /**
    * Creates a new ComplexAuto.
@@ -23,15 +33,24 @@ public class ThreeBallAuto extends SequentialCommandGroup {
    * @param drive The drive subsystem this command will run on
    * 
    */
-  public ThreeBallAuto(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, Intake intake,
-      DistanceSensor distanceSensor) {
 
+  public SixBallAuto(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, Intake intake,
+      DistanceSensor distanceSensor) 
+  {
+    this.driveBase = driveBase;
+    this.shooter = shooter;
+    this.belts = belts;
+    this.limelight = limelight;
+    this.intake = intake;
+    this.distanceSensor = distanceSensor;
+  }
+  
+  @Override
+  public void initialize()
+  {
     addCommands
     (
-        // Drive forward the specified distance
-        //3 ball auto
-     
-        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight),
         new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
@@ -49,10 +68,10 @@ public class ThreeBallAuto extends SequentialCommandGroup {
               {
                 return driveBase.getLeftEncoder().getPosition() > 700;
               }
-            })
-       /*
+            }),
+       
        // make the bot straight
-       new TurnToAngle(0, driveBase)
+       new TurnToAngle(0, driveBase),
        //Put the intake down and run the intake
        new RunCommand(() -> intake.toggle()),
         new RunCommand(() -> intake.run()),
@@ -67,7 +86,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
               }
             }) , 
        //bring  intake up and collect balls
-       new RunCommand(() -> intake.stop()),
+       new RunCommand(() -> intake.stopIntake()),
         new RunCommand(() -> intake.toggle()),
        //drive back to shoot in range
            new RunCommand(() -> driveBase.arcadeDrive(0.5, 0), driveBase)
@@ -81,15 +100,14 @@ public class ThreeBallAuto extends SequentialCommandGroup {
             }),
         //shoot
         new AlignWithTarget(driveBase, limelight),
-        new AimHood(shooter, distanceSensor),
+        new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
         // new WaitCommand(0.5),
         new FireShooter(shooter, belts).withTimeout(5),
         //drive backwards a tiny bitjust to make sure we got off the line   
         new DriveForInches(360, driveBase)
-      */
-      
+     
     );
   }
 }

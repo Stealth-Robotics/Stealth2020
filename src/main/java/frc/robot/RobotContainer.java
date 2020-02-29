@@ -88,8 +88,8 @@ public class RobotContainer {
         belts.setDefaultCommand(new BeltsDefault(belts));
 
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-        camera.setResolution(160, 120);
-        camera.setFPS(15);
+        camera.setResolution(320, 240);
+        camera.setFPS(25);
 
         autoCommand = new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
     }
@@ -101,29 +101,59 @@ public class RobotContainer {
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        new JoystickButton(driveJoystick, 1).whenPressed(() -> driveBase.reverseDrive());
+        new JoystickButton(driveJoystick, 2).whenPressed(() -> driveBase.reverseDrive());
         // new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase,
         // shooter, belts, limelight, distanceSensor));
-        new JoystickButton(driveJoystick, 2).whenHeld(
+        new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.SetLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
                 new AlignWithTarget(driveBase, limelight),
-                new AimHood(shooter, distanceSensor, limelight),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                new AimHood(shooter, distanceSensor, false),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
         );
-        new JoystickButton(driveJoystick, 2).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+
+        new JoystickButton(driveJoystick, 3).whenHeld(
+            new SequentialCommandGroup(
+                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+                new ReverseBelt(belts, 300),
+                new WaitCommand(0.2),
+                new AlignWithTarget(driveBase, limelight),
+                new AimHood(shooter, distanceSensor, true),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new WaitCommand(0.3), 
+                new FireShooter(shooter, belts)
+            )
+        );
+
+        new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
+        StartEndCommand reverseBeltCommand = new StartEndCommand(
+            ///() -> climber.runClimb(0.85, 0.6, 0),
+            () -> belts.reverseAllBelts(),
+            () -> belts.stopAllBelts()
+        );
+        reverseBeltCommand.addRequirements(belts);
+        new JoystickButton(mechJoystick, 7).whenHeld(reverseBeltCommand);
+
+        new JoystickButton(mechJoystick, 8).whenHeld(new StartEndCommand(
+            ///() -> climber.runClimb(0.85, 0.6, 0),
+            () -> intake.reverse(),
+            () -> intake.stopIntake()
+        ));
+
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
             ///() -> climber.runClimb(0.85, 0.6, 0),
-            () -> climber.runClimb(0.65, 0.6, 0),
+            () -> climber.runClimb(0.6, 0.6, 0),
             () -> climber.runClimb(0, 0, 0)
         ));
 
@@ -135,7 +165,7 @@ public class RobotContainer {
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, 0.5),	
             () -> climber.runClimb(0, 0, 0)	
-        ));
+        )/* .beforeStarting(() -> intake.setDeployment(true)) */);
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, -0.5),	

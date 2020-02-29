@@ -39,7 +39,7 @@ public class RobotMap
     public static final int Climber2 = 36;
 
     public static final int LeftLimitSwitch = 8;
-    public static final int LightLimitSwitch = 9;
+    public static final int RightLimitSwitch = 9;
 
     //Intake
     public static final int Intake = 35;

@@ -30,7 +30,7 @@ public class Climber extends SubsystemBase
         //this.PDP = PDP;
 
         leftLimitSwitch = new DigitalInput(RobotMap.LeftLimitSwitch);
-        rightLimitSwitch  = new DigitalInput(RobotMap.LightLimitSwitch);
+        rightLimitSwitch  = new DigitalInput(RobotMap.RightLimitSwitch);
         winch = new CANSparkMax(RobotMap.Winch, MotorType.kBrushless);
 
         leftClimber = new WPI_TalonSRX(RobotMap.Climber1);

@@ -38,7 +38,7 @@ public class Intake extends SubsystemBase
      */
     public void run()
     {
-        intake.set(0.7);
+        intake.set(0.9);
     }
 
     /**
@@ -50,10 +50,26 @@ public class Intake extends SubsystemBase
     }
 
     /**
+     * Reverses the intake
+     */
+    public void reverse()
+    {
+        intake.set(-0.5);
+    }
+
+    /**
      * Toggles the deployment state of the intake
      */
     public void toggle()
     {
         deployPistons.set(!deployPistons.get());
+    }
+
+    /**
+     * Sets the deployment state of the intake
+     */
+    public void setDeployment(boolean state)
+    {
+        deployPistons.set(state);
     }
 }

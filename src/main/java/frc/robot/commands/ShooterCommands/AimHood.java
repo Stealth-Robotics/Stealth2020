@@ -3,7 +3,7 @@ package frc.robot.commands.ShooterCommands;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.DistanceSensor;
-import frc.robot.subsystems.Limelight;
+// import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -15,18 +15,21 @@ public class AimHood extends CommandBase
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Shooter shooter;
     private final DistanceSensor distanceSensor;
-    private final Limelight limelight;
+
+    private boolean override;
+    // private final Limelight limelight;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public AimHood(Shooter shooter, DistanceSensor distanceSensor, Limelight limelight) 
+    public AimHood(Shooter shooter, DistanceSensor distanceSensor, boolean override)
     {
         this.shooter = shooter;
         this.distanceSensor = distanceSensor;
-        this.limelight = limelight;
+        this.override = override;
+        // this.limelight = limelight;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(shooter, distanceSensor);
     }
@@ -36,20 +39,28 @@ public class AimHood extends CommandBase
     public void initialize() 
     {
         double dist = distanceSensor.getHeading() / 1000;
+
+        if (override)
+        {
+            dist = 3.048;
+        }
+        
         
         // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
         double angle = calcAngle(dist) - Math.PI / 12;
         // System.out.println("Angle: " + angle * 180 / Math.PI);
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
 
-        if(limelight.hasValidTarget())
-        {
-            shooter.setHoodPos(angle);
-        }
-        else
-        {
-            shooter.setHoodPos(Constants.maxAngle);
-        }
+        // if(limelight.hasValidTarget())
+        // {
+        //     shooter.setHoodPos(angle);
+        // }
+        // else
+        // {
+        //     shooter.setHoodPos(Constants.maxAngle);
+        // }
+
+        shooter.setHoodPos(angle);
     }
 
     // Returns true when the command should end.
