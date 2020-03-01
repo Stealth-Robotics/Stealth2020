@@ -35,6 +35,7 @@ public final class Constants
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
     public static final double cameraHeight = 0.65405; // in meters
     public static final double cameraAngle = 20 * (Math.PI / 180); // in radians
+    public static final double cameraOffset = 70; //offset of camera from center in mm
     
     public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
     public static final double shooterkI = 0.0;
@@ -49,8 +50,8 @@ public final class Constants
     public static final double hoodkI = 0.009; //these ones work I think
     public static final double hoodkD = 0.0;
 
-    public static final double limekP = 0.065; //TODO: Tune limelight PID on carpet
-    public static final double limekI = 0.063;
+    public static final double limekP = 0.067; //TODO: Tune limelight PID on carpet
+    public static final double limekI = 0.069;
     public static final double limekD = 0.02;
 
     public static final class DriveConstants 

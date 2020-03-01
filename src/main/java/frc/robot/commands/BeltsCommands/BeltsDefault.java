@@ -45,20 +45,25 @@ public class BeltsDefault extends CommandBase
     @Override
     public void execute()
     {
-        if(belts.getBeamBreak1() && belts.getBallCount() < 5)
+        if(belts.getBeamBreak1() && belts.getBallCount() < 5 && belts.getBelt1() >= 0)
         {
             belts.runAllBelts(0.8, 0.8);
             timer.reset();
         }
         
-        if(timer.isExpired())
+        if(timer.isExpired() && belts.getBelt1() >= 0)
         {
             belts.stopAllBelts();
         }
 
-        if (belts.getBeamBreak1() && !previousBeamBreak1)
+        if (belts.getBeamBreak1() && !previousBeamBreak1 && belts.getBelt1() > 0)
         {
             belts.addBall();
+        }
+
+        if (!belts.getBeamBreak1() && previousBeamBreak1 && belts.getBelt1() < 0)
+        {
+            belts.removeBall();
         }
 
         previousBeamBreak1 = belts.getBeamBreak1();

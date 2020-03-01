@@ -2,6 +2,7 @@
 package frc.robot.commands.DrivebaseCommands;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -16,16 +17,18 @@ public class AlignWithTarget extends CommandBase
     private final PIDController controller;
 
     private final Limelight limelight;
+    private final DistanceSensor distanceSensor;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public AlignWithTarget(DriveBase driveBase, Limelight limelight) 
+    public AlignWithTarget(DriveBase driveBase, Limelight limelight, DistanceSensor distanceSensor) 
     {
         this.driveBase = driveBase;
         this.limelight = limelight;
+        this.distanceSensor = distanceSensor;
         
         controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
 
@@ -36,7 +39,8 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void initialize() 
     {       
-        controller.setSetpoint(0);
+        // controller.setSetpoint(Math.atan(distanceSensor.getDistance() / Constants.cameraOffset) * 180 / Math.PI);
+        controller.setSetpoint(0.5);
         controller.setTolerance(0.3);
     }
 

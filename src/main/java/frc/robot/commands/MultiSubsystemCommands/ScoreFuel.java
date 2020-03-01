@@ -40,7 +40,7 @@ public class ScoreFuel extends SequentialCommandGroup
         addRequirements(shooter, driveBase, belts);
 
         addCommands(
-            new AlignWithTarget(driveBase, limelight),
+            new AlignWithTarget(driveBase, limelight, distanceSensor),
             new AimHood(shooter, distanceSensor, false),
             new FireShooter(shooter, belts)
         );

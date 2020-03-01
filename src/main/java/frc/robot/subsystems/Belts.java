@@ -51,6 +51,9 @@ public class Belts extends SubsystemBase
     public void periodic()
     {
         ballCountNet.setDouble(getBallCount());
+
+        System.out.println("Count: " + getBallCount());
+        // System.out.println("Direction: " + getBelt1());
     }
 
     /**
@@ -126,6 +129,11 @@ public class Belts extends SubsystemBase
     {
         belt1.set(-0.8);
         belt2.set(-0.8);
+    }
+
+    public double getBelt1()
+    {
+        return belt1.get();
     }
 
     /**

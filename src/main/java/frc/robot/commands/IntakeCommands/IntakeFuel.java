@@ -34,7 +34,7 @@ public class IntakeFuel extends CommandBase
     @Override
     public void initialize() 
     {
-        intake.toggle();
+        intake.setDeployment(true);
         intake.run();
     }
 
@@ -42,7 +42,7 @@ public class IntakeFuel extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
-        intake.toggle();
+        intake.setDeployment(false);
         intake.stopIntake();
     }
 

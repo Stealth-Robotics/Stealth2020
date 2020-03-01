@@ -51,7 +51,7 @@ public class SixBallAuto extends SequentialCommandGroup
     addCommands
     (
       new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight),
+        new AlignWithTarget(driveBase, limelight, distanceSensor),
         new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(0),
@@ -60,15 +60,15 @@ public class SixBallAuto extends SequentialCommandGroup
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         // new DriveForInches(-50000, driveBase)
         new RunCommand(() -> driveBase.resetEncoders()).withTimeout(0),
-        new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
-            .withInterrupt(new BooleanSupplier()
-            {
-              @Override
-              public boolean getAsBoolean() 
-              {
-                return driveBase.getLeftEncoder().getPosition() > 700;
-              }
-            }),
+        // new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
+        //     .withInterrupt(new BooleanSupplier()
+        //     {
+        //       @Override
+        //       public boolean getAsBoolean() 
+        //       {
+        //         return driveBase.getLeftEncoder().getPosition() > 700;
+        //       }
+        //     }),
        
        // make the bot straight
        new TurnToAngle(0, driveBase),
@@ -84,7 +84,7 @@ public class SixBallAuto extends SequentialCommandGroup
               {
                 return driveBase.getLeftEncoder().getPosition() > 500;
               }
-            }) , 
+            }), 
        //bring  intake up and collect balls
        new RunCommand(() -> intake.stopIntake()),
         new RunCommand(() -> intake.toggle()),
@@ -95,11 +95,11 @@ public class SixBallAuto extends SequentialCommandGroup
               @Override
               public boolean getAsBoolean() 
               {
-                return driveBase.getLeftEncoder().getPosition() > 500;
+                return driveBase.getLeftEncoder().getPosition() < 0;
               }
             }),
         //shoot
-        new AlignWithTarget(driveBase, limelight),
+        new AlignWithTarget(driveBase, limelight, distanceSensor),
         new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
