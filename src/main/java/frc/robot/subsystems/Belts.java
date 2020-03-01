@@ -52,7 +52,7 @@ public class Belts extends SubsystemBase
     {
         ballCountNet.setDouble(getBallCount());
 
-        System.out.println("Count: " + getBallCount());
+        // System.out.println("Count: " + getBallCount());
         // System.out.println("Direction: " + getBelt1());
     }
 

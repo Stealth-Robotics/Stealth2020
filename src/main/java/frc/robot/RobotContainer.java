@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -112,7 +113,7 @@ public class RobotContainer {
                 new WaitCommand(0.2),
                 new AlignWithTarget(driveBase, limelight, distanceSensor),
                 new AimHood(shooter, distanceSensor, false),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.825)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
@@ -126,24 +127,35 @@ public class RobotContainer {
                 new WaitCommand(0.2),
                 new AlignWithTarget(driveBase, limelight, distanceSensor),
                 new AimHood(shooter, distanceSensor, true),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.825)),
                 new WaitCommand(0.3), 
+                new FireShooter(shooter, belts)
+            )
+        );
+
+        new JoystickButton(driveJoystick, 4).whenHeld(
+            new SequentialCommandGroup(
+                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new ParallelDeadlineGroup(new AlignWithTarget(driveBase, limelight, distanceSensor),
+                    new AimHood(shooter, distanceSensor, true).perpetually()),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.825)),
+                new ReverseBelt(belts, 300).withTimeout(0.2),
+                new WaitCommand(0.1), 
                 new FireShooter(shooter, belts)
             )
         );
 
         new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
         new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        new JoystickButton(driveJoystick, 4).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
-        StartEndCommand reverseBeltCommand = new StartEndCommand(
+        new JoystickButton(mechJoystick, 8).whenHeld(new StartEndCommand(
             ///() -> climber.runClimb(0.85, 0.6, 0),
             () -> belts.reverseAllBelts(),
-            () -> belts.stopAllBelts()
-        );
-        new JoystickButton(mechJoystick, 8).whenHeld(reverseBeltCommand
-                .alongWith(new StartEndCommand(
+            () -> belts.stopAllBelts())
+            .alongWith(new StartEndCommand(
                         () -> intake.reverse(),
                         () -> intake.stopIntake()
                     )));
@@ -161,12 +173,12 @@ public class RobotContainer {
         ));
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(-0.5, -0.5, 0),	
+            () -> climber.runClimb(-0.7, -0.7, 0),	
             () -> climber.runClimb(0, 0, 0)	
         ));	
 
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, 0, 0.5),	
+            () -> climber.runClimb(0, 0, 0.75),	
             () -> climber.runClimb(0, 0, 0)	
         )/* .beforeStarting(() -> intake.setDeployment(true)) */);
 

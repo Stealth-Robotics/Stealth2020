@@ -38,6 +38,12 @@ public class AimHood extends CommandBase
     @Override
     public void initialize() 
     {
+        
+    }
+
+    @Override
+    public void execute()
+    {
         double dist = distanceSensor.getHeading() / 1000;
 
         if (override)
