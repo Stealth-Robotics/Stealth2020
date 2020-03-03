@@ -17,8 +17,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class SixBallAuto extends SequentialCommandGroup 
-{
+public class SixBallAuto extends SequentialCommandGroup {
 
   DriveBase driveBase;
   Shooter shooter;
@@ -35,8 +34,7 @@ public class SixBallAuto extends SequentialCommandGroup
    */
 
   public SixBallAuto(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, Intake intake,
-      DistanceSensor distanceSensor) 
-  {
+      DistanceSensor distanceSensor) {
     this.driveBase = driveBase;
     this.shooter = shooter;
     this.belts = belts;
@@ -44,15 +42,13 @@ public class SixBallAuto extends SequentialCommandGroup
     this.intake = intake;
     this.distanceSensor = distanceSensor;
   }
-  
+
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     addCommands
     (
-      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor),
-        new AimHood(shooter, distanceSensor, false),
+        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(0),
         // new WaitCommand(0.5),
@@ -61,53 +57,43 @@ public class SixBallAuto extends SequentialCommandGroup
         // new DriveForInches(-50000, driveBase)
         new RunCommand(() -> driveBase.resetEncoders()).withTimeout(0),
         // new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
-        //     .withInterrupt(new BooleanSupplier()
-        //     {
-        //       @Override
-        //       public boolean getAsBoolean() 
-        //       {
-        //         return driveBase.getLeftEncoder().getPosition() > 700;
-        //       }
-        //     }),
-       
-       // make the bot straight
-       new TurnToAngle(0, driveBase),
-       //Put the intake down and run the intake
-       new RunCommand(() -> intake.toggle()),
-        new RunCommand(() -> intake.run()),
-        //drive backwards to collect intake
-        new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
-            .withInterrupt(new BooleanSupplier()
-            {
-              @Override
-              public boolean getAsBoolean() 
-              {
-                return driveBase.getLeftEncoder().getPosition() > 500;
-              }
-            }), 
-       //bring  intake up and collect balls
-       new RunCommand(() -> intake.stopIntake()),
-        new RunCommand(() -> intake.toggle()),
-       //drive back to shoot in range
-           new RunCommand(() -> driveBase.arcadeDrive(0.5, 0), driveBase)
-            .withInterrupt(new BooleanSupplier()
-            {
-              @Override
-              public boolean getAsBoolean() 
-              {
-                return driveBase.getLeftEncoder().getPosition() < 0;
-              }
-            }),
-        //shoot
-        new AlignWithTarget(driveBase, limelight, distanceSensor),
-        new AimHood(shooter, distanceSensor, false),
+        // .withInterrupt(new BooleanSupplier()
+        // {
+        // @Override
+        // public boolean getAsBoolean()
+        // {
+        // return driveBase.getLeftEncoder().getPosition() > 700;
+        // }
+        // }),
+
+        // make the bot straight
+        new TurnToAngle(0, driveBase),
+        // Put the intake down and run the intake
+        new RunCommand(() -> intake.toggle()), new RunCommand(() -> intake.run()),
+        // drive backwards to collect intake
+        new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase).withInterrupt(new BooleanSupplier() {
+          @Override
+          public boolean getAsBoolean() {
+            return driveBase.getLeftEncoder().getPosition() > 500;
+          }
+        }),
+        // bring intake up and collect balls
+        new RunCommand(() -> intake.stopIntake()), new RunCommand(() -> intake.toggle()),
+        // drive back to shoot in range
+        new RunCommand(() -> driveBase.arcadeDrive(0.5, 0), driveBase).withInterrupt(new BooleanSupplier() {
+          @Override
+          public boolean getAsBoolean() {
+            return driveBase.getLeftEncoder().getPosition() < 0;
+          }
+        }),
+        // shoot
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
         // new WaitCommand(0.5),
         new FireShooter(shooter, belts).withTimeout(5),
-        //drive backwards a tiny bitjust to make sure we got off the line   
+        // drive backwards a tiny bitjust to make sure we got off the line
         new DriveForInches(360, driveBase)
-     
     );
   }
 }
