@@ -69,7 +69,7 @@ public class DriveBase extends SubsystemBase
 		resetEncoders();
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
-		driveSensitivity = 1.0f;
+		driveSensitivity = 0.9f;
 		driveRotSensitivity = 0.8f;
 	}
 

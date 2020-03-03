@@ -31,7 +31,7 @@ public class FireShooter extends CommandBase
     public void initialize() 
     {
         shooter.enable();
-        belts.runAllBelts(0.6, 0.8);
+        belts.runAllBelts(0.8, 1.0);
         //shooter.setShooterSpeedDirect(0.8);
     }
 

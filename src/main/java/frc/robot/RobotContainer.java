@@ -108,19 +108,19 @@ public class RobotContainer {
         // shooter, belts, limelight, distanceSensor));
 
         //Shooting Commands
-        new JoystickButton(driveJoystick, 1).whenHeld(
-            new SequentialCommandGroup(
-                new InstantCommand(() -> limelight.SetLedMode(3)),
-                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
-                new ReverseBelt(belts, 300),
-                new WaitCommand(0.2),
-                new AlignWithTarget(driveBase, limelight, distanceSensor),
-                new AimHood(shooter, distanceSensor, false),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
-                new WaitCommand(0.3), 
-                new FireShooter(shooter, belts)
-            )
-        );
+        // new JoystickButton(driveJoystick, 1).whenHeld(
+        //     new SequentialCommandGroup(
+        //         new InstantCommand(() -> limelight.SetLedMode(3)),
+        //         new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+        //         new ReverseBelt(belts, 300),
+        //         new WaitCommand(0.2),
+        //         new AlignWithTarget(driveBase, limelight, distanceSensor),
+        //         new AimHood(shooter, distanceSensor, false),
+        //         new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+        //         new WaitCommand(0.3), 
+        //         new FireShooter(shooter, belts)
+        //     )
+        // );
 
         new JoystickButton(driveJoystick, 3).whenHeld(
             new SequentialCommandGroup(
@@ -136,17 +136,21 @@ public class RobotContainer {
             )
         );
 
-        new JoystickButton(driveJoystick, 4).whenHeld(
+        new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.SetLedMode(3)),
+                new WaitCommand(0.2),
                 new ParallelDeadlineGroup(new AlignWithTarget(driveBase, limelight, distanceSensor),
-                    new AimHood(shooter, distanceSensor, true).perpetually()),
+                    new AimHood(shooter, distanceSensor, false).perpetually()),
                 new ReverseBelt(belts, 300),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
-                new WaitCommand(0.1), 
+                new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
         );
+
+        // new JoystickButton(driveJoystick, 5).whenPressed(new InstantCommand(
+        //     () -> shooter.setShooterSpeedDirect(driveJoystick.getRawAxis(3))));
 
         new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
         new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
@@ -170,7 +174,7 @@ public class RobotContainer {
             //a pair of star crossed their llife (Does LLoyd llike to llive his llife)
             //miss advetures piteous overthows
             //doth with their death bury their parents strife
-            //Two hours of this bomb ass play
+            //Two houses of this bomb ass play
             //This is for you JIM homie
 
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
@@ -197,7 +201,7 @@ public class RobotContainer {
 
         //System Overrides
         new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(
-            () -> shooter.setShooterSpeedDirect(0.9),
+            () -> shooter.setShooterSpeedDirect(1.0),
             () -> shooter.setShooterSpeedDirect(0)));
 
         new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));

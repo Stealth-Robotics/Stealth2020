@@ -50,9 +50,9 @@ public final class Constants
     public static final double hoodkI = 0.009; //these ones work I think
     public static final double hoodkD = 0.0;
 
-    public static final double limekP = 0.067; //TODO: Tune limelight PID on carpet
-    public static final double limekI = 0.069;
-    public static final double limekD = 0.02;
+    public static final double limekP = 0.08; //TODO: Tune limelight PID on carpet
+    public static final double limekI = 0.075;
+    public static final double limekD = 0.025;
 
     public static final class DriveConstants 
     {
@@ -101,8 +101,8 @@ public final class Constants
         public static final double kRamseteZeta = 0.7;*/
 
         private static final double tickPerMotorRevolution = 360;
-        private static final double driveGearReduction = 1;
-        private static final double wheeldiameterInches = 2.95276;
+        private static final double driveGearReduction = 1 / 10.75;
+        private static final double wheeldiameterInches = 6.00;
         public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
 
         public static final double basekP = 0.01; //TODO: Tune drivebase PID on carpet
