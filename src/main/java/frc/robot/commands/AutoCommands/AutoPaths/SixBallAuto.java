@@ -47,53 +47,31 @@ public class SixBallAuto extends SequentialCommandGroup {
   public void initialize() {
     addCommands
     (
-        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-        // new ReverseBelt(belts, 300),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(0),
-        // new WaitCommand(0.5),
-        new FireShooter(shooter, belts).withTimeout(5),
-        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
-        // new DriveForInches(-50000, driveBase)
-        new RunCommand(() -> driveBase.resetEncoders()).withTimeout(0),
-        // new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase)
-        // .withInterrupt(new BooleanSupplier()
-        // {
-        // @Override
-        // public boolean getAsBoolean()
-        // {
-        // return driveBase.getLeftEncoder().getPosition() > 700;
-        // }
-        // }),
+      // First Shot
 
-        // make the bot straight
-        new TurnToAngle(0, driveBase),
-        // Put the intake down and run the intake
-        new RunCommand(() -> intake.toggle()), new RunCommand(() -> intake.run()),
-        // drive backwards to collect intake
-        new RunCommand(() -> driveBase.arcadeDrive(-0.5, 0), driveBase).withInterrupt(new BooleanSupplier() {
-          @Override
-          public boolean getAsBoolean() {
-            return driveBase.getLeftEncoder().getPosition() > 500;
-          }
-        }),
-        // bring intake up and collect balls
-        new RunCommand(() -> intake.stopIntake()), new RunCommand(() -> intake.toggle()),
-        // drive back to shoot in range
-        new RunCommand(() -> driveBase.arcadeDrive(0.5, 0), driveBase).withInterrupt(new BooleanSupplier() {
-          @Override
-          public boolean getAsBoolean() {
-            return driveBase.getLeftEncoder().getPosition() < 0;
-          }
-        }),
-        // shoot
-        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-        // new ReverseBelt(belts, 300),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(0),
-        // new WaitCommand(0.5),
-        new FireShooter(shooter, belts).withTimeout(5),
-        // drive backwards a tiny bitjust to make sure we got off the line
-        new DriveForInches(360, driveBase)
+      new TurnToAngle(120, driveBase),
+      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+      new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+      new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+      new FireShooter(shooter, belts).withTimeout(5),
+      new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
+
+      // Gather Three Balls
+
+      new TurnToAngle(90, driveBase),
+      new RunCommand(() -> intake.run(), intake),
+      new DriveForInches(200, driveBase),
+      new RunCommand(() -> intake.stopIntake(), intake),
+      new DriveForInches(-170, driveBase),
+
+      // Second Shot
+
+      new TurnToAngle(120, driveBase),
+      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+      new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+      new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+      new FireShooter(shooter, belts).withTimeout(5),
+      new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0)
     );
   }
 }

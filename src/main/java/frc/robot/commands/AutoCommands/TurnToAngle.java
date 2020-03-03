@@ -13,11 +13,13 @@ public class TurnToAngle extends CommandBase
     PIDController controller;
 
 
-    public TurnToAngle(double angle, DriveBase drivebase)
+    public TurnToAngle(double angle, DriveBase driveBase)
     {
         controller = new PIDController(Constants.AutoConstants.turnkP, Constants.AutoConstants.turnkI, Constants.AutoConstants.turnkD);
-        this.driveBase = drivebase;
+        this.driveBase = driveBase;
         this.angle = angle;
+
+        addRequirements(driveBase);
     }
 
     @Override

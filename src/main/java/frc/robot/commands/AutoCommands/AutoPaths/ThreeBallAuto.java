@@ -1,7 +1,5 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -27,7 +25,6 @@ public class ThreeBallAuto extends SequentialCommandGroup {
   public ThreeBallAuto(DriveBase driveBase, Shooter shooter, Belts belts, Limelight limelight, Intake intake, 
   DistanceSensor distanceSensor) 
   {
-
     addCommands
     (
       new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
@@ -35,7 +32,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
       new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
       new FireShooter(shooter, belts).withTimeout(5),
       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
-      new RunCommand(() -> driveBase.resetEncoders()).withTimeout(0), new DriveForInches(12, driveBase)
+      new DriveForInches(12, driveBase)
     );
   }
 }
