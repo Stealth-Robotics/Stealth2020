@@ -19,14 +19,13 @@ public class DriveForInches extends CommandBase
     public DriveForInches(double inches, DriveBase drivebase)
     {
         controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
-        controller.setTolerance(30);
+        controller.setTolerance(5);
 
         turnController = new PIDController(Constants.AutoConstants.turnkP, Constants.AutoConstants.turnkI, Constants.AutoConstants.turnkD);
         controller.setTolerance(5);
 
         this.driveBase = drivebase;
-        // ticksToDrive = inches * Constants.AutoConstants.ticksPerInch;   
-        ticksToDrive = (inches / Constants.AutoConstants.wheeldiameterInches) * Constants.AutoConstants.tickPerMotorRevolution;
+        ticksToDrive = inches * Constants.AutoConstants.ticksPerInch;
         addRequirements(drivebase);
     }
 
@@ -44,7 +43,6 @@ public class DriveForInches extends CommandBase
     {
         System.out.println("Setpoint :" + controller.getSetpoint() + "Encoder Distance : " + driveBase.getAverageEncoderDistance());
         driveBase.arcadeDrive(-controller.calculate(driveBase.getAverageEncoderDistance()), -turnController.calculate(driveBase.getHeading()));
-        
     }
 
     @Override

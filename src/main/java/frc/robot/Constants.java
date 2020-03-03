@@ -100,9 +100,9 @@ public final class Constants
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;*/
 
-        public static final double tickPerMotorRevolution = 360;
-        public static final double driveGearReduction = 1;// / 10.75;
-        public static final double wheeldiameterInches = 6.00;
+        private static final double tickPerMotorRevolution = 360;
+        private static final double driveGearReduction = 1;
+        private static final double wheeldiameterInches = 6.00;
         public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
 
         public static final double basekP = 0.2; //TODO: Tune drivebase PID on carpet
