@@ -80,7 +80,8 @@ public class DriveBase extends SubsystemBase
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
 				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
 
-		// System.out.println("LEFT CANCoder: " + m_leftEncoder.getPosition() + " RIGHT CANCoder: " + m_rightEncoder.getPosition() + " Angle: " + m_gyro.getFusedHeading());
+		//System.out.println("LEFT CANCoder: " + m_leftEncoder.getPosition() + " RIGHT CANCoder: " + m_rightEncoder.getPosition() + " Angle: " + m_gyro.getFusedHeading());
+		//System.out.println("Encoder Average : " + getAverageEncoderDistance());
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public double getAverageEncoderDistance() 
     {
-		return (m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0) + m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0)) / 2.0;
+		return (m_leftEncoder.getPosition()  + (-m_rightEncoder.getPosition())) / 2.0;
 	}
 
 	/**
@@ -196,7 +197,7 @@ public class DriveBase extends SubsystemBase
 	 */
     public void zeroHeading() 
     {
-		m_gyro.setCompassAngle(0.0, Constants.DriveConstants.kTimeoutMs);
+		m_gyro.setFusedHeading(0.0);
 	}
 
 	/**

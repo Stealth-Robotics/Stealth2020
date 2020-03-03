@@ -57,7 +57,7 @@ public final class Constants
     public static final class DriveConstants 
     {
         public static final boolean kLeftEncoderReversed = false;
-        public static final boolean kRightEncoderReversed = true;
+        public static final boolean kRightEncoderReversed = false;
 
         public static final double kTrackwidthMeters = 0.69;
         public static final DifferentialDriveKinematics kDriveKinematics =
@@ -100,17 +100,17 @@ public final class Constants
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;*/
 
-        private static final double tickPerMotorRevolution = 360;
-        private static final double driveGearReduction = 1 / 10.75;
-        private static final double wheeldiameterInches = 6.00;
+        public static final double tickPerMotorRevolution = 360;
+        public static final double driveGearReduction = 1;// / 10.75;
+        public static final double wheeldiameterInches = 6.00;
         public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
 
-        public static final double basekP = 0.01; //TODO: Tune drivebase PID on carpet
-        public static final double basekI = 0.0;
-        public static final double basekD = 0.0;
+        public static final double basekP = 0.2; //TODO: Tune drivebase PID on carpet
+        public static final double basekI = 0;
+        public static final double basekD = 0;
 
-        public static final double baseTurnkP = 0.05; //TODO: Tune drivebase PID on carpet
-        public static final double baseTurnkI = 0.0;
-        public static final double baseTurnkD = 0.0;        
+        public static final double turnkP = 0.07; //TODO: Tune drivebase PID on carpet
+        public static final double turnkI = 0.0;
+        public static final double turnkD = 0.0;        
     }
 }

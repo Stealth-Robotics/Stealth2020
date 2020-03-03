@@ -5,6 +5,7 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.AutoCommands.DriveForInches;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
@@ -28,10 +29,12 @@ public class ThreeBallAuto extends SequentialCommandGroup {
 
     addCommands
     (
+
+        new DriveForInches(36, driveBase)
         // Drive forward the specified distance
         //3 ball auto
      
-        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        /*new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor),
         new AimHood(shooter, distanceSensor, false),
         // new ReverseBelt(belts, 300),
@@ -50,6 +53,8 @@ public class ThreeBallAuto extends SequentialCommandGroup {
                 return driveBase.getLeftEncoder().getPosition() > 700;
               }
             })
+
+            // End Of Old Auto
        /*
        // make the bot straight
        new TurnToAngle(0, driveBase)

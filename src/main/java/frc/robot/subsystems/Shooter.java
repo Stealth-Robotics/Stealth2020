@@ -72,8 +72,8 @@ public class Shooter extends SubsystemBase
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
-        System.out.println("Veloc: " + shooterEncoder.getVelocity());
-        System.out.println("Power: " + shooter1.get());
+        //System.out.println("Veloc: " + shooterEncoder.getVelocity());
+        //System.out.println("Power: " + shooter1.get());
         // shooter1.set(shooterController.calculate(shooterEncoder.getVelocity()));
     }
 

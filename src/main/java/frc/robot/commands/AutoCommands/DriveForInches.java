@@ -1,5 +1,7 @@
 package frc.robot.commands.AutoCommands;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -11,28 +13,37 @@ public class DriveForInches extends CommandBase
     double ticksToDrive = 0;
 
     PIDController controller;
+    PIDController turnController;
 
 
-    public DriveForInches(double ticks, DriveBase drivebase)
+    public DriveForInches(double inches, DriveBase drivebase)
     {
         controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
-        controller.setTolerance(50);
+        controller.setTolerance(30);
+
+        turnController = new PIDController(Constants.AutoConstants.turnkP, Constants.AutoConstants.turnkI, Constants.AutoConstants.turnkD);
+        controller.setTolerance(5);
+
         this.driveBase = drivebase;
         // ticksToDrive = inches * Constants.AutoConstants.ticksPerInch;   
-        ticksToDrive = ticks;
+        ticksToDrive = (inches / Constants.AutoConstants.wheeldiameterInches) * Constants.AutoConstants.tickPerMotorRevolution;
+        addRequirements(drivebase);
     }
 
     @Override
     public void initialize() 
     {
         driveBase.resetEncoders();
+        driveBase.zeroHeading();
         controller.setSetpoint(ticksToDrive);
+        turnController.setSetpoint(0);
     }
 
     @Override
     public void execute()
     {
-        driveBase.arcadeDrive(controller.calculate(driveBase.getAverageEncoderDistance()), 0);
+        System.out.println("Setpoint :" + controller.getSetpoint() + "Encoder Distance : " + driveBase.getAverageEncoderDistance());
+        driveBase.arcadeDrive(-controller.calculate(driveBase.getAverageEncoderDistance()), -turnController.calculate(driveBase.getHeading()));
         
     }
 
