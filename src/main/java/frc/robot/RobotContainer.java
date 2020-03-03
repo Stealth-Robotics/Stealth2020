@@ -156,36 +156,53 @@ public class RobotContainer {
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
 
         //Climbing
+
+        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, 0, -0.5),	
+            () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
+            //I am the expert of code
+            //Two households both alike in dignity
+            //In fair verona where we lay our scene
+            //from acent grudge break to new muteny
+            //where civil bloobs make civik hand unclean
+            //from fourth the fatle loins of these two foes
+            //a pair of star crossed their llife (Does LLoyd llike to llive his llife)
+            //miss advetures piteous overthows
+            //doth with their death bury their parents strife
+            //Two hours of this bomb ass play
+            //This is for you JIM homie
+
         new JoystickButton(mechJoystick, 5).whenHeld(new StartEndCommand(
             () -> climber.runClimb(0.6, 0.6, 0),
-            () -> climber.runClimb(0, 0, 0)
-        ));
+            () -> climber.runClimb(0, 0, 0)));
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(-0.7, -0.7, 0),	
-            () -> climber.runClimb(0, 0, 0)	
-        ));	
+            () -> climber.runClimb(0, 0, 0)));
+        
+
+        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, 0, -0.5),	
+            () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
 
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, 0.75),	
-            () -> climber.runClimb(0, 0, 0)	
-        ));
+            () -> climber.runClimb(0, 0, 0)));
 
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, -0.5),	
-            () -> climber.runClimb(0, 0, 0)	
-        ));
-
+            () -> climber.runClimb(0, 0, 0)));
 
         //System Overrides
-        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(
-            () -> shooter.setShooterSpeedDirect(0.9),
-            () -> shooter.setShooterSpeedDirect(0)
-        ));
-
-        new JoystickButton(mechJoystick, 4).whenHeld(new RunBelt(belts));
-
         new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(
+            () -> shooter.setShooterSpeedDirect(0.9),
+            () -> shooter.setShooterSpeedDirect(0)));
+
+        new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));
+
+        new JoystickButton(mechJoystick, 11).whenHeld(new StartEndCommand(
             () -> shooter.setHoodPos(Constants.minAngle),
             () -> shooter.setHoodPos(Constants.maxAngle)
         ));
