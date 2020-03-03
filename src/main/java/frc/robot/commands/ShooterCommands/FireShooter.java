@@ -32,7 +32,7 @@ public class FireShooter extends CommandBase
     {
         shooter.enable();
         belts.runAllBelts(0.6, 0.8);
-        //shooter.setShooterSpeedDirect(0.8); //TODO remove once pid controller tested
+        //shooter.setShooterSpeedDirect(0.8);
     }
 
     // Called once the command ends or is interrupted.

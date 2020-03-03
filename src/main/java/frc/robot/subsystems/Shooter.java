@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -14,7 +15,7 @@ public class Shooter extends SubsystemBase
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
 
-    //private final CANEncoder shooterEncoder;
+    private final CANEncoder shooterEncoder;
 
     protected final WPI_TalonSRX hood;
 
@@ -37,7 +38,7 @@ public class Shooter extends SubsystemBase
 
         shooter2.follow(shooter1, true);
 
-        //shooterEncoder = shooter1.getEncoder();
+        shooterEncoder = shooter1.getEncoder();
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(100);
@@ -57,8 +58,6 @@ public class Shooter extends SubsystemBase
     {
         // This method will be called once per scheduler run
 
-        
-        
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         /*System.out.println(hood.getSelectedSensorPosition(0));
         if (enabled)
@@ -72,6 +71,9 @@ public class Shooter extends SubsystemBase
         //System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
+
+        // TODO : Put Shooter On PID
+        //shooter1.set(shooterController.calculate(shooterEncoder.));
     }
 
     /**
