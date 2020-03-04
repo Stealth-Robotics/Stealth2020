@@ -17,6 +17,8 @@ public class Shooter extends SubsystemBase
 
     private final CANEncoder shooterEncoder;
 
+    private double currentShooterSpeed;
+
     protected final WPI_TalonSRX hood;
 
     private final PIDController shooterController;
@@ -41,7 +43,7 @@ public class Shooter extends SubsystemBase
         shooterEncoder = shooter1.getEncoder();
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
-        shooterController.setTolerance(100);
+        shooterController.setTolerance(20);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
         hood.setSelectedSensorPosition(0);
@@ -50,6 +52,7 @@ public class Shooter extends SubsystemBase
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(20);
 
+        currentShooterSpeed = 0;
         enabled = false;
     }
 
@@ -59,22 +62,23 @@ public class Shooter extends SubsystemBase
         // This method will be called once per scheduler run
 
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
-        /*System.out.println(hood.getSelectedSensorPosition(0));
+        // System.out.println(hood.getSelectedSensorPosition(0));
+
         if (enabled)
         {
-            shooter.set(-shooterController.calculate(shooterEncoder.getVelocity()));
+            currentShooterSpeed += shooterController.calculate(shooterEncoder.getVelocity());
+            shooter1.set(currentShooterSpeed);
         }
         else
         {
-            shooter.set(0);
-        }*/
+            shooter1.set(0);
+        }
         //System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
-        //System.out.println("Veloc: " + shooterEncoder.getVelocity());
-        //System.out.println("Power: " + shooter1.get());
-        // shooter1.set(shooterController.calculate(shooterEncoder.getVelocity()));
+        System.out.println("Veloc: " + shooterEncoder.getVelocity());
+        System.out.println("Target: " + shooter1.get());
     }
 
     /**
@@ -158,5 +162,15 @@ public class Shooter extends SubsystemBase
     public void disable()
     {
         enabled = false;
+    }
+
+    /**
+     * Finds the approximate power for a given desired velocity
+     * 
+     * @param veloc the desired velocity
+     */
+    public double approxPowerForVeloc(double veloc)
+    {
+        return veloc / 5864;
     }
 }

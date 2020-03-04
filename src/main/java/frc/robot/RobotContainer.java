@@ -134,7 +134,7 @@ public class RobotContainer {
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
-        );
+        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
@@ -147,14 +147,14 @@ public class RobotContainer {
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
-        );
+        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
-        // new JoystickButton(driveJoystick, 5).whenPressed(new InstantCommand(
-        //     () -> shooter.setShooterSpeedDirect(driveJoystick.getRawAxis(3))));
+        new JoystickButton(driveJoystick, 5)
+            .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(driveJoystick.getRawAxis(3) * 5864)))
+            .whenHeld(new StartEndCommand(() -> shooter.enable(), () -> shooter.disable()));
 
-        new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        new JoystickButton(driveJoystick, 4).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        // new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        // new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         //Intake
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));

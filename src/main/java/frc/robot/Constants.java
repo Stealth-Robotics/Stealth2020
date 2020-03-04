@@ -37,8 +37,8 @@ public final class Constants
     public static final double cameraAngle = 20 * (Math.PI / 180); // in radians
     public static final double cameraOffset = 70; //offset of camera from center in mm
     
-    public static final double shooterkP = 0.3; //TODO: Tune Shooter PID
-    public static final double shooterkI = 0.0;
+    public static final double shooterkP = 0.0002; //TODO: Tune Shooter PID
+    public static final double shooterkI = 0.0001;
     public static final double shooterkD = 0.0;
 
     public static final double ticksPerRadian = 2850 / (5 * Math.PI / 18);
