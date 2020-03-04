@@ -14,15 +14,11 @@ public class PanelControl extends SubsystemBase
     private final ColorSensorV3 colorSensor;
     private final Solenoid colorWheelPiston;
 
-    //PowerDistributionPanel PDP;
-
     /**
      * Creates a new ColorWheel.
      */
     public PanelControl() 
     {
-        //this.PDP = PDP;
-
         wheelMotor = new WPI_TalonSRX(RobotMap.ColorWheelMotor);
         colorSensor = new ColorSensorV3(Port.kOnboard);
         colorWheelPiston = new Solenoid(RobotMap.PCM, RobotMap.ColorWheelPCMChannel);

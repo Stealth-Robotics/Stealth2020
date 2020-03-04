@@ -17,15 +17,11 @@ public class Intake extends SubsystemBase
     public double fuelCount;
     public boolean breakTracker;
 
-    //PowerDistributionPanel PDP;
-
     /**
      * Creates a new Intake.
      */
     public Intake() 
     {
-        //this.PDP = PDP;
-
         WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.Intake);
         mainIntake.setInverted(true);
         intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.IntakeHelper));

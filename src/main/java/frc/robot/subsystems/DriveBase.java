@@ -51,16 +51,12 @@ public class DriveBase extends SubsystemBase
 
 	private float driveSensitivity;
 	private float driveRotSensitivity;
-
-	//PowerDistributionPanel PDP;
 	
 	/**
 	 * Creates a new DriveSubsystem.
 	 */
     public DriveBase() 
     {
-		//this.PDP = PDP;
-
 		// Sets the distance per pulse for the encoders
 
 		//m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);

@@ -20,15 +20,11 @@ public class Climber extends SubsystemBase
     WPI_TalonSRX leftClimber;
     WPI_TalonSRX rightClimber;
 
-    //PowerDistributionPanel PDP;
-
     /**
      * Creates a new Climber.
      */
     public Climber() 
     {    
-        //this.PDP = PDP;
-
         leftLimitSwitch = new DigitalInput(RobotMap.LeftLimitSwitch);
         rightLimitSwitch  = new DigitalInput(RobotMap.RightLimitSwitch);
         winch = new CANSparkMax(RobotMap.Winch, MotorType.kBrushless);

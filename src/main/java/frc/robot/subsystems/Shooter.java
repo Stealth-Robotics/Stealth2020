@@ -29,8 +29,6 @@ public class Shooter extends SubsystemBase
 
     private boolean enabled;
 
-    //PowerDistributionPanel PDP;
-
     /**
      * Creates a new Shooter.
      */
