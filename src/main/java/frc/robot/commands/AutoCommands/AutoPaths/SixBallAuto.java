@@ -1,6 +1,6 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
-import java.util.function.BooleanSupplier;
+// import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

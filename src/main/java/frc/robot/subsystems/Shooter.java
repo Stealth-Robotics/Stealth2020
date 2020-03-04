@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +18,7 @@ public class Shooter extends SubsystemBase
 
     private final CANEncoder shooterEncoder;
 
-    private double currentShooterSpeed;
+    private double currentShooterPower;
 
     protected final WPI_TalonSRX hood;
 
@@ -37,6 +38,8 @@ public class Shooter extends SubsystemBase
     {
         shooter1 = new CANSparkMax(RobotMap.Shooter1, MotorType.kBrushless);
         shooter2 = new CANSparkMax(RobotMap.Shooter2, MotorType.kBrushless);
+        shooter1.setIdleMode(IdleMode.kCoast);
+        shooter2.setIdleMode(IdleMode.kCoast);
 
         shooter2.follow(shooter1, true);
 
@@ -44,6 +47,7 @@ public class Shooter extends SubsystemBase
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
         shooterController.setTolerance(20);
+        shooterController.setIntegratorRange(-0.00005, 0.00005);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
         hood.setSelectedSensorPosition(0);
@@ -52,7 +56,7 @@ public class Shooter extends SubsystemBase
         hoodController = new PIDController(Constants.hoodkP, Constants.hoodkI, Constants.hoodkD);
         hoodController.setTolerance(20);
 
-        currentShooterSpeed = 0;
+        currentShooterPower = 0;
         enabled = false;
     }
 
@@ -66,8 +70,8 @@ public class Shooter extends SubsystemBase
 
         if (enabled)
         {
-            currentShooterSpeed += shooterController.calculate(shooterEncoder.getVelocity());
-            shooter1.set(currentShooterSpeed);
+            currentShooterPower += shooterController.calculate(shooterEncoder.getVelocity());
+            shooter1.set(currentShooterPower);
         }
         else
         {
@@ -77,8 +81,12 @@ public class Shooter extends SubsystemBase
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
-        System.out.println("Veloc: " + shooterEncoder.getVelocity());
-        System.out.println("Target: " + shooter1.get());
+        if (isEnabled())
+        {
+            System.out.println("Veloc: " + shooterEncoder.getVelocity());
+            // System.out.println("Target: " + shooter1.get());
+            System.out.println("CurrentPower: " + currentShooterPower);
+        }
     }
 
     /**
@@ -98,6 +106,8 @@ public class Shooter extends SubsystemBase
      */
     public void setShooterSpeed(double speed) 
     {
+        currentShooterPower = approxPowerForVeloc(speed);
+        shooter1.set(currentShooterPower);
         shooterController.setSetpoint(speed);
     }
 

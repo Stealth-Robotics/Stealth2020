@@ -143,18 +143,19 @@ public class RobotContainer {
                 new ParallelDeadlineGroup(new AlignWithTarget(driveBase, limelight, distanceSensor),
                     new AimHood(shooter, distanceSensor, false).perpetually()),
                 new ReverseBelt(belts, 300),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.enable()),
+                new InstantCommand(() -> shooter.setShooterSpeed(4984)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
-        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        );//.whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(driveJoystick, 5)
-            .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(driveJoystick.getRawAxis(3) * 5864)))
+            .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(4984)))
             .whenHeld(new StartEndCommand(() -> shooter.enable(), () -> shooter.disable()));
 
-        // new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        // new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         //Intake
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
@@ -200,9 +201,9 @@ public class RobotContainer {
             () -> climber.runClimb(0, 0, 0)));
 
         //System Overrides
-        new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(
-            () -> shooter.setShooterSpeedDirect(1.0),
-            () -> shooter.setShooterSpeedDirect(0)));
+        // new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(
+        //     () -> shooter.setShooterSpeedDirect(1.0),
+        //     () -> shooter.setShooterSpeedDirect(0)));
 
         new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));
 
