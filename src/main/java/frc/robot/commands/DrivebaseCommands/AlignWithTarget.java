@@ -17,7 +17,7 @@ public class AlignWithTarget extends CommandBase
     private final PIDController controller;
 
     private final Limelight limelight;
-    private final DistanceSensor distanceSensor;
+    //private final DistanceSensor distanceSensor;
 
     /**
      * Creates a new ExampleCommand.
@@ -28,7 +28,7 @@ public class AlignWithTarget extends CommandBase
     {
         this.driveBase = driveBase;
         this.limelight = limelight;
-        this.distanceSensor = distanceSensor;
+        //this.distanceSensor = distanceSensor;
         
         controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
 
