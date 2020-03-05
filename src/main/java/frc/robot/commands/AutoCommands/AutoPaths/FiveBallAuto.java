@@ -44,11 +44,11 @@ public class FiveBallAuto extends SequentialCommandGroup {
     addCommands
     (
       // Drive forward the specified distance
-      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
+      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor, intake),
       new RunCommand(() -> intake.toggle()),
       new DriveForTicks(-5, driveBase),
       new DriveForTicks(5, driveBase),
-      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor)
+      new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor, intake)
     );
   }
 }

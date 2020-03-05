@@ -3,6 +3,7 @@ package frc.robot.commands.ShooterCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Belts;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -12,18 +13,20 @@ public class FireShooter extends CommandBase
 {
     private final Shooter shooter;
     private final Belts belts;
+    private final Intake intake;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public FireShooter(Shooter shooter, Belts belts) 
+    public FireShooter(Shooter shooter, Belts belts, Intake intake) 
     {
         this.shooter = shooter;
         this.belts = belts;
+        this.intake = intake;
 
-        addRequirements(shooter, belts);
+        addRequirements(shooter, belts, intake);
     }
 
     // Called when the command is initially scheduled.
@@ -32,6 +35,7 @@ public class FireShooter extends CommandBase
     {
         shooter.enable();
         belts.runAllBelts(0.75, 0.95);
+        intake.runHelper();
         //shooter.setShooterSpeedDirect(0.8);
     }
 
@@ -42,6 +46,7 @@ public class FireShooter extends CommandBase
         shooter.disable();
         belts.stopAllBelts();
         shooter.setShooterSpeedDirect(0);
+        intake.stopHelper();
 
         belts.resetBallCount();
     }
