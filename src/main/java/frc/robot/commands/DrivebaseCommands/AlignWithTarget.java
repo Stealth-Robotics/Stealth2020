@@ -17,7 +17,7 @@ public class AlignWithTarget extends CommandBase
     private final PIDController controller;
 
     private final Limelight limelight;
-    //private final DistanceSensor distanceSensor;
+    private final DistanceSensor distanceSensor;
 
     /**
      * Creates a new ExampleCommand.
@@ -28,7 +28,7 @@ public class AlignWithTarget extends CommandBase
     {
         this.driveBase = driveBase;
         this.limelight = limelight;
-        //this.distanceSensor = distanceSensor;
+        this.distanceSensor = distanceSensor;
         
         controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
 
@@ -39,9 +39,9 @@ public class AlignWithTarget extends CommandBase
     @Override
     public void initialize() 
     {       
-        // controller.setSetpoint(Math.atan(distanceSensor.getDistance() / Constants.cameraOffset) * 180 / Math.PI);
-        controller.setSetpoint(0.5);
-        controller.setTolerance(0.3);
+        controller.setSetpoint(Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI);
+        // controller.setSetpoint(0.5);
+        controller.setTolerance(0.5);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -49,10 +49,12 @@ public class AlignWithTarget extends CommandBase
     public void execute() 
     {
         driveBase.arcadeDrive(0, -controller.calculate(limelight.getTargetHorizontalOffset()));
+        System.out.println(controller.getPositionError());
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean interrupted) 
+    {
         driveBase.arcadeDrive(0, 0);
         limelight.SetLedMode(1);
     }

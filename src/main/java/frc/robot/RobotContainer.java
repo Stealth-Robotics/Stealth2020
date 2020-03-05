@@ -15,12 +15,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoCommands.DriveForTicks;
+import frc.robot.commands.AutoCommands.AutoPaths.SixBallAuto;
 import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.AutoCommands.TurnToAngle;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
@@ -57,7 +60,7 @@ public class RobotContainer {
     private final Limelight limelight;
     private final DistanceSensor distanceSensor;
 
-    private final ThreeBallAuto autoCommand;
+    private final SequentialCommandGroup autoCommand;
 
     private Joystick driveJoystick;
     private Joystick mechJoystick;
@@ -94,7 +97,33 @@ public class RobotContainer {
         camera.setResolution(320, 240);
         camera.setFPS(25);
 
-        autoCommand = new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
+        // autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
+        autoCommand = new SequentialCommandGroup(
+        new InstantCommand(() -> driveBase.zeroHeading()),
+        new WaitCommand(0.25),
+        new TurnToAngle(15, driveBase),
+        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
+        new FireShooter(shooter, belts).withTimeout(3),
+        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
+        
+        new TurnToAngle(0, driveBase),
+        new TurnToAngle(0, driveBase),
+        new WaitCommand(5),
+        new InstantCommand(() -> intake.setDeployment(true)),
+        new WaitCommand(1),
+        new ParallelDeadlineGroup(
+            new DriveForTicks(3000, driveBase),
+            new IntakeFuel(intake)),
+        new DriveForTicks(-1700, driveBase),
+
+        new TurnToAngle(15, driveBase),
+        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
+        new FireShooter(shooter, belts).withTimeout(3),
+        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
     }
 
     /**
@@ -103,7 +132,8 @@ public class RobotContainer {
      * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
      * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {
+    private void configureButtonBindings() 
+    {
         new JoystickButton(driveJoystick, 2).whenPressed(() -> driveBase.reverseDrive());
         // new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase,
         // shooter, belts, limelight, distanceSensor));
@@ -144,22 +174,23 @@ public class RobotContainer {
                 new ParallelDeadlineGroup(new AlignWithTarget(driveBase, limelight, distanceSensor),
                     new AimHood(shooter, distanceSensor, false).perpetually()),
                 new ReverseBelt(belts, 300),
-                new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeed(4984)),
+                // new InstantCommand(() -> shooter.enable()),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.9)),
+                // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
-        );//.whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         new JoystickButton(driveJoystick, 5)
             .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(4984)))
             .whenHeld(new StartEndCommand(() -> shooter.enable(), () -> shooter.disable()));
 
         new JoystickButton(driveJoystick, 6)
-            .whenPressed(new TurnToAngle(driveBase.getHeading() + 90, driveBase));
+            .whenPressed(new TurnToAngle(0, driveBase));
 
-        new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        // new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        // new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         //Intake
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));

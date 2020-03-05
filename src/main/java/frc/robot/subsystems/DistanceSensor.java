@@ -20,14 +20,14 @@ public class DistanceSensor extends SubsystemBase
         };
     }
 
-    public double getHeading()
+    public double getDistance()
     {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 
         return mDutyCycleAndPeriods[0][0]-139.7-100;   
     }
 
-    public double getDistance()
+    public double getFilteredDistance()
     {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 

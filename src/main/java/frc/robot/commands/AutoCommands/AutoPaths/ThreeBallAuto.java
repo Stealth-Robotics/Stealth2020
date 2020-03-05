@@ -3,7 +3,7 @@ package frc.robot.commands.AutoCommands.AutoPaths;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.AutoCommands.DriveForInches;
+import frc.robot.commands.AutoCommands.DriveForTicks;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
@@ -32,7 +32,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
       new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
       new FireShooter(shooter, belts).withTimeout(5),
       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
-      new DriveForInches(12, driveBase)
+      new DriveForTicks(12, driveBase)
     );
   }
 }

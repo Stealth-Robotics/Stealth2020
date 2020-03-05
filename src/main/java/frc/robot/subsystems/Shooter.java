@@ -66,25 +66,25 @@ public class Shooter extends SubsystemBase
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         // System.out.println(hood.getSelectedSensorPosition(0));
 
-        if (enabled)
-        {
-            currentShooterPower += shooterController.calculate(shooterEncoder.getVelocity());
-            shooter1.set(currentShooterPower);
-        }
-        else
-        {
-            shooter1.set(0);
-        }
+        // if (enabled)
+        // {
+        //     currentShooterPower += shooterController.calculate(shooterEncoder.getVelocity());
+        //     shooter1.set(currentShooterPower);
+        // }
+        // else
+        // {
+        //     shooter1.set(0);
+        // }
         //System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
-        if (isEnabled())
-        {
-            System.out.println("Veloc: " + shooterEncoder.getVelocity());
-            // System.out.println("Target: " + shooter1.get());
-            System.out.println("CurrentPower: " + currentShooterPower);
-        }
+        // if (isEnabled())
+        // {
+        //     System.out.println("Veloc: " + shooterEncoder.getVelocity());
+        //     // System.out.println("Target: " + shooter1.get());
+        //     System.out.println("CurrentPower: " + currentShooterPower);
+        // }
     }
 
     /**

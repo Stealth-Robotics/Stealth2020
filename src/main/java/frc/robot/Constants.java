@@ -51,7 +51,7 @@ public final class Constants
     public static final double hoodkD = 0.0;
 
     public static final double limekP = 0.08; //TODO: Tune limelight PID on carpet
-    public static final double limekI = 0.075;
+    public static final double limekI = 0.08;
     public static final double limekD = 0.025;
 
     public static final class DriveConstants 
@@ -94,23 +94,12 @@ public final class Constants
     public static final class AutoConstants 
     {
         /*public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-
-        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;*/
-
-        private static final double tickPerMotorRevolution = 360;
-        private static final double driveGearReduction = 1;
-        private static final double wheeldiameterInches = 6.00;
-        public static final double ticksPerInch = (tickPerMotorRevolution * driveGearReduction) / (wheeldiameterInches * Math.PI);
-
-        public static final double basekP = 0.2; //TODO: Tune drivebase PID on carpet
+        public static final double kMaxAcceleration; //TODO: Tune drivebase PID on carpet
         public static final double basekI = 0;
         public static final double basekD = 0;
 
-        public static final double turnkP = 0.07; //TODO: Tune drivebase PID on carpet
+        public static final double turnkP = 0.05; //TODO: Tune drivebase PID on carpet
         public static final double turnkI = 0.0;
-        public static final double turnkD = 0.0;        
+        public static final double turnkD = 0.001;        
     }
 }

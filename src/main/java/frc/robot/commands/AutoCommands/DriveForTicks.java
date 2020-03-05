@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 
-public class DriveForInches extends CommandBase
+public class DriveForTicks extends CommandBase
 {
     DriveBase driveBase;
     double ticksToDrive = 0;
@@ -13,7 +13,7 @@ public class DriveForInches extends CommandBase
     PIDController controller;
     PIDController turnController;
 
-    public DriveForInches(double inches, DriveBase drivebase)
+    public DriveForTicks(double ticks, DriveBase drivebase)
     {
         controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
         controller.setTolerance(5);
@@ -22,7 +22,7 @@ public class DriveForInches extends CommandBase
         controller.setTolerance(5);
 
         this.driveBase = drivebase;
-        ticksToDrive = inches * Constants.AutoConstants.ticksPerInch;
+        ticksToDrive = ticks;
         addRequirements(drivebase);
     }
 
@@ -37,7 +37,7 @@ public class DriveForInches extends CommandBase
     @Override
     public void execute()
     {
-        System.out.println("Setpoint :" + controller.getSetpoint() + "Encoder Distance : " + driveBase.getAverageEncoderDistance());
+        // System.out.println("Setpoint :" + controller.getSetpoint() + " Encoder Distance : " + driveBase.getAverageEncoderDistance());
         driveBase.arcadeDrive(-controller.calculate(driveBase.getAverageEncoderDistance()), -turnController.calculate(driveBase.getHeading()));
     }
 

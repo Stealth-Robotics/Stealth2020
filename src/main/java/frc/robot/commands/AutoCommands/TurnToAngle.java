@@ -8,7 +8,7 @@ import frc.robot.subsystems.DriveBase;
 public class TurnToAngle extends CommandBase
 {
     DriveBase driveBase;
-    double angle = 0;
+    double angle;
 
     PIDController controller;
 
@@ -16,6 +16,7 @@ public class TurnToAngle extends CommandBase
     public TurnToAngle(double angle, DriveBase driveBase)
     {
         controller = new PIDController(Constants.AutoConstants.turnkP, Constants.AutoConstants.turnkI, Constants.AutoConstants.turnkD);
+        controller.setTolerance(5);
         this.driveBase = driveBase;
         this.angle = angle;
 
@@ -31,6 +32,7 @@ public class TurnToAngle extends CommandBase
     @Override
     public void execute()
     {
+        // System.out.println(driveBase.getHeading());
         driveBase.arcadeDrive(0, -controller.calculate(driveBase.getHeading()));
     }
 

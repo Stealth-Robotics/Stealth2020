@@ -2,7 +2,7 @@ package frc.robot.commands.AutoCommands.AutoPaths;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.AutoCommands.DriveForInches;
+import frc.robot.commands.AutoCommands.DriveForTicks;
 import frc.robot.commands.MultiSubsystemCommands.ScoreFuel;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.DistanceSensor;
@@ -46,8 +46,8 @@ public class FiveBallAuto extends SequentialCommandGroup {
       // Drive forward the specified distance
       new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor),
       new RunCommand(() -> intake.toggle()),
-      new DriveForInches(-5, driveBase),
-      new DriveForInches(5, driveBase),
+      new DriveForTicks(-5, driveBase),
+      new DriveForTicks(5, driveBase),
       new ScoreFuel(driveBase, shooter, belts, limelight, distanceSensor)
     );
   }

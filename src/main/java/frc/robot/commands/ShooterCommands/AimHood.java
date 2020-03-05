@@ -44,7 +44,7 @@ public class AimHood extends CommandBase
     @Override
     public void execute()
     {
-        double dist = distanceSensor.getHeading() / 1000;
+        double dist = distanceSensor.getDistance() / 1000;
 
         if (override)
         {
@@ -53,7 +53,7 @@ public class AimHood extends CommandBase
         
         
         // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
-        double angle = calcAngle(dist) - Math.PI / 12;
+        double angle = calcAngle(dist) - Math.PI / 36;
         // System.out.println("Angle: " + angle * 180 / Math.PI);
         angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
 

@@ -75,6 +75,7 @@ public class DriveBase extends SubsystemBase
 		// Update the odometry in the periodic block
 		m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition() * (DriveConstants.kLeftEncoderReversed ? -1.0 : 1.0),
 				m_rightEncoder.getPosition() * (DriveConstants.kRightEncoderReversed ? -1.0 : 1.0));
+		System.out.println(getHeading());
 
 		//System.out.println("LEFT CANCoder: " + m_leftEncoder.getPosition() + " RIGHT CANCoder: " + m_rightEncoder.getPosition() + " Angle: " + m_gyro.getFusedHeading());
 		//System.out.println("Encoder Average : " + getAverageEncoderDistance());
@@ -194,6 +195,7 @@ public class DriveBase extends SubsystemBase
     public void zeroHeading() 
     {
 		m_gyro.setFusedHeading(0.0);
+		System.out.println("RESETTING GYRO");
 	}
 
 	/**

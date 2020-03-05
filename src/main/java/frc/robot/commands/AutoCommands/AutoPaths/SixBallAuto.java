@@ -1,11 +1,15 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+
 // import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.commands.AutoCommands.DriveForInches;
+import frc.robot.commands.AutoCommands.DriveForTicks;
 import frc.robot.commands.AutoCommands.TurnToAngle;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.ShooterCommands.AimHood;
@@ -44,34 +48,36 @@ public class SixBallAuto extends SequentialCommandGroup {
   }
 
   @Override
-  public void initialize() {
+  public void initialize() 
+  {
     addCommands
     (
-      // First Shot
+        // First Shot
 
-      new TurnToAngle(120, driveBase),
-      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-      new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-      new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-      new FireShooter(shooter, belts).withTimeout(5),
-      new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
+        new TurnToAngle(-15, driveBase),
+        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+        new FireShooter(shooter, belts).withTimeout(5),
+        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
 
-      // Gather Three Balls
+        // Gather Three Balls
 
-      new TurnToAngle(90, driveBase),
-      new RunCommand(() -> intake.run(), intake),
-      new DriveForInches(200, driveBase),
-      new RunCommand(() -> intake.stopIntake(), intake),
-      new DriveForInches(-170, driveBase),
+        new TurnToAngle(0, driveBase));
+        new ParallelDeadlineGroup(
+            new DriveForTicks(1500, driveBase),
+            new RunCommand(() -> intake.run(), intake),
+        new WaitCommand(2),
+        new DriveForTicks(-1700, driveBase));
 
-      // Second Shot
+        // Second Shot
 
-      new TurnToAngle(120, driveBase),
-      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-      new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-      new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-      new FireShooter(shooter, belts).withTimeout(5),
-      new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0)
-    );
+        // new TurnToAngle(-15, driveBase),
+        // new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        // new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        // new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+        // new FireShooter(shooter, belts).withTimeout(5),
+        // new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0)
+    //);
   }
 }
