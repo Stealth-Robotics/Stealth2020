@@ -31,7 +31,7 @@ public class TurnToAngle extends CommandBase
     @Override
     public void execute()
     {
-        driveBase.arcadeDrive(0, controller.calculate(driveBase.getHeading()));
+        driveBase.arcadeDrive(0, -controller.calculate(driveBase.getHeading()));
     }
 
     @Override

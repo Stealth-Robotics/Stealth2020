@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
+import frc.robot.commands.AutoCommands.TurnToAngle;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
 import frc.robot.commands.BeltsCommands.RunBelt;
@@ -153,6 +154,9 @@ public class RobotContainer {
         new JoystickButton(driveJoystick, 5)
             .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(4984)))
             .whenHeld(new StartEndCommand(() -> shooter.enable(), () -> shooter.disable()));
+
+        new JoystickButton(driveJoystick, 6)
+            .whenPressed(new TurnToAngle(driveBase.getHeading() + 90, driveBase));
 
         new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
         new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
