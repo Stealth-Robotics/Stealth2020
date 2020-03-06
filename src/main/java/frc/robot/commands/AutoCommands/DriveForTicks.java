@@ -9,11 +9,13 @@ public class DriveForTicks extends CommandBase
 {
     DriveBase driveBase;
     double ticksToDrive = 0;
+    double maxSpeed;
+    double angle;
 
     PIDController controller;
     PIDController turnController;
 
-    public DriveForTicks(double ticks, DriveBase drivebase)
+    public DriveForTicks(double ticks, double maxSpeed, DriveBase drivebase)
     {
         controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
         controller.setTolerance(5);
@@ -23,7 +25,24 @@ public class DriveForTicks extends CommandBase
 
         this.driveBase = drivebase;
         ticksToDrive = ticks;
+        this.maxSpeed = maxSpeed;
         addRequirements(drivebase);
+        angle = drivebase.getHeading();
+    }
+
+    public DriveForTicks(double ticks, double maxSpeed, DriveBase drivebase, double angle)
+    {
+        controller = new PIDController(Constants.AutoConstants.basekP, Constants.AutoConstants.basekI, Constants.AutoConstants.basekD);
+        controller.setTolerance(5);
+
+        turnController = new PIDController(Constants.AutoConstants.turnkP, Constants.AutoConstants.turnkI, Constants.AutoConstants.turnkD);
+        controller.setTolerance(5);
+
+        this.driveBase = drivebase;
+        ticksToDrive = ticks;
+        this.maxSpeed = maxSpeed;
+        addRequirements(drivebase);
+        this.angle = angle;
     }
 
     @Override
@@ -31,14 +50,16 @@ public class DriveForTicks extends CommandBase
     {
         driveBase.resetEncoders();
         controller.setSetpoint(ticksToDrive);
-        turnController.setSetpoint(driveBase.getHeading());
+        turnController.setSetpoint(angle);
     }
 
     @Override
     public void execute()
     {
         // System.out.println("Setpoint :" + controller.getSetpoint() + " Encoder Distance : " + driveBase.getAverageEncoderDistance());
-        driveBase.arcadeDrive(-controller.calculate(driveBase.getAverageEncoderDistance()), -turnController.calculate(driveBase.getHeading()));
+        double power = -controller.calculate(driveBase.getAverageEncoderDistance());
+        double sign = Math.signum(power);
+        driveBase.arcadeDrive(Math.abs(power) > maxSpeed ? maxSpeed * sign : power, -turnController.calculate(driveBase.getHeading()));
     }
 
     @Override

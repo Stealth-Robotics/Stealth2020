@@ -104,24 +104,29 @@ public class RobotContainer {
         new TurnToAngle(15, driveBase),
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         
         new TurnToAngle(0, driveBase),
         new TurnToAngle(0, driveBase),
-        new WaitCommand(5),
+        new WaitCommand(1),
         new InstantCommand(() -> intake.setDeployment(true)),
         new WaitCommand(1),
         new ParallelDeadlineGroup(
-            new DriveForTicks(3000, driveBase),
-            new IntakeFuel(intake)),
-        new DriveForTicks(-1700, driveBase),
+            new DriveForTicks(3700, 0.55, driveBase, 0),
+            new IntakeFuel(intake),
+            new BeltsDefault(belts)),
+        // new DriveForTicks(-1700, driveBase),
+        new ParallelDeadlineGroup(
+            new DriveForTicks(-2500, 1.0, driveBase, 0),
+            new IntakeFuel(intake),
+            new BeltsDefault(belts)),
 
         new TurnToAngle(15, driveBase),
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
+        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
     }
@@ -175,7 +180,7 @@ public class RobotContainer {
                     new AimHood(shooter, distanceSensor, false).perpetually()),
                 new ReverseBelt(belts, 300),
                 // new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.9)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
@@ -198,9 +203,17 @@ public class RobotContainer {
         //Climbing
 
         new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, 0, -0.5),	
+            () -> climber.runClimb(-0.7, 0, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
+        new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, -0.7, 0),	
+            () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
+        // new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
+        //     () -> climber.runClimb(0, 0, -0.5),	
+        //     () -> climber.runClimb(0, 0, 0))
+        //     .withTimeout(1));	
             //I am the expert of code
             //Two households both alike in dignity
             //In fair verona where we lay our scene
@@ -219,13 +232,7 @@ public class RobotContainer {
 
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(-0.7, -0.7, 0),	
-            () -> climber.runClimb(0, 0, 0)));
-        
-
-        new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, 0, -0.5),	
-            () -> climber.runClimb(0, 0, 0))
-            .withTimeout(1));	
+            () -> climber.runClimb(0, 0, 0)));	
 
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, 0.75),	
@@ -240,12 +247,12 @@ public class RobotContainer {
         //     () -> shooter.setShooterSpeedDirect(1.0),
         //     () -> shooter.setShooterSpeedDirect(0)));
 
-        new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));
+        // new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));
 
-        new JoystickButton(mechJoystick, 11).whenHeld(new StartEndCommand(
-            () -> shooter.setHoodPos(Constants.minAngle),
-            () -> shooter.setHoodPos(Constants.maxAngle)
-        ));
+        // new JoystickButton(mechJoystick, 11).whenHeld(new StartEndCommand(
+        //     () -> shooter.setHoodPos(Constants.minAngle),
+        //     () -> shooter.setHoodPos(Constants.maxAngle)
+        // ));
 
         new JoystickButton(mechJoystick, 8).whenHeld(new StartEndCommand(
             () -> belts.reverseAllBelts(),

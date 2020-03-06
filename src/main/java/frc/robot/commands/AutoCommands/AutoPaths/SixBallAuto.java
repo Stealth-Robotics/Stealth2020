@@ -65,10 +65,10 @@ public class SixBallAuto extends SequentialCommandGroup {
 
         new TurnToAngle(0, driveBase));
         new ParallelDeadlineGroup(
-            new DriveForTicks(1500, driveBase),
+            new DriveForTicks(1500, 0.55, driveBase),
             new RunCommand(() -> intake.run(), intake),
         new WaitCommand(2),
-        new DriveForTicks(-1700, driveBase));
+        new DriveForTicks(-1700, 0.55, driveBase));
 
         // Second Shot
 

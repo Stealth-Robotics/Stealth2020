@@ -32,7 +32,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
       new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
       new FireShooter(shooter, belts).withTimeout(5),
       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
-      new DriveForTicks(12, driveBase)
+      new DriveForTicks(700, 0.55, driveBase)
     );
   }
 }
