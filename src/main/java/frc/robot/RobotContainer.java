@@ -105,7 +105,7 @@ public class RobotContainer {
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
-        new FireShooter(shooter, belts, intake).withTimeout(3),
+        new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         
         new TurnToAngle(0, driveBase),
@@ -122,7 +122,7 @@ public class RobotContainer {
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.8)).withTimeout(3),
-        new FireShooter(shooter, belts, intake).withTimeout(3),
+        new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
     }
 
@@ -163,7 +163,7 @@ public class RobotContainer {
                 new AimHood(shooter, distanceSensor, true),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 new WaitCommand(0.3), 
-                new FireShooter(shooter, belts, intake)
+                new FireShooter(shooter, belts)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
@@ -175,10 +175,10 @@ public class RobotContainer {
                     new AimHood(shooter, distanceSensor, false).perpetually()),
                 new ReverseBelt(belts, 300),
                 // new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.9)),
                 // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
                 new WaitCommand(0.3), 
-                new FireShooter(shooter, belts, intake)
+                new FireShooter(shooter, belts)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 

@@ -49,7 +49,7 @@ public class BeltsDefault extends CommandBase
         {
             if(belts.getBeamBreak1() && belts.getBallCount() < 5)
             {
-                belts.runAllBelts(0.8, 0.75);
+                belts.runAllBelts(0.8, 0.8);
                 timer.reset();
             }
             
