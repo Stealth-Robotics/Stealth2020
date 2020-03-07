@@ -51,11 +51,18 @@ public class AimHood extends CommandBase
             dist = 3.048;
         }
         
-        
-        // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
-        double angle = calcAngle(dist) - Math.PI / 36;
-        // System.out.println("Angle: " + angle * 180 / Math.PI);
-        angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
+        double angle;
+        if (dist > 1)
+        {
+            // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
+            angle = calcAngle(dist) - 3 * Math.PI / 72;
+            // System.out.println("Angle: " + angle * 180 / Math.PI);
+            angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
+        }
+        else
+        {
+            angle = Constants.maxAngle - Math.PI / 36;
+        }
 
         // if(limelight.hasValidTarget())
         // {

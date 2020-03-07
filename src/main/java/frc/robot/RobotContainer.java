@@ -8,14 +8,18 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -23,12 +27,10 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCommands.DriveForTicks;
-import frc.robot.commands.AutoCommands.AutoPaths.SixBallAuto;
-import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.AutoCommands.TurnToAngle;
+import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
-import frc.robot.commands.BeltsCommands.RunBelt;
 import frc.robot.commands.DrivebaseCommands.AlignWithTarget;
 import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
@@ -48,7 +50,8 @@ import frc.robot.subsystems.Shooter;
  * scheduler calls). Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer 
+{
     // The robot's subsystems and commands are defined here...
     private final DriveBase driveBase;
     private final Shooter shooter;
@@ -60,15 +63,18 @@ public class RobotContainer {
     private final Limelight limelight;
     private final DistanceSensor distanceSensor;
 
-    private final SequentialCommandGroup autoCommand;
+    // private final Command autoCommand;
 
     private Joystick driveJoystick;
     private Joystick mechJoystick;
 
+    SendableChooser<Command> m_chooser;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
-    public RobotContainer() {
+    public RobotContainer() 
+    {
         driveBase = new DriveBase();
         shooter = new Shooter();
         intake = new Intake();
@@ -93,12 +99,14 @@ public class RobotContainer {
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
+        //shooter.setDefaultCommand(new RunCommand(() -> shooter.setShooterSpeedDirect(0)));                                                                                                                    
+
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
         camera.setResolution(320, 240);
         camera.setFPS(25);
 
         // autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
-        autoCommand = new SequentialCommandGroup(
+        SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
         new InstantCommand(() -> driveBase.zeroHeading()),
         new WaitCommand(0.25),
         new TurnToAngle(15, driveBase),
@@ -113,8 +121,13 @@ public class RobotContainer {
         new WaitCommand(1),
         new InstantCommand(() -> intake.setDeployment(true)),
         new WaitCommand(1),
+
         new ParallelDeadlineGroup(
-            new DriveForTicks(3700, 0.55, driveBase, 0),
+            new DriveForTicks(1700, 0.10, driveBase, 0),
+            new IntakeFuel(intake),
+            new BeltsDefault(belts)),
+        new ParallelDeadlineGroup(
+            new DriveForTicks(2000, 0.55, driveBase, 0),
             new IntakeFuel(intake),
             new BeltsDefault(belts)),
         // new DriveForTicks(-1700, driveBase),
@@ -129,6 +142,13 @@ public class RobotContainer {
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
+
+        m_chooser = new SendableChooser<>();
+        m_chooser.setDefaultOption("Three Ball", new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor));
+        m_chooser.addOption("Six Ball", sixBallAuto);
+
+        SmartDashboard.putData("Auto mode", m_chooser);
+        // System.out.println("Auto Set");
     }
 
     /**
@@ -164,8 +184,9 @@ public class RobotContainer {
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
-                new AlignWithTarget(driveBase, limelight, distanceSensor),
-                new AimHood(shooter, distanceSensor, true),
+                new ParallelDeadlineGroup(
+                    new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
+                    new AimHood(shooter, distanceSensor, true)),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
@@ -175,17 +196,30 @@ public class RobotContainer {
         new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.SetLedMode(3)),
-                new WaitCommand(0.2),
-                new ParallelDeadlineGroup(new AlignWithTarget(driveBase, limelight, distanceSensor),
-                    new AimHood(shooter, distanceSensor, false).perpetually()),
+                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
+                new WaitCommand(0.15),
+                new ParallelDeadlineGroup(
+                    new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
+                    new AimHood(shooter, distanceSensor, false)),
                 // new InstantCommand(() -> shooter.enable()),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
-                new WaitCommand(0.3), 
+                new WaitCommand(0.20), 
                 new FireShooter(shooter, belts)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+
+        // new ConditionalCommand(new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+        //         new InstantCommand(() -> shooter.setShooterSpeedDirect(1.0)),
+        //         new BooleanSupplier()
+        //         {
+        //             @Override
+        //             public boolean getAsBoolean() 
+        //             {
+        //                 return distanceSensor.getDistance() > 20000;
+        //             }
+        //         });
 
         new JoystickButton(driveJoystick, 5)
             .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(4984)))
@@ -203,11 +237,19 @@ public class RobotContainer {
         //Climbing
 
         new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(-0.7, 0, 0),	
+            () -> climber.runClimb(0.5, 0, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
         new JoystickButton(mechJoystick, 4).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, -0.7, 0),	
+            () -> climber.runClimb(-0.5, 0, 0),	
+            () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
+        new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, 0.5, 0),	
+            () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
+        new JoystickButton(mechJoystick, 10).whenHeld(new StartEndCommand(	
+            () -> climber.runClimb(0, -0.5, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
         // new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
@@ -259,11 +301,10 @@ public class RobotContainer {
             () -> belts.stopAllBelts())
             .alongWith(new StartEndCommand(
                         () -> intake.reverse(),
-                        () -> intake.stopIntake()
-                )
-            )
-        );
-
+                        () -> intake.stopIntake()))
+            .alongWith(new StartEndCommand(
+                        () -> shooter.setShooterSpeedDirect(-0.2),
+                        () -> shooter.setShooterSpeedDirect(0))));
         
     }
   
@@ -275,6 +316,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() 
     {
-        return autoCommand;
+        return m_chooser.getSelected();
     }
 }

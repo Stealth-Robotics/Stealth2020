@@ -1,6 +1,5 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 
 // import java.util.function.BooleanSupplier;
@@ -21,7 +20,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class SixBallAuto extends SequentialCommandGroup {
+public class SixBallAuto extends SequentialCommandGroup 
+{
 
   DriveBase driveBase;
   Shooter shooter;

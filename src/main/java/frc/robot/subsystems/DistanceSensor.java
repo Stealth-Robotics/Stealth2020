@@ -20,11 +20,18 @@ public class DistanceSensor extends SubsystemBase
         };
     }
 
+    @Override
+    public void periodic() 
+    { 
+        // System.out.println(getDistance());
+    }
+
     public double getDistance()
     {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 
-        return mDutyCycleAndPeriods[0][0]-139.7-100;   
+        return mDutyCycleAndPeriods[0][0]+119.7-100;  
+        //return mDutyCycleAndPeriods[0][0]-22.225-100;   
     }
 
     public double getFilteredDistance()
@@ -34,5 +41,6 @@ public class DistanceSensor extends SubsystemBase
         mReading = (mReading / 8) * 7 + (mDutyCycleAndPeriods[0][0] / 8);
 
         return mReading-139.7-100;
+        //return mReading-22.225-100;
     }
 }
