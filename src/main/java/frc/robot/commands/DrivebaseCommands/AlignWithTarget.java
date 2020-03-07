@@ -18,6 +18,7 @@ public class AlignWithTarget extends CommandBase
 
     private final Limelight limelight;
     private final DistanceSensor distanceSensor;
+    private boolean overrideOffset;
 
     /**
      * Creates a new ExampleCommand.
@@ -31,15 +32,37 @@ public class AlignWithTarget extends CommandBase
         this.distanceSensor = distanceSensor;
         
         controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
+        overrideOffset = false;
 
         addRequirements(driveBase, limelight);
+    }
+
+    public AlignWithTarget(DriveBase driveBase, Limelight limelight, DistanceSensor distanceSensor, boolean overrideOffset) 
+    {
+        this.driveBase = driveBase;
+        this.limelight = limelight;
+        this.distanceSensor = distanceSensor;
+        
+        controller = new PIDController(Constants.limekP, Constants.limekI, Constants.limekD);
+        this.overrideOffset = overrideOffset;
+
+        addRequirements(driveBase, limelight);
+
+        
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() 
     {       
-        controller.setSetpoint(Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI);
+        if (overrideOffset)
+        {
+            controller.setSetpoint(0.4);
+        }
+        else
+        {
+            controller.setSetpoint(Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI);
+        }
         // controller.setSetpoint(0.5);
         controller.setTolerance(0.7);
     }
@@ -56,7 +79,6 @@ public class AlignWithTarget extends CommandBase
     public void end(boolean interrupted) 
     {
         driveBase.arcadeDrive(0, 0);
-        limelight.SetLedMode(1);
     }
 
     // Returns true when the command should end.
