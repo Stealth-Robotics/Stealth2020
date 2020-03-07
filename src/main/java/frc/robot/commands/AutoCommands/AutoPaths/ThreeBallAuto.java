@@ -1,5 +1,6 @@
 package frc.robot.commands.AutoCommands.AutoPaths;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -29,8 +30,10 @@ public class ThreeBallAuto extends SequentialCommandGroup {
     (
       new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
       new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
-      new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(2),
-      new FireShooter(shooter, belts).withTimeout(4),
+      // new RunCommand(() -> shooter.setShooterSpeedDirect(0.84)).withTimeout(2),
+      new RunCommand(() -> shooter.setShooterSpeed(4925)).withTimeout(2),
+      new InstantCommand(() -> shooter.enable()),
+      new FireShooter(shooter, belts).withTimeout(2.5),
       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
       new DriveForTicks(700, 0.55, driveBase)
     );

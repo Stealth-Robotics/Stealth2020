@@ -41,7 +41,7 @@ public class FireShooter extends CommandBase
     {
         shooter.disable();
         belts.stopAllBelts();
-        shooter.setShooterSpeedDirect(0);
+        // shooter.setShooterSpeedDirect(0);
 
         belts.resetBallCount();
     }
