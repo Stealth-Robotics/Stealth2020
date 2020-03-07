@@ -28,7 +28,6 @@ public class Shooter extends SubsystemBase
     private final PIDController hoodController;
 
     private boolean enabled;
-    private boolean enabledTracker;
 
     /**
      * Creates a new Shooter.
@@ -45,7 +44,7 @@ public class Shooter extends SubsystemBase
         shooterEncoder = shooter1.getEncoder();
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
-        shooterController.setTolerance(50);
+        shooterController.setTolerance(20);
         shooterController.setIntegratorRange(-0.00005, 0.00005);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
@@ -57,7 +56,6 @@ public class Shooter extends SubsystemBase
 
         currentShooterPower = 0;
         enabled = false;
-        enabledTracker = false;
     }
 
     @Override
@@ -68,27 +66,25 @@ public class Shooter extends SubsystemBase
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
         // System.out.println(hood.getSelectedSensorPosition(0));
 
-        if (enabled)
-        {
-            currentShooterPower += shooterController.calculate(shooterEncoder.getVelocity());
-            shooter1.set(currentShooterPower);
-        }
-        else if (enabledTracker)
-        {
-            shooter1.set(0);
-        }
-
-        enabledTracker = enabled;
+        // if (enabled)
+        // {
+        //     currentShooterPower += shooterController.calculate(shooterEncoder.getVelocity());
+        //     shooter1.set(currentShooterPower);
+        // }
+        // else
+        // {
+        //     shooter1.set(0);
+        // }
         //System.out.println("Hood Setpoint: " + hoodController.getSetpoint());
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
-        if (isEnabled())
-        {
-            System.out.println("Veloc: " + shooterEncoder.getVelocity());
-            System.out.println("Target: " + shooterController.getSetpoint());
-            System.out.println("CurrentPower: " + currentShooterPower);
-        }
+        // if (isEnabled())
+        // {
+        //     System.out.println("Veloc: " + shooterEncoder.getVelocity());
+        //     // System.out.println("Target: " + shooter1.get());
+        //     System.out.println("CurrentPower: " + currentShooterPower);
+        // }
     }
 
     /**
@@ -111,7 +107,6 @@ public class Shooter extends SubsystemBase
         currentShooterPower = approxPowerForVeloc(speed);
         shooter1.set(currentShooterPower);
         shooterController.setSetpoint(speed);
-        shooterController.reset();
     }
 
     /**
@@ -185,7 +180,5 @@ public class Shooter extends SubsystemBase
     public double approxPowerForVeloc(double veloc)
     {
         return veloc / 5864;
-
-        // return veloc / 5600;
     }
 }
