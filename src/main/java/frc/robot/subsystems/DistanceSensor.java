@@ -20,11 +20,39 @@ public class DistanceSensor extends SubsystemBase
         };
     }
 
+    /**
+     * Returns the distance from the distance sensor in MM
+     * 
+     * @return Distance in MM
+     */
     public double getDistance()
     {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 
         return mDutyCycleAndPeriods[0][0]-139.7-100;   
+    }
+
+    /**
+     * Returns fused distance from limelight and distance sensor in MM
+     * 
+     * Accounts for if the distance sensor is being blocked by another robot.
+     * 
+     * @param limelight
+     * @return Returns fused distance in MM
+     */
+    public double getFusedDistance(Limelight limelight)
+    {
+        double m_distance = getDistance();
+        double lime_distance = limelight.getTargetDistance() * 1000;
+        double tolarance = 25;
+
+        double output = (m_distance + lime_distance) / 2;
+
+        if(Math.abs(m_distance - lime_distance) > tolarance){
+            output = lime_distance;
+        }
+
+        return output;
     }
 
     public double getFilteredDistance()

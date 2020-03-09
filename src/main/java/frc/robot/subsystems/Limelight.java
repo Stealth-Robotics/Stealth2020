@@ -19,7 +19,7 @@ public class Limelight extends SubsystemBase
     @Override
     public void periodic()
     {
-        //System.out.println(getTargetDistance() * 100 / 2.54 / 12);
+        //System.out.println(getTargetDistance());
     }
 
     /**
@@ -61,6 +61,11 @@ public class Limelight extends SubsystemBase
         return hasValidTarget() ? limelightTableEntry.getEntry("ty").getDouble(0) * Math.PI / 180 : Double.NaN;
     }
 
+    /**
+     * Target Area (0% of image to 100% of image)
+     * 
+     * @return Target Size 0% of image to 100% of image, will return NaN if no valid target
+     */
     public double getTargetArea()
     {
         return hasValidTarget() ? limelightTableEntry.getEntry("ta").getDouble(0) : Double.NaN;
@@ -73,7 +78,7 @@ public class Limelight extends SubsystemBase
      */
     public double getTargetDistance()
     {
-        return (Constants.crosshairHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset()) ;
+        return (Constants.crosshairHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
     }
 
     public void GetCamMode(double defaultValue)
