@@ -44,7 +44,7 @@ public class DistanceSensor extends SubsystemBase
     {
         double m_distance = getDistance();
         double lime_distance = limelight.getTargetDistance() * 1000;
-        double tolarance = 25;
+        double tolarance = 100;
 
         double output = (m_distance + lime_distance) / 2;
 
