@@ -55,6 +55,17 @@ public class DistanceSensor extends SubsystemBase
         return output;
     }
 
+    /**
+     * Returns the delta from the LIDAR measured distance to the limelight estimated distance
+     * 
+     * @param limelight
+     * @return Delta from LIDAR measured distance to limelight distance in MM
+     */
+    public double getLimeDistanceDelta(Limelight limelight)
+    {
+        return getDistance() - (limelight.getTargetDistance() * 1000);
+    }
+
     public double getFilteredDistance()
     {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
