@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants 
 {
     public static final double targetHeight = 2.49; //meters
-    public static final double crosshairHeight = 2.23; //meters | old: 2.3876
+    public static final double crosshairHeight = 2.27; //meters | old: 2.23, old: 2.3876 | height of center lime tape
     public static final double shooterHeight = 0.6858; //meters
     public static final double heightDiff = targetHeight - shooterHeight; //meters
     public static final double fuelAirTimeSquared = heightDiff * 2 / 9.8; //seconds^2

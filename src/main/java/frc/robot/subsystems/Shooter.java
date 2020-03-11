@@ -56,6 +56,10 @@ public class Shooter extends SubsystemBase
 
         currentShooterPower = 0;
         enabled = false;
+
+        addChild("HoodPID", hoodController);
+        addChild("HoodTalon", hood);
+        addChild("ShooterPID", shooterController);
     }
 
     @Override

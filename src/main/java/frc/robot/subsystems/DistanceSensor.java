@@ -1,46 +1,86 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.CANifier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
-public class DistanceSensor extends SubsystemBase
-{
+public class DistanceSensor extends SubsystemBase {
     private final CANifier mCANIfier;
     double mReading = 0.0;
-	double[][] mDutyCycleAndPeriods;
+    double[][] mDutyCycleAndPeriods;
 
-    public DistanceSensor()
-    {
+    public DistanceSensor() {
         mCANIfier = new CANifier(RobotMap.DistanceSensor);
-        mDutyCycleAndPeriods = new double[][]
-        {
-            new double[]{0, 0}, new double[]{0, 0},
-            new double[]{0, 0}, new double[]{0, 0}
-        };
+        mDutyCycleAndPeriods = new double[][] { new double[] { 0, 0 }, new double[] { 0, 0 }, new double[] { 0, 0 },
+                new double[] { 0, 0 } };
     }
 
-    @Override
-    public void periodic() 
-    { 
-        // System.out.println(getDistance());
-    }
-
-    public double getDistance()
-    {
+    /**
+     * Returns the distance from the distance sensor in MM
+     * 
+     * @return Distance in MM
+     */
+    public double getDistance() {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 
-        return mDutyCycleAndPeriods[0][0]+119.7-100;  
-        //return mDutyCycleAndPeriods[0][0]-22.225-100;   
+        return mDutyCycleAndPeriods[0][0] - 139.7 - 100;
     }
 
-    public double getFilteredDistance()
-    {
+    /**
+     * Returns fused distance from limelight and distance sensor in MM
+     * 
+     * Accounts for if the distance sensor is being blocked by another robot.
+     * 
+     * @param limelight
+     * @return Returns fused distance in MM
+     */
+    public double getFusedDistance(Limelight limelight) {
+        double m_distance = getDistance();
+        double lime_distance = limelight.getTargetDistance() * 1000;
+        double tolarance = 100;
+
+        double output = (m_distance + lime_distance) / 2;
+
+        if (Math.abs(m_distance - lime_distance) > tolarance) {
+            output = lime_distance;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns the delta from the LIDAR measured distance to the limelight estimated
+     * distance
+     * 
+     * @param limelight
+     * @return Delta from LIDAR measured distance to limelight distance in MM
+     */
+    public double getLimeDistanceDelta(Limelight limelight) {
+        return getDistance() - (limelight.getTargetDistance() * 1000);
+    }
+
+    public double getFilteredDistance() {
         mCANIfier.getPWMInput(CANifier.PWMChannel.PWMChannel0, mDutyCycleAndPeriods[0]);
 
         mReading = (mReading / 8) * 7 + (mDutyCycleAndPeriods[0][0] / 8);
 
-        return mReading-139.7-100;
-        //return mReading-22.225-100;
+        return mReading - 139.7 - 100;
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        super.initSendable(builder);
+
+        builder.addDoubleProperty(".distance", new DoubleSupplier() {
+            @Override
+            public double getAsDouble() {
+                
+                return getDistance();
+            }
+        }, null);
     }
 }
