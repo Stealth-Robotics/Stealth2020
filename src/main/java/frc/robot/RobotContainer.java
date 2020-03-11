@@ -109,16 +109,16 @@ public class RobotContainer
         SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
         new InstantCommand(() -> driveBase.zeroHeading()),
         new WaitCommand(0.25),
-        new TurnToAngle(15, driveBase),
+        new TurnToAngle(15, driveBase).withTimeout(2),
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         
-        new TurnToAngle(0, driveBase),
-        new TurnToAngle(0, driveBase),
-        new WaitCommand(1),
+        new TurnToAngle(0, driveBase).withTimeout(3),
+        new TurnToAngle(0, driveBase).withTimeout(1),
+        // new WaitCommand(1),
         new InstantCommand(() -> intake.setDeployment(true)),
         new WaitCommand(1),
 
@@ -136,9 +136,9 @@ public class RobotContainer
             new IntakeFuel(intake),
             new BeltsDefault(belts)),
 
-        new TurnToAngle(15, driveBase),
+        new TurnToAngle(15, driveBase).withTimeout(2),
         new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
@@ -187,11 +187,26 @@ public class RobotContainer
                 new ParallelDeadlineGroup(
                     new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
                     new AimHood(shooter, distanceSensor, true)),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
                 new WaitCommand(0.3), 
                 new FireShooter(shooter, belts)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+
+        new JoystickButton(driveJoystick, 4).whenHeld(
+            new SequentialCommandGroup(
+                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+                new ReverseBelt(belts, 300),
+                new WaitCommand(0.2),
+                new ParallelDeadlineGroup(
+                    new AlignWithTarget(driveBase, limelight, distanceSensor, true).withTimeout(3),
+                    new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle))),
+                // new InstantCommand(() -> shooter.enable()),
+                new InstantCommand(() -> shooter.setShooterSpeed(0.95)),
+                // new InstantCommand(() -> shooter.setShooterSpeed(5512)),
+                new WaitCommand(0.4), 
+                new FireShooter(shooter, belts))
+                ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));//.whenReleased(() -> shooter.disable());
 
         new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
@@ -203,7 +218,7 @@ public class RobotContainer
                     new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
                     new AimHood(shooter, distanceSensor, false)),
                 // new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
                 // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
                 new WaitCommand(0.20), 
                 new FireShooter(shooter, belts)
@@ -317,5 +332,15 @@ public class RobotContainer
     public Command getAutonomousCommand() 
     {
         return m_chooser.getSelected();
+    }
+
+    public void turnOffLimelight()
+    {
+        limelight.SetLedMode(0);
+    }
+
+    public void turnOnLimelight()
+    {
+        limelight.SetLedMode(3);
     }
 }

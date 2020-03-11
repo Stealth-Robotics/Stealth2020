@@ -61,7 +61,7 @@ public class AimHood extends CommandBase
         }
         else
         {
-            angle = Constants.maxAngle - Math.PI / 36;
+            angle = Constants.maxAngle - 3 * Math.PI / 36;
         }
 
         // if(limelight.hasValidTarget())
