@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -50,6 +51,10 @@ public class Robot extends TimedRobot
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        SmartDashboard.putNumber("DeltaDist", m_robotContainer.getLimeDistanceDelta());
+        SmartDashboard.putNumber("LimeDist", m_robotContainer.limelight.getTargetDistance() * 1000);
+        SmartDashboard.putNumber("DistDist", m_robotContainer.distanceSensor.getDistance());
+        SmartDashboard.putBoolean("DistTolarance", m_robotContainer.isWithinTolarance());
     }
 
     /**
@@ -114,7 +119,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() 
     {
-      
+
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ThreeBallAuto extends SequentialCommandGroup {
   {
     addCommands
     (
-      new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+      new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
       new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
       new RunCommand(() -> shooter.setShooterSpeedDirect(0.82)).withTimeout(2),
       new FireShooter(shooter, belts).withTimeout(3),

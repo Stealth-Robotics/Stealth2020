@@ -66,7 +66,7 @@ public class DriveBase extends SubsystemBase
 		m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
 		driveSensitivity = 0.9f;
-		driveRotSensitivity = 0.8f;
+		driveRotSensitivity = 0.6f;
 	}
 
 	@Override

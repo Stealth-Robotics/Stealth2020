@@ -27,28 +27,28 @@ public final class Constants
     public static final double fuelAirTime = 0.608; //seconds
     public static final double fuelInitVelocY = 9.8 * fuelAirTime; //meters / second
 
-    public static final double shooterMaxVeloc = 8.967; //meters / second
+    public static final double shooterMaxVeloc = 9.5;//8.967; //meters / second
     public static final double shooterMaxVelocToTheFourth = shooterMaxVeloc * shooterMaxVeloc * shooterMaxVeloc * shooterMaxVeloc;
     public static final double g = -9.8; //meters / second^2
     
     // Estimating Distance With Limelight
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
     public static final double cameraHeight = 0.65405; // in meters
-    public static final double cameraAngle = 20 * (Math.PI / 180); // in radians
+    public static final double cameraAngle = 27 * (Math.PI / 180); // in radians
     public static final double cameraOffset = 70; //offset of camera from center in mm
     
-    public static final double shooterkP = 0.0000004; //TODO: Tune Shooter PID
-    public static final double shooterkI = 0.0000003;
-    public static final double shooterkD = 0.000002;
+    public static final double shooterkP = 0.0000009;
+    public static final double shooterkI = 0.00000014;
+    public static final double shooterkD = 0.000000;
 
-    public static final double ticksPerRadian = 2850 / (5 * Math.PI / 18);
+    public static final double ticksPerRadian = 2810 / (2 * Math.PI / 9);
 
-    public static final double maxAngle = 14 * Math.PI / 36;
-    public static final double minAngle = maxAngle - 2 * Math.PI / 9;
+    public static final double maxAngle = 14 * Math.PI / 36; //70
+    public static final double minAngle = maxAngle - 2 * Math.PI / 9; //30
 
     public static final double hoodkP = 0.01; 
     public static final double hoodkI = 0.009; //these ones work I think
-    public static final double hoodkD = 0.0;
+    public static final double hoodkD = 0.0001;
 
     public static final double limekP = 0.08; //TODO: Tune limelight PID on carpet
     public static final double limekI = 0.09;

@@ -60,8 +60,8 @@ public class RobotContainer
     private final Belts belts;
     // private final PanelControl panelControl;
 
-    private final Limelight limelight;
-    private final DistanceSensor distanceSensor;
+    public final Limelight limelight; //TODO make subsystems private again
+    public final DistanceSensor distanceSensor;
 
     // private final Command autoCommand;
 
@@ -95,7 +95,8 @@ public class RobotContainer
         configureButtonBindings();
 
         driveBase.setDefaultCommand(new RunCommand(
-                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1), driveJoystick.getRawAxis(2)), driveBase));
+                () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1),
+                Math.abs(driveJoystick.getRawAxis(2)) < 0.175 ? 0 : driveJoystick.getRawAxis(2)), driveBase));
 
         belts.setDefaultCommand(new BeltsDefault(belts));
 
@@ -110,7 +111,7 @@ public class RobotContainer
         new InstantCommand(() -> driveBase.zeroHeading()),
         new WaitCommand(0.25),
         new TurnToAngle(15, driveBase).withTimeout(2),
-        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
@@ -137,7 +138,7 @@ public class RobotContainer
             new BeltsDefault(belts)),
 
         new TurnToAngle(15, driveBase).withTimeout(2),
-        new RunCommand(() -> limelight.SetLedMode(3)).withTimeout(0.5),
+        new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts).withTimeout(3),
@@ -180,7 +181,7 @@ public class RobotContainer
 
         new JoystickButton(driveJoystick, 3).whenHeld(
             new SequentialCommandGroup(
-                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new InstantCommand(() -> limelight.setLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
@@ -210,7 +211,7 @@ public class RobotContainer
 
         new JoystickButton(driveJoystick, 1).whenHeld(
             new SequentialCommandGroup(
-                new InstantCommand(() -> limelight.SetLedMode(3)),
+                new InstantCommand(() -> limelight.setLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.15),
@@ -218,12 +219,20 @@ public class RobotContainer
                     new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
                     new AimHood(shooter, distanceSensor, false)),
                 // new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
-                // new InstantCommand(() -> shooter.setShooterSpeed(4984)),
-                new WaitCommand(0.20), 
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(1)),
+                // new InstantCommand(() -> shooter.setShooterSpeed(4500)).withInterrupt(new BooleanSupplier()
+                // {
+                //     @Override
+                //     public boolean getAsBoolean() 
+                //     {
+                //         return shooter.shooterAtSpeed();
+                //     }
+                // }),
+                new WaitCommand(0.2),
                 new FireShooter(shooter, belts)
             )
-        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
+        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
+        .whenReleased(() -> shooter.disable());
 
         // new ConditionalCommand(new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
         //         new InstantCommand(() -> shooter.setShooterSpeedDirect(1.0)),
@@ -238,13 +247,12 @@ public class RobotContainer
 
         new JoystickButton(driveJoystick, 5)
             .whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(4984)))
+            //.whenPressed(new InstantCommand(() -> shooter.setShooterSpeed(5500)))
+            //.whenReleased(new InstantCommand(() -> shooter.setShooterSpeed(0)));
             .whenHeld(new StartEndCommand(() -> shooter.enable(), () -> shooter.disable()));
 
         new JoystickButton(driveJoystick, 6)
             .whenPressed(new TurnToAngle(0, driveBase));
-
-        // new JoystickButton(driveJoystick, 1).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
-        // new JoystickButton(driveJoystick, 3).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
         //Intake
         new JoystickButton(mechJoystick, 9).whenHeld(new IntakeFuel(intake));
@@ -306,10 +314,10 @@ public class RobotContainer
 
         // new JoystickButton(mechJoystick, 10).whenHeld(new RunBelt(belts));
 
-        // new JoystickButton(mechJoystick, 11).whenHeld(new StartEndCommand(
-        //     () -> shooter.setHoodPos(Constants.minAngle),
-        //     () -> shooter.setHoodPos(Constants.maxAngle)
-        // ));
+        new JoystickButton(driveJoystick, 11).whenHeld(new StartEndCommand(
+            () -> shooter.setHoodPos(Constants.minAngle),
+            () -> shooter.setHoodPos(Constants.maxAngle)
+        ));
 
         new JoystickButton(mechJoystick, 8).whenHeld(new StartEndCommand(
             () -> belts.reverseAllBelts(),
@@ -336,11 +344,56 @@ public class RobotContainer
 
     public void turnOffLimelight()
     {
-        limelight.SetLedMode(0);
+        limelight.setLedMode(0);
     }
 
     public void turnOnLimelight()
     {
-        limelight.SetLedMode(3);
+        limelight.setLedMode(3);
+    }
+
+    /**
+     * Returns fused distance from limelight and distance sensor in MM
+     * 
+     * Accounts for if the distance sensor is being blocked by another robot.
+     * 
+     * @param limelight
+     * @return Returns fused distance in MM
+     */
+    public double getFusedDistance() 
+    {
+        double m_distance = distanceSensor.getDistance();
+        double lime_distance = limelight.getTargetDistance() * 1000;
+        double tolarance = 400;
+
+        double output = 0;
+
+        if (Math.abs(m_distance - lime_distance) > tolarance) 
+        {
+            output = lime_distance;
+        } 
+        else 
+        {
+            output = m_distance;
+        }
+
+        return output;
+    }
+
+    /**
+     * Returns the delta from the LIDAR measured distance to the limelight estimated
+     * distance
+     * 
+     * @param limelight
+     * @return Delta from LIDAR measured distance to limelight distance in MM
+     */
+    public double getLimeDistanceDelta() 
+    {
+        return distanceSensor.getDistance() - (limelight.getTargetDistance() * 1000);
+    }
+
+    public boolean isWithinTolarance()
+    {
+        return Math.abs(getLimeDistanceDelta()) < 400;
     }
 }

@@ -55,7 +55,8 @@ public class AimHood extends CommandBase
         if (dist > 1)
         {
             // double angle = Math.atan(Constants.fuelInitVelocY / (dist / Constants.fuelAirTime));
-            angle = calcAngle(dist) - 3 * Math.PI / 72;
+            // angle = calcAngle(dist) - 3 * Math.PI / 72;
+            angle = calcAngle(dist) - 13 * Math.PI / 180;
             // System.out.println("Angle: " + angle * 180 / Math.PI);
             angle = (angle > Constants.maxAngle) ? Constants.maxAngle : (angle < Constants.minAngle) ? Constants.minAngle : angle;
         }

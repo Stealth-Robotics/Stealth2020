@@ -27,8 +27,8 @@ public class Limelight extends SubsystemBase
      */
     public void intializeLimelight()
     {
-        SetLedMode(3);
-        SetCamMode(0);
+        setLedMode(3);
+        setCamMode(0);
     }
 
     /**
@@ -81,22 +81,22 @@ public class Limelight extends SubsystemBase
         return (Constants.crosshairHeight - Constants.cameraHeight) / Math.tan(Constants.cameraAngle + getTargetVerticalOffset());
     }
 
-    public void GetCamMode(double defaultValue)
+    public void getCamMode(double defaultValue)
     {
         limelightTableEntry.getEntry("camMode").getDouble(defaultValue);
     }
 
-    public void GetLedMode(double defaultValue)
+    public void getLedMode(double defaultValue)
     {
         limelightTableEntry.getEntry("ledMode").getDouble(defaultValue);
     }
 
-    public void SetCamMode(double camMode)
+    public void setCamMode(double camMode)
     {
         limelightTableEntry.getEntry("camMode").setNumber(camMode);
     }
 
-    public void SetLedMode(double ledMode)
+    public void setLedMode(double ledMode)
     {
         limelightTableEntry.getEntry("ledMode").setNumber(ledMode);
     }

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -44,8 +45,9 @@ public class Shooter extends SubsystemBase
         shooterEncoder = shooter1.getEncoder();
 
         shooterController = new PIDController(Constants.shooterkP, Constants.shooterkI, Constants.shooterkD);
-        shooterController.setTolerance(20);
-        shooterController.setIntegratorRange(-0.00005, 0.00005);
+        shooterController.setTolerance(100);
+        shooterController.setIntegratorRange(-0.0003, 0.0003);
+        shooterController.setSetpoint(0);
 
         hood = new WPI_TalonSRX(RobotMap.Hood);
         hood.setSelectedSensorPosition(0);
@@ -55,7 +57,7 @@ public class Shooter extends SubsystemBase
         hoodController.setTolerance(20);
 
         currentShooterPower = 0;
-        enabled = false;
+        enabled = true;
 
         addChild("HoodPID", hoodController);
         addChild("HoodTalon", hood);
@@ -83,12 +85,21 @@ public class Shooter extends SubsystemBase
         //System.out.println("Hood Current: " + hood.getSelectedSensorPosition(0));
         //System.out.println("Hood Power: " + hood.get());
 
+        SmartDashboard.putNumber("Shooter Velocity", shooterEncoder.getVelocity());
+        SmartDashboard.putNumber("Shooter Target", shooterController.getSetpoint());
+        SmartDashboard.putNumber("Shooter Power", shooter1.get());
+        SmartDashboard.putNumber("Shooter Error", shooterController.getPositionError());
+        SmartDashboard.putBoolean("Shooter At Speed", shooterAtSpeed());
+
         // if (isEnabled())
         // {
         //     System.out.println("Veloc: " + shooterEncoder.getVelocity());
         //     // System.out.println("Target: " + shooter1.get());
         //     System.out.println("CurrentPower: " + currentShooterPower);
         // }
+
+        // System.out.println(hood.getSelectedSensorPosition(0));
+        // System.out.println("HoodError: " + hoodController.getPositionError());
     }
 
     /**
@@ -111,6 +122,7 @@ public class Shooter extends SubsystemBase
         currentShooterPower = approxPowerForVeloc(speed);
         shooter1.set(currentShooterPower);
         shooterController.setSetpoint(speed);
+        shooterController.reset();
     }
 
     /**
@@ -183,6 +195,7 @@ public class Shooter extends SubsystemBase
      */
     public double approxPowerForVeloc(double veloc)
     {
-        return veloc / 5864;
+        //return veloc / 5864;
+        return veloc / 6150;
     }
 }
