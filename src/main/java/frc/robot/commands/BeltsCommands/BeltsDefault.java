@@ -45,6 +45,7 @@ public class BeltsDefault extends CommandBase
     @Override
     public void execute()
     {
+        //TODO: Document this and rework to be more readable
         if (belts.getBelt1() >= 0)
         {
             if(belts.getBeamBreak1() && belts.getBallCount() < 5)
