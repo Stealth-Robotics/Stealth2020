@@ -55,7 +55,7 @@ public class Climber extends SubsystemBase
     public void runClimb(double leftSpeed, double rightSpeed, double winchSpeed)
     {
         leftClimber.set(leftSpeed);
-        rightClimber.set(rightSpeed);
+        //rightClimber.set(rightSpeed);
         winch.set(-winchSpeed);
     }
 }
