@@ -111,7 +111,7 @@ public class RobotContainer
         new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-        new FireShooter(shooter, belts).withTimeout(3),
+        new FireShooter(shooter, belts, intake).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         
         new TurnToAngle(0, driveBase).withTimeout(3),
@@ -138,7 +138,7 @@ public class RobotContainer
         new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
         new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false).withTimeout(5),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-        new FireShooter(shooter, belts).withTimeout(3),
+        new FireShooter(shooter, belts, intake).withTimeout(3),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
 
         m_chooser = new SendableChooser<>();
@@ -187,7 +187,7 @@ public class RobotContainer
                     new AimHood(shooter, distanceSensor, true)),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
                 new WaitCommand(0.3), 
-                new FireShooter(shooter, belts)
+                new FireShooter(shooter, belts, intake)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));
 
@@ -203,7 +203,7 @@ public class RobotContainer
                 new InstantCommand(() -> shooter.setShooterSpeed(0.95)),
                 // new InstantCommand(() -> shooter.setShooterSpeed(5512)),
                 new WaitCommand(0.4), 
-                new FireShooter(shooter, belts))
+                new FireShooter(shooter, belts, intake))
                 ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle));//.whenReleased(() -> shooter.disable());
 
         new JoystickButton(driveJoystick, 1).whenHeld(
@@ -226,7 +226,7 @@ public class RobotContainer
                 //     }
                 // }),
                 new WaitCommand(0.2),
-                new FireShooter(shooter, belts)
+                new FireShooter(shooter, belts, intake)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
         .whenReleased(() -> shooter.disable());

@@ -15,7 +15,9 @@ public class Intake extends SubsystemBase
     private final Solenoid deployPistons;
 
     public double fuelCount;
-    public boolean breakTracker;
+    public boolean breakTracker; 
+    WPI_TalonSRX intakeHelper;
+
 
     /**
      * Creates a new Intake.
@@ -24,7 +26,8 @@ public class Intake extends SubsystemBase
     {
         WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.Intake);
         mainIntake.setInverted(true);
-        intake = new SpeedControllerGroup(mainIntake, new WPI_TalonSRX(RobotMap.IntakeHelper));
+        intakeHelper = new WPI_TalonSRX(RobotMap.IntakeHelper);
+        intake = new SpeedControllerGroup(mainIntake, intakeHelper);
 
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.IntakeDeployPCMChannel);
     }
@@ -68,4 +71,14 @@ public class Intake extends SubsystemBase
     {
         deployPistons.set(state);
     }
+
+    /**
+     * Runs the green intake helper wheel
+     
+     */
+    public void runHelperWheel(double wheelSpeed)
+    {
+      intakeHelper.set(wheelSpeed);
+    }
+    
 }

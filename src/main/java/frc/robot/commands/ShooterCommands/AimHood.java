@@ -1,4 +1,4 @@
-
+  
 package frc.robot.commands.ShooterCommands;
 
 import frc.robot.Constants;
@@ -98,7 +98,8 @@ public class AimHood extends CommandBase
         // {
         //     quadResult = (-2 * Constants.shooterMaxVeloc * Constants.shooterMaxVeloc / (Constants.g * dist)
         //          + sqrtPort) / 2;
-        // }
+        // }1
+        //]
         // else
         // {
         //     quadResult = (-2 * Constants.shooterMaxVeloc * Constants.shooterMaxVeloc / (Constants.g * dist)

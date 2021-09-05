@@ -4,6 +4,7 @@ package frc.robot.commands.ShooterCommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Intake;
 
 /**
  * An example command that uses an example subsystem.
@@ -12,16 +13,18 @@ public class FireShooter extends CommandBase
 {
     private final Shooter shooter;
     private final Belts belts;
+    private final Intake intake;
 
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public FireShooter(Shooter shooter, Belts belts) 
+    public FireShooter(Shooter shooter, Belts belts, Intake intake) 
     {
         this.shooter = shooter;
         this.belts = belts;
+        this.intake = intake;
 
         addRequirements(shooter, belts);
     }
@@ -31,6 +34,7 @@ public class FireShooter extends CommandBase
     public void initialize() 
     {
         shooter.enable();
+        intake.runHelperWheel(0.5);
         belts.runAllBelts(0.75, 0.95);
         //shooter.setShooterSpeedDirect(0.8);
     }

@@ -70,6 +70,7 @@ public class Shooter extends SubsystemBase
         // This method will be called once per scheduler run
 
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
+        System.out.println(hood.getSelectedSensorPosition(0));
         // System.out.println(hood.getSelectedSensorPosition(0));
 
         // if (enabled)
