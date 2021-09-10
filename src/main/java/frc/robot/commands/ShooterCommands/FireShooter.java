@@ -46,8 +46,8 @@ public class FireShooter extends CommandBase
         shooter.disable();
         belts.stopAllBelts();
         shooter.setShooterSpeedDirect(0);
-
         belts.resetBallCount();
+        intake.stopHelperWheel();
     }
 
     // Returns true when the command should end.

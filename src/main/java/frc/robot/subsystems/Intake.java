@@ -4,31 +4,29 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase 
 {
-    private final SpeedControllerGroup intake;
+    
 
     private final Solenoid deployPistons;
 
     public double fuelCount;
     public boolean breakTracker; 
-    WPI_TalonSRX intakeHelper;
 
+    WPI_TalonSRX intakeHelper;
+    WPI_TalonSRX mainIntake;
 
     /**
      * Creates a new Intake.
      */
     public Intake() 
     {
-        WPI_TalonSRX mainIntake = new WPI_TalonSRX(RobotMap.Intake);
-        mainIntake.setInverted(true);
-        intakeHelper = new WPI_TalonSRX(RobotMap.IntakeHelper);
-        intake = new SpeedControllerGroup(mainIntake, intakeHelper);
-
+         mainIntake = new WPI_TalonSRX(RobotMap.Intake);
+         mainIntake.setInverted(true);
+         intakeHelper = new WPI_TalonSRX(RobotMap.IntakeHelper);
         deployPistons = new Solenoid(RobotMap.PCM, RobotMap.IntakeDeployPCMChannel);
     }
 
@@ -37,7 +35,8 @@ public class Intake extends SubsystemBase
      */
     public void run()
     {
-        intake.set(0.9);
+        mainIntake.set(0.9);
+        intakeHelper.set(0.9);
     }
 
     /**
@@ -45,7 +44,8 @@ public class Intake extends SubsystemBase
      */
     public void stopIntake()
     {
-        intake.set(0);
+        mainIntake.set(0);
+        intakeHelper.set(0);
     }
 
     /**
@@ -53,7 +53,8 @@ public class Intake extends SubsystemBase
      */
     public void reverse()
     {
-        intake.set(-0.5);
+        mainIntake.set(-0.5);
+        intakeHelper.set(-0.5);
     }
 
     /**
@@ -79,6 +80,11 @@ public class Intake extends SubsystemBase
     public void runHelperWheel(double wheelSpeed)
     {
       intakeHelper.set(wheelSpeed);
+    }
+
+    public void stopHelperWheel()
+    {
+        intakeHelper.set(0);
     }
     
 }
