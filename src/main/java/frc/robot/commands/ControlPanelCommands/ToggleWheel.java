@@ -17,4 +17,9 @@ public class ToggleWheel extends CommandBase
     {
         panelControl.togglePosition();
     }
+    @Override
+    public boolean isFinished() 
+    {
+       return false;
+    }
 }
