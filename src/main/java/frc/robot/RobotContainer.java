@@ -95,7 +95,7 @@ public class RobotContainer
                 () -> driveBase.arcadeDrive(driveJoystick.getRawAxis(1),
                 Math.abs(driveJoystick.getRawAxis(2)) < 0.175 ? 0 : driveJoystick.getRawAxis(2)), driveBase));
 
-        belts.setDefaultCommand(new BeltsDefault(belts));
+        belts.setDefaultCommand(new BeltsDefault(belts, intake));
 
         //shooter.setDefaultCommand(new RunCommand(() -> shooter.setShooterSpeedDirect(0)));                                                                                                                    
 
@@ -123,16 +123,16 @@ public class RobotContainer
         new ParallelDeadlineGroup(
             new DriveForTicks(1700, 0.10, driveBase, 0),
             new IntakeFuel(intake),
-            new BeltsDefault(belts)),
+            new BeltsDefault(belts, intake )),
         new ParallelDeadlineGroup(
             new DriveForTicks(2000, 0.55, driveBase, 0),
             new IntakeFuel(intake),
-            new BeltsDefault(belts)),
+            new BeltsDefault(belts, intake)),
         // new DriveForTicks(-1700, driveBase),
         new ParallelDeadlineGroup(
             new DriveForTicks(-2500, 1.0, driveBase, 0),
             new IntakeFuel(intake),
-            new BeltsDefault(belts)),
+            new BeltsDefault(belts, intake)),
 
         new TurnToAngle(15, driveBase).withTimeout(2),
         new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
