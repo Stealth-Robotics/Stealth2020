@@ -7,6 +7,7 @@
 
 package frc.robot.commands.IntakeCommands;
 
+import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -17,6 +18,7 @@ public class IntakeFuel extends CommandBase
 {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Intake intake;
+   
 
     /**
      * Creates a new ExampleCommand.
@@ -26,6 +28,7 @@ public class IntakeFuel extends CommandBase
     public IntakeFuel(Intake intake) 
     {
         this.intake = intake;
+        
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(intake);
     }
@@ -36,6 +39,8 @@ public class IntakeFuel extends CommandBase
     {
         intake.setDeployment(true);
         intake.run();
+        intake.runHelperWheel(0.8);
+        System.out.println("Helper Wheel has started");
     }
 
     // Called once the command ends or is interrupted.
@@ -44,6 +49,7 @@ public class IntakeFuel extends CommandBase
     {
         intake.setDeployment(false);
         intake.stopIntake();
+        intake.stopHelperWheel();
     }
 
     // Returns true when the command should end.
