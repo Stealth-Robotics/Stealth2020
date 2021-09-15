@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCommands.DriveForTicks;
 import frc.robot.commands.AutoCommands.TurnToAngle;
+import frc.robot.commands.AutoCommands.AutoPaths.FiveBallAuto;
 import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
@@ -215,8 +216,9 @@ public class RobotContainer
                 new ParallelDeadlineGroup(
                     new AlignWithTarget(driveBase, limelight, distanceSensor).withTimeout(3),
                     new AimHood(shooter, distanceSensor, false)),
+                    new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
                 // new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(1)),
+              
                 // new InstantCommand(() -> shooter.setShooterSpeed(4500)).withInterrupt(new BooleanSupplier()
                 // {
                 //     @Override
@@ -225,7 +227,7 @@ public class RobotContainer
                 //         return shooter.shooterAtSpeed();
                 //     }
                 // }),
-                new WaitCommand(0.2),
+                new WaitCommand(0.5),
                 new FireShooter(shooter, belts, intake)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
@@ -271,6 +273,11 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 10).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, -0.5, 0),	
             () -> climber.runClimb(0, 0, 0))
+            .withTimeout(1));	
+
+            new JoystickButton(mechJoystick,8).whenHeld(new StartEndCommand (
+                () -> belts.reverseAllBelts(),
+                () -> belts.stopAllBelts())
             .withTimeout(1));	
         // new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
         //     () -> climber.runClimb(0, 0, -0.5),	
