@@ -22,10 +22,9 @@ public class BeltsDefault extends CommandBase
     private final Belts belts;
     private final Intake intake;
     private StopWatch timer;
-    private StopWatch timer1;
-
+ 
     private boolean previousBeamBreak1;
-    private boolean delay = false;
+    //private boolean delay = false;
     //private boolean previousBeamBreak2;
 
     /**
@@ -39,7 +38,7 @@ public class BeltsDefault extends CommandBase
         this.intake = intake;
 
         timer = new StopWatch(100);
-        timer1 = new StopWatch(500);
+        //timer1 = new StopWatch(500);
 
         previousBeamBreak1 = false;
         //previousBeamBreak2 = false;
@@ -50,33 +49,48 @@ public class BeltsDefault extends CommandBase
 
     @Override
     public void execute()
-    {    
+    {   // System.out.println(belts.getBeamBreak1());
 
         if (belts.getBelt1() >= 0)
         {
-            if(belts.getBeamBreak1() && belts.getBallCount() <= 4 && delay)
+            if(belts.getBeamBreak1() && belts.getBallCount() <= 4)
             {    
                 //set a delay/pause for 500 ms here
-                
+               // System.out.println("timer1 has started");
                 belts.runAllBelts(0.8, 0.8);
+                intake.runHelperWheel(0.5);
                 timer.reset();
-                timer1.reset();
-                delay = false;
-            }
+                //timer1.reset();
+                //delay = false;
 
-            if(timer1.isExpired())
-            {
-                delay = true;
             }
+           // System.out.println(timer1.timeLeft());
+            
+               
+            //if(timer1.isExpired())
+           // {
+                //System.out.println("timer1 has ended");
+               // delay = true;
+
+          //  }
+          //  if(b)
  
             if(belts.getBallCount() > 4 && belts.getBeamBreak1() == true)
             {
                 intake.runHelperWheel(0.1);
             }
             
-            if(timer.isExpired())
+            if(timer.isExpired() )
             {
                 belts.stopAllBelts();
+                //intake.stopHelperWheel();
+            }
+            if(timer.isExpired() && belts.getBallCount() < 5)
+            {
+            
+               // intake.stopHelperWheel();
+               // System.out.println("Stop Helper Wheel");
+                
             }
 
             if (belts.getBeamBreak1() && !previousBeamBreak1)
