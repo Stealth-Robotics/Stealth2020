@@ -70,7 +70,6 @@ public class Shooter extends SubsystemBase
         // This method will be called once per scheduler run
 
         hood.set(hoodController.calculate(hood.getSelectedSensorPosition(0)));
-        System.out.println(hood.getSelectedSensorPosition(0));
         // System.out.println(hood.getSelectedSensorPosition(0));
 
         // if (enabled)
@@ -99,7 +98,7 @@ public class Shooter extends SubsystemBase
         //     System.out.println("CurrentPower: " + currentShooterPower);
         // }
 
-        // System.out.println(hood.getSelectedSensorPosition(0));
+        //System.out.println(hood.getSelectedSensorPosition(0));
         // System.out.println("HoodError: " + hoodController.getPositionError());
     }
 
@@ -148,7 +147,10 @@ public class Shooter extends SubsystemBase
      */
     public void setHoodPos(double angle)
     {
-        hoodController.setSetpoint(((Constants.maxAngle) - angle) * Constants.ticksPerRadian);
+        double newSetpoint  = ((Constants.maxAngle) - angle) * Constants.ticksPerRadian;
+        System.out.println("NewSetpoint " + newSetpoint + "Angle " + angle);
+        
+        hoodController.setSetpoint(newSetpoint);
         hoodController.reset();
     }
 

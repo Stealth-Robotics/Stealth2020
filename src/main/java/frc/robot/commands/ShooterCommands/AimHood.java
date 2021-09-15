@@ -43,7 +43,8 @@ public class AimHood extends CommandBase
 
     @Override
     public void execute()
-    {
+    {  
+       // System.out.println("Encode Val");
         double dist = distanceSensor.getDistance() / 1000;
 
         if (override)
