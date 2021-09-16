@@ -56,7 +56,7 @@ public class SixBallAuto extends SequentialCommandGroup
 
         new TurnToAngle(-15, driveBase),
         new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor), new AimHood(shooter, distanceSensor, false),
+        new AlignWithTarget(driveBase, limelight, distanceSensor, 0 ), new AimHood(shooter, distanceSensor, false),
         new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
         new FireShooter(shooter, belts, intake).withTimeout(5),
         new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),

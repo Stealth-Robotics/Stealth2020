@@ -90,7 +90,15 @@ public class DriveBase extends SubsystemBase
     {
 		return m_odometry.getPoseMeters();
 	}
-
+	
+	/**
+	 * @return the degrees the robot is pointing
+	 */
+	public double getPoseThetaDegrees()
+	{
+	  return m_odometry.getPoseMeters().getRotation().getDegrees();
+	}
+  
 	/**
 	 * Returns the current wheel speeds of the robot.
 	 *

@@ -39,6 +39,12 @@ public class TurnToAngle extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return controller.atSetpoint();
+        double posError = Math.abs(driveBase.getPoseThetaDegrees() - angle);
+
+        System.out.printf("iF:%f %s\n",posError,driveBase.getPose().toString());
+    
+        return posError < Constants.DriveConstants.kTurnToleranceDeg;
+    
+    //    return getController().atGoal()
     }
 }
