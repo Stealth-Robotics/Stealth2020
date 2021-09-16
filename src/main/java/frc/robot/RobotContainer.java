@@ -34,6 +34,7 @@ import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
+import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
@@ -56,6 +57,7 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final Belts belts;
+    private final PanelControl panelControl;
     // private final PanelControl panelControl;
 
     public final Limelight limelight; //TODO make subsystems private again
@@ -78,6 +80,7 @@ public class RobotContainer
         intake = new Intake();
         climber = new Climber();
         belts = new Belts();
+        panelControl = new PanelControl();
         // panelControl = new PanelControl();
 
         limelight = new Limelight();
@@ -310,6 +313,19 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 3).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, -0.5),	
             () -> climber.runClimb(0, 0, 0)));
+
+            // new JoystickButton(mechJoystick,7).whenHeld(new StartEndCommand(
+            // () -> panelControl.togglePosition(),
+            // () -> panelControl.togglePosition()));
+
+            // new JoystickButton(mechJoystick,10).whenHeld(new StartEndCommand(
+            //     () -> panelControl.setWheelSpeed(1),
+            //     () -> panelControl.setWheelSpeed(0)));
+
+                new JoystickButton(mechJoystick,11).whenHeld(new StartEndCommand(
+                    () -> intake.toggle(), 
+                    () -> intake.toggle()));
+    
 
         //System Overrides
         // new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(
