@@ -125,11 +125,11 @@ public class RobotContainer
         //new WaitCommand(1),
 
         new ParallelDeadlineGroup(
-            new DriveForTicks(1700, 0.1, driveBase, 0),
-            new IntakeFuel(intake),
-            new BeltsDefault(belts, intake )),
+            new DriveForTicks(1700, 0.1, driveBase, 0)
+            //new IntakeFuel(intake),
+            /*new BeltsDefault(belts, intake )*/),
         new ParallelDeadlineGroup(
-            new DriveForTicks(2000, 0.55, driveBase, 0),
+            new DriveForTicks(2000, 0.75, driveBase, 0),
             new IntakeFuel(intake),
             new BeltsDefault(belts, intake)),
         // new DriveForTicks(-1700, driveBase),
