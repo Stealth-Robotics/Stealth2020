@@ -56,8 +56,8 @@ public class RobotMap
 
     //Pneumatics
     public static final int PCM = 20;
-    public static final int ColorWheelPCMChannel = 1;
-    public static final int IntakeDeployPCMChannel = 0;
+    public static final int ColorWheelPCMChannel = 0;
+    public static final int IntakeDeployPCMChannel = 1;
 
     
 }
