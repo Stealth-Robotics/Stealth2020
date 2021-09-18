@@ -53,17 +53,30 @@ public class BeltsDefault extends CommandBase
 
         if (belts.getBelt1() >= 0)
         {
-            if(belts.getBeamBreak1() && belts.getBallCount() <= 2)
+            if(belts.getBeamBreak1() && belts.getBallCount() < 4)
             {    
                 //set a delay/pause for 500 ms here
                // System.out.println("timer1 has started");
-                belts.runAllBelts(0.8, 0.8);
+                belts.runAllBelts(0.75, 0.9);
                 intake.runHelperWheel(0.5);
                 timer.reset();
                 //timer1.reset();
                 //delay = false;
 
             }
+            if(belts.getBeamBreak1() && belts.getBallCount() == 4)
+            {    
+                //set a delay/pause for 500 ms here
+               // System.out.println("timer1 has started");
+                belts.runAllBelts(0.75, 0.4);
+                intake.runHelperWheel(0.5);
+                timer.reset();
+                //timer1.reset();
+                //delay = false;
+
+            }
+            
+            
            // System.out.println(timer1.timeLeft());
             
                
@@ -73,13 +86,9 @@ public class BeltsDefault extends CommandBase
                // delay = true;
 
           //  }
-           if(belts.getBallCount() == 3)
-           {
-               intake.runHelperWheel(0.5);
-               belts.runAllBelts(0.8, 1);
-           }
- 
-            if(belts.getBallCount() >= 4 && belts.getBeamBreak1() == true)
+          //  if(b)
+            
+            if(belts.getBallCount() > 4 && belts.getBeamBreak1() == true)
             {
                 intake.runHelperWheel(0.1);
             }
