@@ -89,7 +89,6 @@ public class AlignWithTarget extends CommandBase
     // Returns true when the command should end.
     @Override
   public boolean isFinished() {
-
     double posError = Math.abs(driveBase.getPoseThetaDegrees() - angle);
     System.out.printf("iF:%f %s\n",posError,driveBase.getPose().toString());
     return posError < Constants.DriveConstants.kTurnToleranceDeg;

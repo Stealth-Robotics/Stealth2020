@@ -69,7 +69,7 @@ public class RobotContainer
     private Joystick mechJoystick;
 
     SendableChooser<Command> m_chooser;
-
+    
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
@@ -108,42 +108,47 @@ public class RobotContainer
         camera.setFPS(25);
 
         // autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
-        SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
-        new InstantCommand(() -> driveBase.zeroHeading()),
-       // new WaitCommand(0.25),
-        new TurnToAngle(15, driveBase).withTimeout(2),
-        new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor,0 ), new AimHood(shooter, distanceSensor, false ).withTimeout(5),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-        new FireShooter(shooter, belts, intake).withTimeout(2),
-        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0),
         
-        new TurnToAngle(0, driveBase).withTimeout(3),
-        new TurnToAngle(0, driveBase).withTimeout(1),
-        // new WaitCommand(1),
+       
+       
+       
+
+     SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
+        new InstantCommand(() -> driveBase.zeroHeading()),
+       new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
+       new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+       new AlignWithTarget(driveBase, limelight, distanceSensor,0 ), new AimHood(shooter, distanceSensor, false ).withTimeout(5),
+       new WaitCommand(0.5),
+       new FireShooter(shooter, belts, intake).withTimeout(2),
+       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(2),
+       new TurnToAngle(-16, driveBase).withTimeout(2),
+       //new code started here
         new InstantCommand(() -> intake.setDeployment(true)),
         //new WaitCommand(1),
 
         new ParallelDeadlineGroup(
-            new DriveForTicks(1700, 0.1, driveBase, 0)
+            new DriveForTicks(1700, 0.1, driveBase)),
             //new IntakeFuel(intake),
-            /*new BeltsDefault(belts, intake )*/),
-        new ParallelDeadlineGroup(
-            new DriveForTicks(2000, 0.75, driveBase, 0),
-            new IntakeFuel(intake),
-            new BeltsDefault(belts, intake)),
-        // new DriveForTicks(-1700, driveBase),
-        new ParallelDeadlineGroup(
-            new DriveForTicks(-2500, 1.0, driveBase, 0),
-            new IntakeFuel(intake),
-            new BeltsDefault(belts, intake)),
+            //new BeltsDefault(belts, intake )),
+            new ParallelDeadlineGroup(
+                new DriveForTicks(2000, 0.75, driveBase),
+                new IntakeFuel(intake),
+                new BeltsDefault(belts, intake)),
+            // new DriveForTicks(-1700, driveBase),
+            new ParallelDeadlineGroup(
+                new DriveForTicks(-2500, 1.0, driveBase),
+                new IntakeFuel(intake),
+                new BeltsDefault(belts, intake)),
+    
+            new TurnToAngle(15, driveBase).withTimeout(2),
+            new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
+            new AlignWithTarget(driveBase, limelight, distanceSensor , 0), new AimHood(shooter, distanceSensor, false).withTimeout(5),
+            new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+            new FireShooter(shooter, belts, intake).withTimeout(3),
+            new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
+    
 
-        new TurnToAngle(15, driveBase).withTimeout(2),
-        new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
-        new AlignWithTarget(driveBase, limelight, distanceSensor , 0), new AimHood(shooter, distanceSensor, false).withTimeout(5),
-        new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-        new FireShooter(shooter, belts, intake).withTimeout(3),
-        new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
+
 
         m_chooser = new SendableChooser<>();
         m_chooser.setDefaultOption("Three Ball", new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor));
@@ -161,7 +166,7 @@ public class RobotContainer
      */
     private void configureButtonBindings() 
     {
-        new JoystickButton(driveJoystick, 2).whenPressed(() -> driveBase.reverseDrive());
+      //  new JoystickButton(driveJoystick, 2).whenPressed(() -> driveBase.reverseDrive());
         // new JoystickButton(driveJoystick, 2).whenHeld(new ScoreFuel(driveBase,
         // shooter, belts, limelight, distanceSensor));
 
@@ -187,7 +192,7 @@ public class RobotContainer
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
                 new ParallelDeadlineGroup(
-                    new AlignWithTarget(driveBase, limelight, distanceSensor, 0 ).withTimeout(3),
+                    new AlignWithTarget(driveBase, limelight, distanceSensor, -10 ).withTimeout(3),
                     new AimHood(shooter, distanceSensor, true)),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
                 new WaitCommand(0.3), 

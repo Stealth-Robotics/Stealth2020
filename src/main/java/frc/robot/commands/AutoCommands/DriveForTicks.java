@@ -56,8 +56,8 @@ public class DriveForTicks extends CommandBase
     @Override
     public void execute()
     {
-        // System.out.println("Setpoint :" + controller.getSetpoint() + " Encoder Distance : " + driveBase.getAverageEncoderDistance());
-        double power = -controller.calculate(driveBase.getAverageEncoderDistance());
+        System.out.println("Setpoint :" + controller.getSetpoint() + " Encoder Distance : " + driveBase.getAverageEncoderDistance());
+        double power = -controller.calculate(driveBase.getAverageEncoderDistance())*.5;
         double sign = Math.signum(power);
         driveBase.arcadeDrive(Math.abs(power) > maxSpeed ? maxSpeed * sign : power, -turnController.calculate(driveBase.getHeading()));
     }

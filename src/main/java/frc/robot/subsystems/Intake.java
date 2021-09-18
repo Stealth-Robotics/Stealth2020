@@ -71,6 +71,7 @@ public class Intake extends SubsystemBase
     public void setDeployment(boolean state)
     {
         deployPistons.set(state);
+        System.out.println("Intake has been deployed");
     }
 
     /**
