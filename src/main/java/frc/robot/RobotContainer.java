@@ -184,7 +184,7 @@ public class RobotContainer
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
                 new ParallelDeadlineGroup(
-                    new AlignWithTarget(driveBase, limelight, distanceSensor, -10 ).withTimeout(3),
+                    new AlignWithTarget(driveBase, limelight, distanceSensor, false, -10 ).withTimeout(3),
                     new AimHood(shooter, distanceSensor, true)),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.82)),
                 new WaitCommand(0.3), 
@@ -198,7 +198,7 @@ public class RobotContainer
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.2),
                 new ParallelDeadlineGroup(
-                    new AlignWithTarget(driveBase, limelight, distanceSensor, true, 0).withTimeout(3),
+                    new AlignWithTarget(driveBase, limelight, distanceSensor, false, 0).withTimeout(5),
                     new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle))),
                 // new InstantCommand(() -> shooter.enable()),
                 new InstantCommand(() -> shooter.setShooterSpeed(0.95)),
@@ -214,7 +214,7 @@ public class RobotContainer
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.15),
                 new ParallelDeadlineGroup(
-                    new AlignWithTarget(driveBase, limelight, distanceSensor, 0 ).withTimeout(3),
+                    new AlignWithTarget(driveBase, limelight, distanceSensor, false, 0 ).withTimeout(5),
                     new AimHood(shooter, distanceSensor, false)),
                     new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
                 // new InstantCommand(() -> shooter.enable()),
@@ -301,7 +301,7 @@ public class RobotContainer
         new JoystickButton(mechJoystick, 6).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(-0.7, -0.7, 0),	
             () -> climber.runClimb(0, 0, 0)));	
-
+            
         new JoystickButton(mechJoystick, 2).whenHeld(new StartEndCommand(	
             () -> climber.runClimb(0, 0, 0.75),	
             () -> climber.runClimb(0, 0, 0)));

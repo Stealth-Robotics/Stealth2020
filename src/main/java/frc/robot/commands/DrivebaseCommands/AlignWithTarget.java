@@ -69,7 +69,7 @@ public class AlignWithTarget extends CommandBase
             angle = Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI;
         }
         // controller.setSetpoint(0.5);
-        controller.setTolerance(0.7);
+        controller.setTolerance(10);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
