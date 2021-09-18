@@ -81,7 +81,6 @@ public class RobotContainer
         climber = new Climber();
         belts = new Belts();
         panelControl = new PanelControl();
-        // panelControl = new PanelControl();
 
         limelight = new Limelight();
         distanceSensor = new DistanceSensor();
@@ -109,27 +108,22 @@ public class RobotContainer
 
         // autoCommand = new SixBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor);
         
-       
-       
-       
-
-     SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
-        new InstantCommand(() -> driveBase.zeroHeading()),
-       new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
-       new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-       new AlignWithTarget(driveBase, limelight, distanceSensor,0 ), new AimHood(shooter, distanceSensor, false ).withTimeout(5),
-       new WaitCommand(0.5),
-       new FireShooter(shooter, belts, intake).withTimeout(2),
-       new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(2),
-       new TurnToAngle(-16, driveBase).withTimeout(2),
-       //new code started here
-        new InstantCommand(() -> intake.setDeployment(true)),
-        //new WaitCommand(1),
-
-        new ParallelDeadlineGroup(
-            new DriveForTicks(1700, 0.1, driveBase)),
-            //new IntakeFuel(intake),
-            //new BeltsDefault(belts, intake )),
+        SequentialCommandGroup sixBallAuto = new SequentialCommandGroup(
+            new InstantCommand(() -> driveBase.zeroHeading()),
+            new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
+            new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
+            new AlignWithTarget(driveBase, limelight, distanceSensor,0 ), new AimHood(shooter, distanceSensor, false ).withTimeout(5),
+            new WaitCommand(0.5),
+            new FireShooter(shooter, belts, intake).withTimeout(2),
+            new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(2),
+            new TurnToAngle(-16, driveBase).withTimeout(2),
+            //new code started here
+            new InstantCommand(() -> intake.setDeployment(true)),
+            //new WaitCommand(1),
+            new ParallelDeadlineGroup(
+                new DriveForTicks(1700, 0.1, driveBase)),
+                //new IntakeFuel(intake),
+                //new BeltsDefault(belts, intake )),
             new ParallelDeadlineGroup(
                 new DriveForTicks(2000, 0.75, driveBase),
                 new IntakeFuel(intake),
@@ -145,11 +139,9 @@ public class RobotContainer
             new AlignWithTarget(driveBase, limelight, distanceSensor , 0), new AimHood(shooter, distanceSensor, false).withTimeout(5),
             new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
             new FireShooter(shooter, belts, intake).withTimeout(3),
-            new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0));
+            new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0)
+        );
     
-
-
-
         m_chooser = new SendableChooser<>();
         m_chooser.setDefaultOption("Three Ball", new ThreeBallAuto(driveBase, shooter, belts, limelight, intake, distanceSensor));
         m_chooser.addOption("Six Ball", sixBallAuto);
@@ -282,10 +274,9 @@ public class RobotContainer
             () -> climber.runClimb(0, -0.5, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
-
-            new JoystickButton(mechJoystick,8).whenHeld(new StartEndCommand (
-                () -> belts.reverseAllBelts(),
-                () -> belts.stopAllBelts())
+        new JoystickButton(mechJoystick,8).whenHeld(new StartEndCommand (
+            () -> belts.reverseAllBelts(),
+            () -> belts.stopAllBelts())
             .withTimeout(1));	
         // new JoystickButton(mechJoystick, 1).whenHeld(new StartEndCommand(	
         //     () -> climber.runClimb(0, 0, -0.5),	
@@ -327,9 +318,9 @@ public class RobotContainer
             //     () -> panelControl.setWheelSpeed(1),
             //     () -> panelControl.setWheelSpeed(0)));
 
-                new JoystickButton(mechJoystick,11).whenHeld(new StartEndCommand(
-                    () -> intake.toggle(), 
-                    () -> intake.toggle()));
+        new JoystickButton(mechJoystick,11).whenHeld(new StartEndCommand(
+            () -> intake.toggle(), 
+            () -> intake.toggle()));
     
 
         //System Overrides
@@ -355,7 +346,6 @@ public class RobotContainer
                         () -> shooter.setShooterSpeedDirect(0))));
         
     }
-  
   
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
