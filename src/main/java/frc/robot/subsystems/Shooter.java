@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -16,6 +18,8 @@ public class Shooter extends SubsystemBase
     // IMPORTANT : Speed Controller Group Does Not Respect Inversion. Do not use Speed Controller Group For Shooter
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
+
+    private TalonFX shooterMotor;
 
     private final CANEncoder shooterEncoder;
 
@@ -35,6 +39,8 @@ public class Shooter extends SubsystemBase
      */
     public Shooter() 
     {
+        shooterMotor = new TalonFX(3);
+
         shooter1 = new CANSparkMax(RobotMap.Shooter1, MotorType.kBrushless);
         shooter2 = new CANSparkMax(RobotMap.Shooter2, MotorType.kBrushless);
         shooter1.setIdleMode(IdleMode.kCoast);
@@ -132,7 +138,8 @@ public class Shooter extends SubsystemBase
      */
     public void setShooterSpeedDirect(double speed) 
     {
-        shooter1.set(speed);
+        //shooter1.set(speed);
+        shooterMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void setHoodSpeedDirect(double speed) 

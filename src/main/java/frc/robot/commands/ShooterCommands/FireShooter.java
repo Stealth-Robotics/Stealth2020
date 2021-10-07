@@ -36,7 +36,7 @@ public class FireShooter extends CommandBase
         shooter.enable();
         intake.runHelperWheel(0.5);
         belts.runAllBelts(0.75, 0.95);
-        //shooter.setShooterSpeedDirect(0.8);
+        shooter.setShooterSpeedDirect(0.8);
     }
 
     // Called once the command ends or is interrupted.

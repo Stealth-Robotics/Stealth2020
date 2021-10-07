@@ -211,12 +211,13 @@ public class RobotContainer
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.setLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+                new InstantCommand(() -> shooter.setHoodSpeedDirect(0.8)),
                 new ReverseBelt(belts, 300),
                 new WaitCommand(0.15),
                 new ParallelDeadlineGroup(
-                    new AlignWithTarget(driveBase, limelight, distanceSensor, false, 0 ).withTimeout(5),
+                    //new AlignWithTarget(driveBase, limelight, distanceSensor, false, 0 ).withTimeout(5),
                     new AimHood(shooter, distanceSensor, false)),
-                    new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                    //new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
                 // new InstantCommand(() -> shooter.enable()),
               
                 // new InstantCommand(() -> shooter.setShooterSpeed(4500)).withInterrupt(new BooleanSupplier()
