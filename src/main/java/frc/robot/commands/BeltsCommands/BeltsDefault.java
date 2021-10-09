@@ -57,7 +57,7 @@ public class BeltsDefault extends CommandBase
             {    
                 //set a delay/pause for 500 ms here
                // System.out.println("timer1 has started");
-                belts.runAllBelts(0.75, 0.9);
+                belts.runAllBelts(0.65, 0.8);
                 intake.runHelperWheel(0.5);
                 timer.reset();
                 //timer1.reset();

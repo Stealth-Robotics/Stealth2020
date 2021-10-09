@@ -1,6 +1,8 @@
 
 package frc.robot.commands.ShooterCommands;
 
+import com.ctre.phoenix.time.StopWatch;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Shooter;
@@ -33,10 +35,11 @@ public class FireShooter extends CommandBase
     @Override
     public void initialize() 
     {
-        shooter.enable();
+        //shooter.enable();
         intake.runHelperWheel(0.5);
         belts.runAllBelts(0.75, 0.95);
-        shooter.setShooterSpeedDirect(0.8);
+        //shooter.setShooterSpeedDirect(0.85);
+    
     }
 
     // Called once the command ends or is interrupted.

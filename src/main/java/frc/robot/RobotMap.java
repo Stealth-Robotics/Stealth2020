@@ -35,8 +35,8 @@ public class RobotMap
 
     //Climber
     public static final int Winch = 29;
-    public static final int Climber1 = 14;
-    public static final int Climber2 = 14;
+    public static final int Climber1 = 30;
+    public static final int Climber2 = 36;
 
     public static final int LeftLimitSwitch = 8;
     public static final int RightLimitSwitch = 9;

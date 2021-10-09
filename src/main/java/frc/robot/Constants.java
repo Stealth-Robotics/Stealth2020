@@ -72,7 +72,8 @@ public final class Constants
         public static final double kTurnP = .005;
         public static final double kTurnI = 0;
         public static final double kTurnD = 0;
-        public static final double kTurnToleranceDeg = 10;
+        public static final double kTurnToleranceDeg = 0.7;
+        public static final double kTurnHigherToleranceDeg = 0.15;
         public static final double kTurnRateToleranceDegPerS = 10; // degrees per second
         // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
         // These characterization values MUST be determined either experimentally or theoretically

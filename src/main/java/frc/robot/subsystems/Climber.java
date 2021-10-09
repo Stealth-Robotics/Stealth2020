@@ -13,8 +13,6 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase
 {
     private final CANSparkMax winch;
-    private final DigitalInput leftLimitSwitch;  
-    private final DigitalInput rightLimitSwitch;
     //private final SpeedControllerGroup climbElevators;
 
     WPI_TalonSRX leftClimber;
@@ -24,9 +22,7 @@ public class Climber extends SubsystemBase
      * Creates a new Climber.
      */
     public Climber() 
-    {    
-        leftLimitSwitch = new DigitalInput(RobotMap.LeftLimitSwitch);
-        rightLimitSwitch  = new DigitalInput(RobotMap.RightLimitSwitch);
+    {
         winch = new CANSparkMax(RobotMap.Winch, MotorType.kBrushless);
 
         leftClimber = new WPI_TalonSRX(RobotMap.Climber1);
@@ -35,15 +31,6 @@ public class Climber extends SubsystemBase
         leftClimber.setInverted(true);
 
         //climbElevators = new SpeedControllerGroup(leftClimber,  rightClimber);
-    }
-
-    @Override
-    public void periodic() 
-    { 
-        if((!leftLimitSwitch.get() || !rightLimitSwitch.get()) && (leftClimber.get() > 0 && rightClimber.get() > 0))
-        {
-            runClimb(0, 0, 0);
-        }
     }
 
     /**
@@ -55,7 +42,7 @@ public class Climber extends SubsystemBase
     public void runClimb(double leftSpeed, double rightSpeed, double winchSpeed)
     {
         leftClimber.set(leftSpeed);
-        //rightClimber.set(rightSpeed);
+        rightClimber.set(rightSpeed);
         winch.set(-winchSpeed);
     }
 }
