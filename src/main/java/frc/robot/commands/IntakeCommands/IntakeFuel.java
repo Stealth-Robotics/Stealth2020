@@ -7,7 +7,6 @@
 
 package frc.robot.commands.IntakeCommands;
 
-import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

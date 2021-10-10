@@ -1,8 +1,5 @@
 
 package frc.robot.commands.ShooterCommands;
-
-import com.ctre.phoenix.time.StopWatch;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Shooter;

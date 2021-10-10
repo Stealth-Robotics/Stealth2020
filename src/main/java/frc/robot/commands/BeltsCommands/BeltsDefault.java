@@ -10,7 +10,6 @@ package frc.robot.commands.BeltsCommands;
 import frc.robot.subsystems.Belts;
 import frc.robot.subsystems.Intake;
 import frc.util.StopWatch;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**

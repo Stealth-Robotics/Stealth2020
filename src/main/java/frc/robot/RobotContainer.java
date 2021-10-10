@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoCommands.DriveForTicks;
 import frc.robot.commands.AutoCommands.TurnToAngle;
-import frc.robot.commands.AutoCommands.AutoPaths.FiveBallAuto;
 import frc.robot.commands.AutoCommands.AutoPaths.ThreeBallAuto;
 import frc.robot.commands.BeltsCommands.BeltsDefault;
 import frc.robot.commands.BeltsCommands.ReverseBelt;
@@ -34,7 +33,6 @@ import frc.robot.commands.IntakeCommands.IntakeFuel;
 import frc.robot.commands.ShooterCommands.AimHood;
 import frc.robot.commands.ShooterCommands.FireShooter;
 import frc.robot.subsystems.Belts;
-import frc.robot.subsystems.PanelControl;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DistanceSensor;
 import frc.robot.subsystems.DriveBase;
@@ -57,7 +55,6 @@ public class RobotContainer
     private final Intake intake;
     private final Climber climber;
     private final Belts belts;
-    private final PanelControl panelControl;
     // private final PanelControl panelControl;
 
     public final Limelight limelight; //TODO make subsystems private again
@@ -80,7 +77,6 @@ public class RobotContainer
         intake = new Intake();
         climber = new Climber();
         belts = new Belts();
-        panelControl = new PanelControl();
 
         limelight = new Limelight();
         distanceSensor = new DistanceSensor();
