@@ -14,16 +14,20 @@ public class FireShooter extends CommandBase
     private final Belts belts;
     private final Intake intake;
 
+    private boolean slowMode;
+
     /**
      * Creates a new ExampleCommand.
      *
      * @param subsystem The subsystem used by this command.
      */
-    public FireShooter(Shooter shooter, Belts belts, Intake intake) 
+    public FireShooter(Shooter shooter, Belts belts, Intake intake, boolean slowMode) 
     {
         this.shooter = shooter;
         this.belts = belts;
         this.intake = intake;
+
+        this.slowMode = slowMode;
 
         addRequirements(shooter, belts);
     }
@@ -34,8 +38,17 @@ public class FireShooter extends CommandBase
     {
         //shooter.enable();
         intake.runHelperWheel(0.5);
-        belts.runAllBelts(0.75, 0.95);
+        //slowMode ? belts.runAllBelts(0.55, 0.75) : belts.runAllBelts(0.75, 0.95);
         //shooter.setShooterSpeedDirect(0.85);
+
+        if(slowMode)
+        {
+            belts.runAllBelts(0.25, 0.45);
+        }
+
+        else {
+            belts.runAllBelts(0.75, 0.95);
+        }
     
     }
 

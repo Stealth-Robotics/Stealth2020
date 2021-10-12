@@ -110,7 +110,7 @@ public class RobotContainer
             new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
             new AlignWithTarget(driveBase, limelight, distanceSensor,0, false), new AimHood(shooter, distanceSensor, false ).withTimeout(5),
             new WaitCommand(0.5),
-            new FireShooter(shooter, belts, intake).withTimeout(2),
+            new FireShooter(shooter, belts, intake, false).withTimeout(2),
             new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(2),
             new TurnToAngle(-16, driveBase).withTimeout(2),
             //new code started here
@@ -134,7 +134,7 @@ public class RobotContainer
             new RunCommand(() -> limelight.setLedMode(3)).withTimeout(0.5),
             new AlignWithTarget(driveBase, limelight, distanceSensor , 0, false), new AimHood(shooter, distanceSensor, false).withTimeout(5),
             new RunCommand(() -> shooter.setShooterSpeedDirect(0.85)).withTimeout(3),
-            new FireShooter(shooter, belts, intake).withTimeout(3),
+            new FireShooter(shooter, belts, intake, false).withTimeout(3),
             new RunCommand(() -> shooter.setHoodPos(Constants.maxAngle)).withTimeout(0)
         );
     
@@ -158,14 +158,14 @@ public class RobotContainer
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.setLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
-                new ReverseBelt(belts, 300),
+                new ReverseBelt(belts, 200),
                 new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
                 new WaitCommand(0.5),
                 new ParallelDeadlineGroup(
                     new AlignWithTarget(driveBase, limelight, distanceSensor, 0, false).withTimeout(5),
                     new AimHood(shooter, distanceSensor, false)),
-                new FireShooter(shooter, belts, intake)
+                new FireShooter(shooter, belts, intake, false)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
         .whenReleased(() -> shooter.disable());
@@ -174,13 +174,13 @@ public class RobotContainer
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.setLedMode(3)),
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
-                new ReverseBelt(belts, 300),
+                new ReverseBelt(belts, 200),
                 new InstantCommand(() -> shooter.enable()),
                 new InstantCommand(() -> shooter.setShooterSpeedDirect(0.6)),
                 new WaitCommand(0.5),
                 new ParallelDeadlineGroup(
                     new AimHood(shooter, distanceSensor, false)),
-                new FireShooter(shooter, belts, intake)
+                new FireShooter(shooter, belts, intake, false)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
         .whenReleased(() -> shooter.disable());
@@ -191,12 +191,12 @@ public class RobotContainer
                 new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
                 new ReverseBelt(belts, 300),
                 new InstantCommand(() -> shooter.enable()),
-                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.8)),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.7)),
                 new WaitCommand(0.5),
                 new ParallelDeadlineGroup(
                     new AlignWithTarget(driveBase, limelight, distanceSensor, 0, true).withTimeout(5),
                     new AimHood(shooter, distanceSensor, false)),
-                new FireShooter(shooter, belts, intake)
+                new FireShooter(shooter, belts, intake, true)
             )
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
         .whenReleased(() -> shooter.disable());

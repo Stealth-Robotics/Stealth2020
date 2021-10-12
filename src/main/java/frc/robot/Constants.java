@@ -35,7 +35,7 @@ public final class Constants
     // Based On : https://docs.limelightvision.io/en/latest/cs_estimating_distance.html
     public static final double cameraHeight = 0.65405; // in meters
     public static final double cameraAngle = 27 * (Math.PI / 180); // in radians
-    public static final double cameraOffset = 70; //offset of camera from center in mm
+    public static final double cameraOffset = 75; //offset of camera from center in mm
     
     public static final double shooterkP = 0.0000009;
     public static final double shooterkI = 0.00000014;

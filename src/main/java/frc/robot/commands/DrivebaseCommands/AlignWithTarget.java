@@ -44,9 +44,16 @@ public class AlignWithTarget extends CommandBase
     public void initialize() 
     {       
         controller.setSetpoint(Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI);
+        if(higherAccuracy)
+        {
+            controller.setTolerance(Constants.DriveConstants.kTurnHigherToleranceDeg);
+        }
+        else {
+            controller.setTolerance(Constants.DriveConstants.kTurnToleranceDeg);
+        };
         angle = Math.atan(Constants.cameraOffset / distanceSensor.getDistance()) * 180 / Math.PI;
 
-        controller.setTolerance(Constants.DriveConstants.kTurnToleranceDeg);
+        //controller.setTolerance(Constants.DriveConstants.kTurnToleranceDeg);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -71,6 +78,6 @@ public class AlignWithTarget extends CommandBase
     // return posError < Constants.DriveConstants.kTurnToleranceDeg;
     //return getController().atGoal();
 
-    return higherAccuracy ? Math.abs(limelight.getTargetHorizontalOffset()) < Constants.DriveConstants.kTurnHigherToleranceDeg : Math.abs(limelight.getTargetHorizontalOffset()) < Constants.DriveConstants.kTurnToleranceDeg;
+    return controller.atSetpoint();
   }
 }
