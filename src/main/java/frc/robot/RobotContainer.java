@@ -143,7 +143,6 @@ public class RobotContainer
         m_chooser.addOption("Six Ball", sixBallAuto);
 
         SmartDashboard.putData("Auto mode", m_chooser);
-        // System.out.println("Auto Set");
     }
 
     /**
@@ -216,11 +215,11 @@ public class RobotContainer
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
         new JoystickButton(mechJoystick, 7).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0, 0.5, 0),	
+            () -> climber.runClimb(0.5, 0, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
         new JoystickButton(mechJoystick, 10).whenHeld(new StartEndCommand(	
-            () -> climber.runClimb(0.5, 0.5, 0),	
+            () -> climber.runClimb(0, 0.5, 0),	
             () -> climber.runClimb(0, 0, 0))
             .withTimeout(1));	
         new JoystickButton(mechJoystick,8).whenHeld(new StartEndCommand (
