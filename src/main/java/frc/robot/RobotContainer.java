@@ -169,6 +169,21 @@ public class RobotContainer
         ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
         .whenReleased(() -> shooter.disable());
 
+        new JoystickButton(driveJoystick, 10).whenHeld(
+            new SequentialCommandGroup(
+                new InstantCommand(() -> limelight.setLedMode(3)),
+                new InstantCommand(() -> shooter.setHoodPos(Constants.minAngle)),
+                new ReverseBelt(belts, 200),
+                new InstantCommand(() -> shooter.enable()),
+                new InstantCommand(() -> shooter.setShooterSpeedDirect(0.85)),
+                new WaitCommand(0.5),
+                new ParallelDeadlineGroup(
+                    new AimHood(shooter, distanceSensor, false)),
+                new FireShooter(shooter, belts, intake, false)
+            )
+        ).whenReleased(() -> shooter.setHoodPos(Constants.maxAngle))
+        .whenReleased(() -> shooter.disable());
+
         new JoystickButton(driveJoystick, 12).whenHeld(
             new SequentialCommandGroup(
                 new InstantCommand(() -> limelight.setLedMode(3)),
